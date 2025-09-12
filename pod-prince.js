@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const runsInPrince = (typeof Prince !== "undefined");
 
         if (runsInPrince) {
+
+            Prince.Log.info("POD_PRINCE");
+            
             Prince.trackBoxes = true;
 
             // Prince.addEventListener("complete", function() {
