@@ -1,3 +1,5 @@
+const runsInPrince = (typeof Prince !== "undefined");
+
 const handleSeparators = () => {
 
     console.log("HANDLING SEPARATORS 02");
