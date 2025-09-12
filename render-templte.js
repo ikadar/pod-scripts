@@ -1,3 +1,5 @@
+import handleSeparators from "https://cdn.jsdelivr.net/gh/ikadar/hanging-separator@2a0c97666036c036abfa6f8bd7316efcbfb19808/separator-mono.js";
+
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
 
@@ -47,6 +49,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
+    handleSeparators();
 //    run();
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");
