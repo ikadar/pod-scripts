@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 handleSeparators();
             });
 
-        } else {
-            document.addEventListener("DOMContentLoaded", function () {
-                handleSeparators();
-            });
+//        } else {
+//            document.addEventListener("DOMContentLoaded", function () {
+//               handleSeparators();
+//            });
         }
 
     }
