@@ -47,7 +47,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
-    run();
+//    run();
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");
     }
