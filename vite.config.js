@@ -1,3 +1,4 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import babel from '@rollup/plugin-babel';
 
@@ -9,31 +10,42 @@ export default defineConfig({
             formats: ['iife'],
             fileName: () => 'pod.bundle.js',
         },
-        // 🔎 Debug:
-        minify: false,          // ne tömörítsen (így nem lesz bo/ae/ar)
-        sourcemap: true,        // külön .map fájl
-        // vagy: sourcemap: 'inline'  // a .map beágyazva a bundle végébe
-        esbuild: {
-            keepNames: true,      // őrizze meg a függvényneveket a stack trace-ben
-        },
+        // helpful while debugging
+        minify: false,
+        sourcemap: true,
+        esbuild: { keepNames: true },
+        // ALSO tell esbuild to aim at ES5 just in case:
+        target: 'es5',
         rollupOptions: {
-            // Ha csak vanilla JS a három fájl, nem kell külön resolve/commonjs
             plugins: [
                 babel({
+                    // ensure Babel runs on your source files
+                    extensions: ['.js'],
+                    include: ['src/**/*'],
+                    exclude: /node_modules/,
                     babelHelpers: 'bundled',
+                    // no polyfills (Prince hates many core-js shims)
                     presets: [
                         ['@babel/preset-env', {
-                            targets: 'IE 11',
-                            // useBuiltIns: 'usage',
-                            // corejs: 3,
+                            targets: 'ie 11',
                             bugfixes: true,
                             modules: false,
+                            // IMPORTANT: no useBuiltIns/corejs
                         }]
+                    ],
+                    // explicitly include a few transforms that matter for Prince:
+                    plugins: [
+                        '@babel/plugin-transform-shorthand-properties',
+                        '@babel/plugin-transform-destructuring',
+                        '@babel/plugin-transform-parameters',
+                        '@babel/plugin-transform-spread',
+                        '@babel/plugin-transform-arrow-functions',
+                        '@babel/plugin-transform-classes',
                     ]
                 })
             ],
             output: {
-                extend: true, // ha már létezne window.Pod, ne írja felül
+                extend: true,
             }
         }
     }

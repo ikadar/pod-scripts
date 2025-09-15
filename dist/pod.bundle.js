@@ -67,11 +67,11 @@ this.Pod = (function() {
     if (sendData) {
       window.parent.postMessage({
         source: "template-processor",
-        html,
-        data,
-        templateId,
-        orderLineUuid,
-        options
+        html: html,
+        data: data,
+        templateId: templateId,
+        orderLineUuid: orderLineUuid,
+        options: options
       }, "*");
     }
   }
