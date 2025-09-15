@@ -2,8 +2,8 @@ import handleSeparators from "./separator-mono.js";
 import renderTemplate from "./render-template";
 
 function addPodScripts() {
-    Prince.Log.info("TEST01");
-    document.addEventListener("DOMContentLoaded", function () {
+    Prince.Log.info("TEST00");
+    // document.addEventListener("DOMContentLoaded", function () {
 
         const runsInPrince = (typeof Prince !== "undefined");
 
@@ -34,12 +34,13 @@ function addPodScripts() {
         }
 
         if (runsInPrince) {
+            Prince.Log.info("TEST01");
             setTimeout(init, 5000);
         } else {
             init();
         }
 
-    });
+    // });
 
 }
 

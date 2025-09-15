@@ -79,29 +79,28 @@ this.Pod = (function() {
     document.getElementsByTagName("body")[0].style.scale = ratio;
   }
   function addPodScripts() {
-    Prince.Log.info("TEST01");
-    document.addEventListener("DOMContentLoaded", function() {
-      var runsInPrince2 = typeof Prince !== "undefined";
-      function init() {
-        Prince.Log.info("TEST02");
-        if (runsInPrince2) {
-          Prince.Log.info("POD_PRINCE");
-          Prince.Log.info("TEST03");
-          Prince.trackBoxes = true;
-          Prince.registerPostLayoutFunc(function() {
-            handleSeparators();
-          });
-        } else {
-          renderTemplate({});
-          handleSeparators();
-        }
-      }
+    Prince.Log.info("TEST00");
+    var runsInPrince2 = typeof Prince !== "undefined";
+    function init() {
+      Prince.Log.info("TEST02");
       if (runsInPrince2) {
-        setTimeout(init, 5e3);
+        Prince.Log.info("POD_PRINCE");
+        Prince.Log.info("TEST03");
+        Prince.trackBoxes = true;
+        Prince.registerPostLayoutFunc(function() {
+          handleSeparators();
+        });
       } else {
-        init();
+        renderTemplate({});
+        handleSeparators();
       }
-    });
+    }
+    if (runsInPrince2) {
+      Prince.Log.info("TEST01");
+      setTimeout(init, 5e3);
+    } else {
+      init();
+    }
   }
   if (typeof window !== "undefined") {
     window.addPodScripts = addPodScripts;
