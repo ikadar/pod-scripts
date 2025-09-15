@@ -9,6 +9,7 @@ this.Pod = (function() {
       var next = separator.nextElementSibling;
       if (next) {
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
+          console.log("HIDE SEPARATOR");
           separator.style.visibility = "hidden";
         } else {
           separator.style.visibility = "visible";
