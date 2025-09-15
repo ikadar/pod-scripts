@@ -9,6 +9,13 @@ export default defineConfig({
             formats: ['iife'],
             fileName: () => 'pod.bundle.js',
         },
+        // 🔎 Debug:
+        minify: false,          // ne tömörítsen (így nem lesz bo/ae/ar)
+        sourcemap: true,        // külön .map fájl
+        // vagy: sourcemap: 'inline'  // a .map beágyazva a bundle végébe
+        esbuild: {
+            keepNames: true,      // őrizze meg a függvényneveket a stack trace-ben
+        },
         rollupOptions: {
             // Ha csak vanilla JS a három fájl, nem kell külön resolve/commonjs
             plugins: [
@@ -17,8 +24,10 @@ export default defineConfig({
                     presets: [
                         ['@babel/preset-env', {
                             targets: 'IE 11',
-                            useBuiltIns: 'usage',
-                            corejs: 3
+                            // useBuiltIns: 'usage',
+                            // corejs: 3,
+                            bugfixes: true,
+                            modules: false,
                         }]
                     ]
                 })
