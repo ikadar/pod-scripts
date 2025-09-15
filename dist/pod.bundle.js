@@ -2,7 +2,7 @@ this.Pod = (function() {
   "use strict";
   var runsInPrince = typeof Prince !== "undefined";
   var handleSeparators = function handleSeparators2() {
-    console.log("HANDLING SEPARATORS 02");
+    console.log("HANDLING SEPARATORS 02 - 100");
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
     separators.map(function(separator) {

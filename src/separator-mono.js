@@ -2,7 +2,7 @@ const runsInPrince = (typeof Prince !== "undefined");
 
 const handleSeparators = () => {
 
-    console.log("HANDLING SEPARATORS 02");
+    console.log("HANDLING SEPARATORS 02 - 100");
 
     const separatorNodeList = document.querySelectorAll(".separator");
     const separators = Array.from(separatorNodeList);
