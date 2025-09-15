@@ -1,4 +1,4 @@
-import handleSeparators from "https://cdn.jsdelivr.net/gh/ikadar/hanging-separator@2a0c97666036c036abfa6f8bd7316efcbfb19808/separator-mono.js";
+import handleSeparators from "./separator-mono.js";
 
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
