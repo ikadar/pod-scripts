@@ -58,7 +58,7 @@ this.Pod = (function() {
     }
   });
   function scriptFromTheTemplate() {
-    console.log("scriptFromTheTemplate");
+    logInfo("scriptFromTheTemplate");
   }
   function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     var source = document.getElementById("entry-template").innerHTML;
@@ -71,7 +71,6 @@ this.Pod = (function() {
     var html = renderer.render(safeData);
     document.getElementsByTagName("body")[0].outerHTML = html;
     scriptFromTheTemplate();
-    handleSeparators();
     if (sendData) {
       window.parent.postMessage({
         source: "template-processor",

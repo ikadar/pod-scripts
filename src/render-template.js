@@ -1,4 +1,5 @@
 import handleSeparators from "./separator-mono.js";
+import logInfo from "./logInfo";
 
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
@@ -29,7 +30,7 @@ window.addEventListener('message', (event) => {
 });
 
 function scriptFromTheTemplate() {
-    console.log("scriptFromTheTemplate");
+    logInfo("scriptFromTheTemplate");
     // replace by the scriptFromTheTemplate
 }
 
@@ -49,7 +50,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
-    handleSeparators();
+//    handleSeparators();
 //    run();
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");
