@@ -1,22 +1,23 @@
+import logInfo from "./logInfo";
 const runsInPrince = (typeof Prince !== "undefined");
 
 const handleSeparators = () => {
 
-    console.log("HANDLING SEPARATORS 02 - 101");
+    logInfo("HANDLING SEPARATORS 02 - 101");
 
     const separatorNodeList = document.querySelectorAll(".separator");
     const separators = Array.from(separatorNodeList);
 
-    console.log("SEPARATORS", separators.length);
+    logInfo("SEPARATORS", separators.length);
 
     separators.map((separator) => {
         const next = separator.nextElementSibling;
         if (next) {
-            console.log("NEXT", next);
-            console.log("getYCoordinate(separator)", getYCoordinate(separator));
-            console.log("getYCoordinate(next)", getYCoordinate(next));
+            logInfo("NEXT", next);
+            logInfo("getYCoordinate(separator)", getYCoordinate(separator));
+            logInfo("getYCoordinate(next)", getYCoordinate(next));
             if (getYCoordinate(separator) !== getYCoordinate(next)) {
-                console.log("HIDE SEPARATOR");
+                logInfo("HIDE SEPARATOR");
                 separator.style.visibility = "hidden";
             } else {
                 separator.style.visibility = "visible";

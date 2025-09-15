@@ -1,19 +1,27 @@
 this.Pod = (function() {
   "use strict";
+  var runsInPrince$1 = typeof Prince !== "undefined";
+  function logInfo(info) {
+    if (runsInPrince$1) {
+      Prince.Log.info(info);
+    } else {
+      console.log(info);
+    }
+  }
   var runsInPrince = typeof Prince !== "undefined";
   var handleSeparators = function handleSeparators2() {
-    console.log("HANDLING SEPARATORS 02 - 101");
+    logInfo("HANDLING SEPARATORS 02 - 101");
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
-    console.log("SEPARATORS", separators.length);
+    logInfo("SEPARATORS", separators.length);
     separators.map(function(separator) {
       var next = separator.nextElementSibling;
       if (next) {
-        console.log("NEXT", next);
-        console.log("getYCoordinate(separator)", getYCoordinate(separator));
-        console.log("getYCoordinate(next)", getYCoordinate(next));
+        logInfo("NEXT");
+        logInfo("getYCoordinate(separator)", getYCoordinate(separator));
+        logInfo("getYCoordinate(next)", getYCoordinate(next));
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
-          console.log("HIDE SEPARATOR");
+          logInfo("HIDE SEPARATOR");
           separator.style.visibility = "hidden";
         } else {
           separator.style.visibility = "visible";
