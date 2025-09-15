@@ -34,7 +34,7 @@ function addPodScripts() {
         }
 
         if (runsInPrince) {
-            Prince.Log.info("TEST01");
+            Prince.Log.info("TEST01b");
             init();
             // setTimeout(init, 5000);
         } else {

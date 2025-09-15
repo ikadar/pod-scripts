@@ -96,7 +96,7 @@ this.Pod = (function() {
       }
     }
     if (runsInPrince2) {
-      Prince.Log.info("TEST01");
+      Prince.Log.info("TEST01b");
       init();
     } else {
       init();
