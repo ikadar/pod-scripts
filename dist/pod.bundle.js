@@ -88,10 +88,8 @@ this.Pod = (function() {
   function addPodScripts() {
     var runsInPrince2 = typeof Prince !== "undefined";
     function init() {
-      Prince.Log.info("TEST02");
       if (runsInPrince2) {
         Prince.Log.info("POD_PRINCE");
-        Prince.Log.info("TEST03");
         Prince.trackBoxes = true;
         Prince.registerPostLayoutFunc(function() {
           handleSeparators();

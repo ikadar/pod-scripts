@@ -6,13 +6,10 @@ function addPodScripts() {
     const runsInPrince = (typeof Prince !== "undefined");
 
     function init() {
-        Prince.Log.info("TEST02");
 
         if (runsInPrince) {
 
             Prince.Log.info("POD_PRINCE");
-            Prince.Log.info("TEST03");
-
             Prince.trackBoxes = true;
 
             // Prince.addEventListener("complete", function() {
