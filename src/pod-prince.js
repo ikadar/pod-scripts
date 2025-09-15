@@ -43,4 +43,7 @@ function addPodScripts() {
 
 }
 
+if (typeof window !== 'undefined') {
+    window.addPodScripts = addPodScripts;
+}
 export default addPodScripts;

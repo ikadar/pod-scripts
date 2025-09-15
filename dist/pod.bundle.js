@@ -103,6 +103,9 @@ this.Pod = (function() {
       }
     });
   }
+  if (typeof window !== "undefined") {
+    window.addPodScripts = addPodScripts;
+  }
   return addPodScripts;
 })();
 //# sourceMappingURL=pod.bundle.js.map
