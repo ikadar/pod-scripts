@@ -79,14 +79,14 @@ this.Pod = (function() {
     document.getElementsByTagName("body")[0].style.scale = ratio;
   }
   function addPodScripts() {
-    console.log("TEST01");
+    Prince.Log.info("TEST01");
     document.addEventListener("DOMContentLoaded", function() {
       var runsInPrince2 = typeof Prince !== "undefined";
       function init() {
-        console.log("TEST02");
+        Prince.Log.info("TEST02");
         if (runsInPrince2) {
           Prince.Log.info("POD_PRINCE");
-          console.log("TEST03");
+          Prince.Log.info("TEST03");
           Prince.trackBoxes = true;
           Prince.registerPostLayoutFunc(function() {
             handleSeparators();

@@ -2,18 +2,18 @@ import handleSeparators from "./separator-mono.js";
 import renderTemplate from "./render-template";
 
 function addPodScripts() {
-    console.log("TEST01");
+    Prince.Log.info("TEST01");
     document.addEventListener("DOMContentLoaded", function () {
 
         const runsInPrince = (typeof Prince !== "undefined");
 
         function init() {
-            console.log("TEST02");
+            Prince.Log.info("TEST02");
 
             if (runsInPrince) {
 
                 Prince.Log.info("POD_PRINCE");
-                console.log("TEST03");
+                Prince.Log.info("TEST03");
 
                 Prince.trackBoxes = true;
 
