@@ -86,7 +86,6 @@ this.Pod = (function() {
     document.getElementsByTagName("body")[0].style.scale = ratio;
   }
   function addPodScripts() {
-    Prince.Log.info("TEST00");
     var runsInPrince2 = typeof Prince !== "undefined";
     function init() {
       Prince.Log.info("TEST02");
@@ -103,14 +102,10 @@ this.Pod = (function() {
       }
     }
     if (runsInPrince2) {
-      Prince.Log.info("TEST01b");
       init();
     } else {
       init();
     }
-  }
-  if (typeof window !== "undefined") {
-    window.addPodScripts = addPodScripts;
   }
   return addPodScripts;
 })();
