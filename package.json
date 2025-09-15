@@ -1,0 +1,24 @@
+{
+  "name": "pod-scripts",
+  "version": "1.0.0",
+  "description": "Bundle for PrinceXML",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^7.1.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@babel/core": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+    "core-js": "^3.37.0",
+    "regenerator-runtime": "^0.14.1"
+  },
+  "browserslist": [
+    "IE 11",
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions"
+  ]
+}

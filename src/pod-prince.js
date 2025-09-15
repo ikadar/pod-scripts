@@ -1,5 +1,4 @@
-import handleSeparators from "https://cdn.jsdelivr.net/gh/ikadar/hanging-separator@2a0c97666036c036abfa6f8bd7316efcbfb19808/separator-mono.js";
-
+import handleSeparators from "./separator-mono.js";
 
 console.log("TEST01");
 document.addEventListener("DOMContentLoaded", function () {
