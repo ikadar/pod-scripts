@@ -97,7 +97,7 @@ this.Pod = (function() {
     }
     if (runsInPrince2) {
       Prince.Log.info("TEST01");
-      setTimeout(init, 5e3);
+      init();
     } else {
       init();
     }
