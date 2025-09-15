@@ -1,11 +1,13 @@
 import handleSeparators from "./separator-mono.js";
+import renderTemplate from "./render-template";
 
-function runPodScripts() {
+function addPodScripts() {
     console.log("TEST01");
     document.addEventListener("DOMContentLoaded", function () {
 
+        const runsInPrince = (typeof Prince !== "undefined");
+
         function init() {
-            const runsInPrince = (typeof Prince !== "undefined");
             console.log("TEST02");
 
             if (runsInPrince) {
@@ -20,21 +22,25 @@ function runPodScripts() {
                 // }, false);
 
                 Prince.registerPostLayoutFunc(function () {
+                    // renderTemplate();
                     handleSeparators();
                 });
 
-//        } else {
-//            document.addEventListener("DOMContentLoaded", function () {
-//               handleSeparators();
-//            });
+           } else {
+                renderTemplate({});
+                handleSeparators();
             }
 
         }
 
-        setTimeout(init, 5000);
+        if (runsInPrince) {
+            setTimeout(init, 5000);
+        } else {
+            init();
+        }
 
     });
 
 }
 
-export default runPodScripts;
+export default addPodScripts;

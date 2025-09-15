@@ -2,14 +2,19 @@ const runsInPrince = (typeof Prince !== "undefined");
 
 const handleSeparators = () => {
 
-    console.log("HANDLING SEPARATORS 02 - 100");
+    console.log("HANDLING SEPARATORS 02 - 101");
 
     const separatorNodeList = document.querySelectorAll(".separator");
     const separators = Array.from(separatorNodeList);
 
+    console.log("SEPARATORS", separators.length);
+
     separators.map((separator) => {
         const next = separator.nextElementSibling;
         if (next) {
+            console.log("NEXT", next);
+            console.log("getYCoordinate(separator)", getYCoordinate(separator));
+            console.log("getYCoordinate(next)", getYCoordinate(next));
             if (getYCoordinate(separator) !== getYCoordinate(next)) {
                 console.log("HIDE SEPARATOR");
                 separator.style.visibility = "hidden";
