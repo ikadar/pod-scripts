@@ -16,7 +16,9 @@ function smartCaps() {
             const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
             let node;
             while ((node = walker.nextNode())) {
-                result.push(node);
+                if (node.nodeValue.trim().length > 0) {
+                    result.push(node);
+                }
             }
         });
 

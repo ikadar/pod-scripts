@@ -721,7 +721,9 @@ this.Pod = (function() {
         var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
         var node;
         while (node = walker.nextNode()) {
-          result.push(node);
+          if (node.nodeValue.trim().length > 0) {
+            result.push(node);
+          }
         }
       });
       return result;
