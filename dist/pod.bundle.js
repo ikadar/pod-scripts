@@ -988,6 +988,11 @@ this.Pod = (function() {
       handleSeparators();
     }
   }
+  var templateScripts$1 = function templateScripts2() {
+  };
+  var setTemplateScripts = function setTemplateScripts2(scripts) {
+    templateScripts$1 = scripts;
+  };
   window.addEventListener("message", function(event) {
     var sourceNode = document.getElementById("entry-template");
     if (!event.data.data || !sourceNode) {
@@ -1017,7 +1022,11 @@ this.Pod = (function() {
     logInfo$1("scriptFromTheTemplate");
   }
   function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
-    var source = document.getElementById("entry-template").innerHTML;
+    var sourceNode = document.getElementById("entry-template");
+    if (!sourceNode) {
+      return false;
+    }
+    var source = sourceNode.innerHTML;
     var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
       return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
     });
@@ -1027,6 +1036,7 @@ this.Pod = (function() {
     var html = renderer.render(safeData);
     document.getElementsByTagName("body")[0].outerHTML = html;
     scriptFromTheTemplate();
+    templateScripts$1();
     if (sendData) {
       window.parent.postMessage({
         source: "template-processor",
@@ -1037,10 +1047,16 @@ this.Pod = (function() {
         options: options
       }, "*");
     }
+    return true;
   }
   function zoom(ratio) {
     document.getElementsByTagName("body")[0].style.scale = ratio;
   }
+  var templateScripts = function templateScripts2() {
+    smartCaps();
+    runSqueeze();
+    handleSeparators();
+  };
   function addPodScripts() {
     var runsInPrince2 = typeof Prince !== "undefined";
     function init() {
@@ -1053,9 +1069,11 @@ this.Pod = (function() {
           handleSeparators();
         });
       } else {
-        renderTemplate({});
-        smartCaps();
-        handleSeparators();
+        setTemplateScripts(templateScripts);
+        var rendered = renderTemplate({});
+        if (!rendered) {
+          templateScripts();
+        }
       }
     }
     if (runsInPrince2) {

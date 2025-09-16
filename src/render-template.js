@@ -4,6 +4,12 @@ import smartCaps from "./smart-caps";
 import squeeze from "./squeeze";
 import runSqueeze from "./squeeze";
 
+let templateScripts = () => {}
+
+const setTemplateScripts = (scripts) => {
+    templateScripts = scripts;
+}
+
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
 
@@ -44,7 +50,14 @@ function scriptFromTheTemplate() {
 }
 
 function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
-    const source = document.getElementById('entry-template').innerHTML;
+
+    const sourceNode = document.getElementById('entry-template');
+
+    if (!sourceNode) {
+        return false;
+    }
+
+    const source = sourceNode.innerHTML;
 
     // Wrap each string property in SafeString
     const safeData = JSON.parse(JSON.stringify(data), (key, value) =>
@@ -59,12 +72,15 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
+    templateScripts();
     // smartCaps();
     // runSqueeze();
     // handleSeparators();
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");
     }
+
+    return true;
 }
 
 function zoom(ratio) {
@@ -72,4 +88,4 @@ function zoom(ratio) {
     document.getElementsByTagName('body')[0].style.scale = ratio;
 }
 
-export default renderTemplate;
+export {renderTemplate, setTemplateScripts};
