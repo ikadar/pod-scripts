@@ -16,7 +16,8 @@ function smartCaps() {
             const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
             let node;
             while ((node = walker.nextNode())) {
-                if (node.nodeValue.trim().length > 0) {
+                const text = node.nodeValue;
+                if (text.trim().length > 0) {
                     node.nodeValue = text.replace(/\w\S*/g, function (word) {
                         return word.charAt(0).toUpperCase() + word.slice(1);
                     });
