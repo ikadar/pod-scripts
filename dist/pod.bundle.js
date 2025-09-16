@@ -1064,6 +1064,7 @@ this.Pod = (function() {
     } else {
       init();
     }
+    window.__PROCESSING_DONE__ = true;
   }
   return addPodScripts;
 })();

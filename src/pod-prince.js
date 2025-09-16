@@ -41,7 +41,7 @@ function addPodScripts() {
         init();
     }
 
-    window.__PROCESSING_DONE__ === true;
+    window.__PROCESSING_DONE__ = true;
 
 }
 
