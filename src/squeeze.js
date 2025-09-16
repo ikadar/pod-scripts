@@ -225,6 +225,7 @@ function prepareElementsForLetterSpacing() {
 
         element.style.letterSpacing = "0.1px";
         element.style.maxWidth = "";
+        element.style.width = "fit-content";
         element.style.whiteSpace = "nowrap"; // Prevent wrapping
     });
 }
