@@ -50,8 +50,8 @@ this.Pod = (function() {
                 return word;
               }
               if (lower.startsWith("d'") || lower.startsWith("l'")) {
-                var prefix = apostropheMatch[1].toLowerCase() + "'";
-                var rest = apostropheMatch[2];
+                var prefix = lower.slice(0, 2);
+                var rest = lower.slice(2);
                 return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
               }
               return word.charAt(0).toUpperCase() + word.slice(1);

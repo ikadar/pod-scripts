@@ -25,8 +25,8 @@ function smartCaps() {
                         }
 
                         if (lower.startsWith("d'") || lower.startsWith("l'")) {
-                            const prefix = apostropheMatch[1].toLowerCase() + "'"; // keep prefix lowercase
-                            const rest = apostropheMatch[2];
+                            const prefix = lower.slice(0, 2); // "d'" or "l'"
+                            const rest = lower.slice(2);
                             return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
                         }
 
