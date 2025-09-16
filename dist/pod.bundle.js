@@ -109,7 +109,7 @@ this.Pod = (function() {
     return convertToPt(el.clientWidth + "px");
   }
   function getElementBoxWidth2(el) {
-    return el.getBoundingClientRect().width;
+    return convertToPt(el.getBoundingClientRect().width + "px");
   }
   function squeeze(s) {
     logInfo("=== " + s.element.id + " ===");
