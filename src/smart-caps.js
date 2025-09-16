@@ -1,4 +1,5 @@
 import {map} from "core-js/internals/array-iteration";
+import logInfo from "./logInfo";
 
 function smartCaps() {
 
@@ -36,7 +37,7 @@ function smartCaps() {
     const smartCaps = Array.from(smartCapsNodeList);
 
     smartCaps.forEach(smartCap => {
-        console.log(smartCap);
+        logInfo(smartCap);
     })
 }
 

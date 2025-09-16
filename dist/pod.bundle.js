@@ -740,7 +740,7 @@ this.Pod = (function() {
     var smartCapsNodeList = getTextNodesInSmartCap();
     var smartCaps2 = Array.from(smartCapsNodeList);
     smartCaps2.forEach(function(smartCap) {
-      console.log(smartCap);
+      logInfo$1(smartCap);
     });
   }
   function _typeof(o) {
