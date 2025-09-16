@@ -106,14 +106,11 @@ this.Pod = (function() {
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function getElementBoxWidth(el) {
-    return convertToPt(el.clientWidth + "px");
-  }
-  function getElementBoxWidth2(el) {
     return convertToPt(el.getBoundingClientRect().width + "px");
   }
   function squeeze(s) {
     logInfo("=== " + s.element.id + " ===");
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth2(s.element), s.element.style.fontSize);
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
