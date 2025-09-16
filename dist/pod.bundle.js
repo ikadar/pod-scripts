@@ -65,7 +65,6 @@ this.Pod = (function() {
     var smartCapsNodeList = getTextNodesInSmartCap();
     var smartCaps2 = Array.from(smartCapsNodeList);
     smartCaps2.forEach(function(smartCap) {
-      logInfo$1(smartCap);
     });
   }
   var indentIncrement = 4;
@@ -146,7 +145,7 @@ this.Pod = (function() {
         maxFontSizePt: maxFontSizePt
       };
       element.style.fontSize = "1pt";
-      element.style.width = "";
+      element.style.width = "fit-content";
       element.style.maxWidth = "";
       element.style.whiteSpace = "nowrap";
     });

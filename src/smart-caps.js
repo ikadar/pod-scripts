@@ -44,7 +44,7 @@ function smartCaps() {
     const smartCaps = Array.from(smartCapsNodeList);
 
     smartCaps.forEach(smartCap => {
-        logInfo(smartCap);
+        // logInfo(smartCap);
     })
 }
 

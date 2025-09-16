@@ -110,7 +110,8 @@ function prepareElements () {
         };
 
         element.style.fontSize = "1pt";
-        element.style.width = "";
+        element.style.width = "fit-content";
+        // element.style.width = "";
         element.style.maxWidth = "";
         element.style.whiteSpace = "nowrap";
 
