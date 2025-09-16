@@ -1055,9 +1055,7 @@ this.Pod = (function() {
           handleSeparators();
         });
       } else {
-        renderTemplate({});
         smartCaps();
-        runSqueeze();
         handleSeparators();
       }
     }

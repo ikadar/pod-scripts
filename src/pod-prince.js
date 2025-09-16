@@ -27,9 +27,9 @@ function addPodScripts() {
             });
 
        } else {
-            renderTemplate({});
+            // renderTemplate({});
             smartCaps();
-            runSqueeze();
+            // runSqueeze();
             handleSeparators();
         }
 
