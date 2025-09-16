@@ -1,6 +1,4 @@
 import logInfo from "./logInfo";
-// const runsInPrince = (typeof Prince !== "undefined");
-const runsInPrince = false;
 
 const handleSeparators = () => {
 
@@ -15,8 +13,6 @@ const handleSeparators = () => {
         const next = separator.nextElementSibling;
         if (next) {
             logInfo("NEXT", next);
-            logInfo("getYCoordinate(separator)", getYCoordinate(separator));
-            logInfo("getYCoordinate(next)", getYCoordinate(next));
             if (getYCoordinate(separator) !== getYCoordinate(next)) {
                 logInfo("HIDE SEPARATOR");
                 separator.style.visibility = "hidden";
@@ -28,11 +24,7 @@ const handleSeparators = () => {
 };
 
 const getYCoordinate = (element) => {
-    if (runsInPrince) {
-        return element.getPrinceBoxes()[0].y;
-    } else {
-        return element.getBoundingClientRect().top;
-    }
+    return element.getBoundingClientRect().top;
 };
 
 export default handleSeparators;

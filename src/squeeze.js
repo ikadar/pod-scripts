@@ -3,16 +3,10 @@ import handleSeparators from "./separator-mono";
 const indentIncrement = 4;
 var indent = 0;
 const debug = true;
-const runsInPrince = false;
-// const runsInPrince = (typeof Prince !== "undefined");
 
 function logInfo (info) {
     if (debug) {
-        if (runsInPrince) {
-            Prince.Log.info("|" + getIndentation() + info);
-        } else {
-            console.log("|" + getIndentation() + info);
-        }
+        console.log("|" + getIndentation() + info);
     }
 }
 
@@ -60,12 +54,7 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
 }
 
 function getElementBoxWidth (el) {
-    if (runsInPrince) {
-        const boxes = el.getPrinceBoxes();
-        return boxes[0].w;
-    } else {
-        return convertToPt(el.clientWidth + "px");
-    }
+    return convertToPt(el.clientWidth + "px");
 }
 
 function squeeze (s) {
@@ -130,7 +119,8 @@ function prepareElements () {
 
 function calculateSqueezedLetterSpacing (element, maxWidthPt) {
 
-    const dpi = (runsInPrince ? 1 : 0.74999943307122);
+    const dpi = 0.74999943307122;
+    // const dpi = (runsInPrince ? 1 : 0.74999943307122);
 
     logInfo("--- CALCULATION STARTED");
     logInfo("");
@@ -241,15 +231,7 @@ function prepareElementsForLetterSpacing() {
 
 function convertToPt(size) {
 
-    var dpi;
-    if (runsInPrince) {
-        dpi = 74.999943307122;
-        // dpi = 72;
-    } else {
-        // dpi = 72;
-        dpi = 74.999943307122;
-        // dpi = 96;
-    }
+    var dpi = 74.999943307122;
 
     const pointsPerInch = 72; // 1 inch = 72 points
     // const pointsPerInch = dpi; // 1 inch = 72 points
@@ -294,35 +276,12 @@ function convertToPt(size) {
 }
 
 function runSqueeze() {
-    if (runsInPrince) {
-        logInfo("--- STARTED");
+    prepareElements();
+    prepareElementsForLetterSpacing();
 
-        Prince.Log.info(typeof window);
-
-        Prince.trackBoxes = true;
-
-        prepareElements();
-        prepareElementsForLetterSpacing();
-
-        Prince.registerPostLayoutFunc(function() {
-            squeezeAll();
-            squeezeAllLetterSpacing();
-            handleSeparators();
-            // document.getElementById("job_title").style.fontSize = "32pt";
-        });
-
-        Prince.addEventListener("complete", function() {
-            // logInfo("--- FROM COMPLETE");
-        }, false);
-
-    } else {
-        prepareElements();
-        prepareElementsForLetterSpacing();
-
-        squeezeAll();
-        squeezeAllLetterSpacing();
-        handleSeparators();
-    }
+    squeezeAll();
+    squeezeAllLetterSpacing();
+    handleSeparators();
 }
 
 export default runSqueeze;
