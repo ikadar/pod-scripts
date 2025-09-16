@@ -722,6 +722,9 @@ this.Pod = (function() {
         var node;
         while (node = walker.nextNode()) {
           if (node.nodeValue.trim().length > 0) {
+            node.nodeValue = text.replace(/\w\S*/g, function(word) {
+              return word.charAt(0).toUpperCase() + word.slice(1);
+            });
             result.push(node);
           }
         }
@@ -841,23 +844,23 @@ this.Pod = (function() {
     logInfo("");
     increaseIndentation();
     maxWidthPt = maxWidthPt * dpi;
-    var text = element.textContent || "";
+    var text2 = element.textContent || "";
     var currentLetterSpacing = parseFloat(window.getComputedStyle(element).letterSpacing) || 0;
     currentLetterSpacing = currentLetterSpacing * dpi;
     var currentWidth = getElementBoxWidth(element);
     currentWidth = currentWidth * dpi;
     logInfo("maxWidthPt: " + maxWidthPt);
     logInfo("currentWidth: " + currentWidth);
-    logInfo("text: " + (typeof text == "undefined"));
-    logInfo("text: " + (typeof text == "string"));
-    logInfo("text: " + !!text);
-    logInfo("text: " + (!!text ? "AAA" : "BBB"));
-    logInfo("text length: " + (!!text ? text.length : 0));
+    logInfo("text: " + (typeof text2 == "undefined"));
+    logInfo("text: " + (typeof text2 == "string"));
+    logInfo("text: " + !!text2);
+    logInfo("text: " + (!!text2 ? "AAA" : "BBB"));
+    logInfo("text length: " + (!!text2 ? text2.length : 0));
     logInfo("currentLetterSpacing: " + currentLetterSpacing + "pt (assuming)");
     logInfo("scale: " + (maxWidthPt - currentWidth));
     var newLetterSpacing = currentLetterSpacing;
-    if (text.length > 1) {
-      var extraSpacing = (maxWidthPt - currentWidth) / (text.length - 1);
+    if (text2.length > 1) {
+      var extraSpacing = (maxWidthPt - currentWidth) / (text2.length - 1);
       newLetterSpacing = currentLetterSpacing + extraSpacing;
     }
     logInfo("newLetterSpacing: " + newLetterSpacing);

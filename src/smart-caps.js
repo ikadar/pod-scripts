@@ -17,6 +17,9 @@ function smartCaps() {
             let node;
             while ((node = walker.nextNode())) {
                 if (node.nodeValue.trim().length > 0) {
+                    node.nodeValue = text.replace(/\w\S*/g, function (word) {
+                        return word.charAt(0).toUpperCase() + word.slice(1);
+                    });
                     result.push(node);
                 }
             }
