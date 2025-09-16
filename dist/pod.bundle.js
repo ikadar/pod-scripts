@@ -713,6 +713,7 @@ this.Pod = (function() {
   }
   requireArrayIteration();
   function smartCaps() {
+    var ignore = ["rue", "avenue", "impasse", "allée", "boulevard", "place", "route", "voie", "de", "la", "le", "les", "aux", "du"];
     function getTextNodesInSmartCap() {
       var root = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
       var result = [];
@@ -724,6 +725,10 @@ this.Pod = (function() {
           var text = node.nodeValue;
           if (text.trim().length > 0) {
             node.nodeValue = text.replace(/\w\S*/g, function(word) {
+              var lower = word.toLowerCase();
+              if (ignore.includes(lower)) {
+                return word;
+              }
               return word.charAt(0).toUpperCase() + word.slice(1);
             });
             result.push(node);

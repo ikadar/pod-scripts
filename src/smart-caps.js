@@ -19,8 +19,11 @@ function smartCaps() {
                 const text = node.nodeValue;
                 if (text.trim().length > 0) {
                     node.nodeValue = text.replace(/\w\S*/g, function (word) {
-                        return word.charAt(0).toUpperCase() + word.slice(1);
-                    });
+                        const lower = word.toLowerCase();
+                        if (ignore.includes(lower)) {
+                            return word;
+                        }
+                        return word.charAt(0).toUpperCase() + word.slice(1);                    });
                     result.push(node);
                 }
             }
