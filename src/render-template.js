@@ -1,5 +1,8 @@
 import handleSeparators from "./separator-mono.js";
 import logInfo from "./logInfo";
+import smartCaps from "./smart-caps";
+import squeeze from "./squeeze";
+import runSqueeze from "./squeeze";
 
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
@@ -50,8 +53,9 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
+    smartCaps();
+    runSqueeze();
     handleSeparators();
-//    run();
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");
     }

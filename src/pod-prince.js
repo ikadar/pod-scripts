@@ -1,5 +1,8 @@
 import handleSeparators from "./separator-mono.js";
 import renderTemplate from "./render-template";
+import squeeze from "./squeeze";
+import smartCaps from "./smart-caps";
+import runSqueeze from "./squeeze";
 
 function addPodScripts() {
 
@@ -23,6 +26,8 @@ function addPodScripts() {
 
        } else {
             renderTemplate({});
+            smartCaps();
+            runSqueeze();
             handleSeparators();
         }
 
