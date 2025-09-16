@@ -1,4 +1,4 @@
-import handleSeparators from "./separator-mono";
+import handleSeparators from "./separator";
 
 const indentIncrement = 4;
 var indent = 0;

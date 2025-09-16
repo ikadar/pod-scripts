@@ -5,7 +5,7 @@ import babel from '@rollup/plugin-babel';
 export default defineConfig({
     build: {
         lib: {
-            entry: 'src/pod-prince.js',
+            entry: 'src/pod-template-scripts.js',
             name: 'Pod',
             formats: ['iife'],
             fileName: () => 'pod.bundle.js',

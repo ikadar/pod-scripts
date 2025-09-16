@@ -10,9 +10,19 @@ this.Pod = (function() {
     logInfo$1("SEPARATORS", separators.length);
     separators.map(function(separator) {
       var next = separator.nextElementSibling;
+      var prev = separator.previousElementSibling;
       if (next) {
         logInfo$1("NEXT");
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
+          logInfo$1("HIDE SEPARATOR");
+          separator.style.visibility = "hidden";
+        } else {
+          separator.style.visibility = "visible";
+        }
+      }
+      if (prev) {
+        logInfo$1("PREV");
+        if (getYCoordinate(separator) !== getYCoordinate(prev)) {
           logInfo$1("HIDE SEPARATOR");
           separator.style.visibility = "hidden";
         } else {

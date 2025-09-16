@@ -1,4 +1,4 @@
-import handleSeparators from "./separator-mono.js";
+import handleSeparators from "./separator.js";
 import logInfo from "./logInfo";
 import smartCaps from "./smart-caps";
 import squeeze from "./squeeze";
