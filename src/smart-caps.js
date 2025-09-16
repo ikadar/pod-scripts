@@ -23,7 +23,15 @@ function smartCaps() {
                         if (ignore.includes(lower)) {
                             return word;
                         }
-                        return word.charAt(0).toUpperCase() + word.slice(1);                    });
+
+                        if (lower.startsWith("d'") || lower.startsWith("l'")) {
+                            const prefix = apostropheMatch[1].toLowerCase() + "'"; // keep prefix lowercase
+                            const rest = apostropheMatch[2];
+                            return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
+                        }
+
+                        return word.charAt(0).toUpperCase() + word.slice(1);
+                    });
                     result.push(node);
                 }
             }

@@ -4,26 +4,21 @@ this.Pod = (function() {
     console.log(info);
   }
   var handleSeparators = function handleSeparators2() {
-    logInfo$1("HANDLING SEPARATORS 02 - 101");
+    logInfo$1("HANDLING SEPARATORS");
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
-    logInfo$1("SEPARATORS", separators.length);
     separators.map(function(separator) {
       var next = separator.nextElementSibling;
       var prev = separator.previousElementSibling;
       var nextInNewLine = false;
       var prevInNewLine = false;
       if (next) {
-        logInfo$1("NEXT");
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
-          logInfo$1("HIDE SEPARATOR");
           nextInNewLine = true;
         }
       }
       if (prev) {
-        logInfo$1("PREV");
         if (getYCoordinate(separator) !== getYCoordinate(prev)) {
-          logInfo$1("HIDE SEPARATOR");
           prevInNewLine = true;
         }
       }
@@ -53,6 +48,11 @@ this.Pod = (function() {
               var lower = word.toLowerCase();
               if (ignore.includes(lower)) {
                 return word;
+              }
+              if (lower.startsWith("d'") || lower.startsWith("l'")) {
+                var prefix = apostropheMatch[1].toLowerCase() + "'";
+                var rest = apostropheMatch[2];
+                return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
               }
               return word.charAt(0).toUpperCase() + word.slice(1);
             });
