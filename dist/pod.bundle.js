@@ -1047,6 +1047,8 @@ this.Pod = (function() {
         Prince.Log.info("POD_PRINCE");
         Prince.trackBoxes = true;
         Prince.registerPostLayoutFunc(function() {
+          smartCaps();
+          runSqueeze();
           handleSeparators();
         });
       } else {

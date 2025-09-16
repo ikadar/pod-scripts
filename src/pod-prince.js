@@ -21,6 +21,8 @@ function addPodScripts() {
 
             Prince.registerPostLayoutFunc(function () {
                 // renderTemplate();
+                smartCaps();
+                runSqueeze();
                 handleSeparators();
             });
 
