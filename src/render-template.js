@@ -7,7 +7,9 @@ import runSqueeze from "./squeeze";
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
 
-    if (!event.data.data) {
+    const sourceNode = document.getElementById('entry-template');
+
+    if (!event.data.data || !sourceNode) {
         return;
     }
 

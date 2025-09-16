@@ -989,7 +989,8 @@ this.Pod = (function() {
     }
   }
   window.addEventListener("message", function(event) {
-    if (!event.data.data) {
+    var sourceNode = document.getElementById("entry-template");
+    if (!event.data.data || !sourceNode) {
       return;
     }
     var data = {};
@@ -1055,6 +1056,7 @@ this.Pod = (function() {
           handleSeparators();
         });
       } else {
+        renderTemplate({});
         smartCaps();
         handleSeparators();
       }
