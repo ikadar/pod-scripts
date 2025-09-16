@@ -11,23 +11,26 @@ this.Pod = (function() {
     separators.map(function(separator) {
       var next = separator.nextElementSibling;
       var prev = separator.previousElementSibling;
+      var nextInNewLine = false;
+      var prevInNewLine = false;
       if (next) {
         logInfo$1("NEXT");
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
           logInfo$1("HIDE SEPARATOR");
-          separator.style.visibility = "hidden";
-        } else {
-          separator.style.visibility = "visible";
+          nextInNewLine = true;
         }
       }
       if (prev) {
         logInfo$1("PREV");
         if (getYCoordinate(separator) !== getYCoordinate(prev)) {
           logInfo$1("HIDE SEPARATOR");
-          separator.style.visibility = "hidden";
-        } else {
-          separator.style.visibility = "visible";
+          prevInNewLine = true;
         }
+      }
+      if (nextInNewLine || prevInNewLine) {
+        separator.style.visibility = "hidden";
+      } else {
+        separator.style.visibility = "visible";
       }
     });
   };

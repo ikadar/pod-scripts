@@ -12,24 +12,38 @@ const handleSeparators = () => {
     separators.map((separator) => {
         const next = separator.nextElementSibling;
         const prev = separator.previousElementSibling;
+
+        let nextInNewLine = false;
+        let prevInNewLine = false;
+
         if (next) {
             logInfo("NEXT", next);
             if (getYCoordinate(separator) !== getYCoordinate(next)) {
                 logInfo("HIDE SEPARATOR");
-                separator.style.visibility = "hidden";
-            } else {
-                separator.style.visibility = "visible";
+                nextInNewLine = true;
+                // separator.style.visibility = "hidden";
+            // } else {
+            //     separator.style.visibility = "visible";
             }
         }
+
         if (prev) {
             logInfo("PREV", prev);
             if (getYCoordinate(separator) !== getYCoordinate(prev)) {
                 logInfo("HIDE SEPARATOR");
-                separator.style.visibility = "hidden";
-            } else {
-                separator.style.visibility = "visible";
+                prevInNewLine = true;
+                // separator.style.visibility = "hidden";
+            // } else {
+            //     separator.style.visibility = "visible";
             }
         }
+
+        if (nextInNewLine || prevInNewLine) {
+            separator.style.visibility = "hidden";
+        } else {
+            separator.style.visibility = "visible";
+        }
+
     });
 };
 
