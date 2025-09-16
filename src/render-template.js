@@ -7,6 +7,10 @@ import runSqueeze from "./squeeze";
 window.addEventListener('message', (event) => {
     // console.log('Message received from parent:', event.data);
 
+    if (!event.data.data) {
+        return;
+    }
+
     const data = {};
     Object.keys(event.data.data).map((key) => {
         if (Array.isArray(event.data.data[key]) && (event.data.data[key].length > 0)) {

@@ -989,6 +989,9 @@ this.Pod = (function() {
     }
   }
   window.addEventListener("message", function(event) {
+    if (!event.data.data) {
+      return;
+    }
     var data = {};
     Object.keys(event.data.data).map(function(key) {
       if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
