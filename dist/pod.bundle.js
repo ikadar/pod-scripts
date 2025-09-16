@@ -1,14 +1,10 @@
 this.Pod = (function() {
   "use strict";
-  var runsInPrince$2 = typeof Prince !== "undefined";
   function logInfo$1(info) {
-    if (runsInPrince$2) {
-      Prince.Log.info(info);
-    } else {
+    {
       console.log(info);
     }
   }
-  var runsInPrince$1 = typeof Prince !== "undefined";
   var handleSeparators = function handleSeparators2() {
     logInfo$1("HANDLING SEPARATORS 02 - 101");
     var separatorNodeList = document.querySelectorAll(".separator");
@@ -30,9 +26,7 @@ this.Pod = (function() {
     });
   };
   var getYCoordinate = function getYCoordinate2(element) {
-    if (runsInPrince$1) {
-      return element.getPrinceBoxes()[0].y;
-    } else {
+    {
       return element.getBoundingClientRect().top;
     }
   };
@@ -743,22 +737,11 @@ this.Pod = (function() {
       logInfo$1(smartCap);
     });
   }
-  function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-      return typeof o2;
-    } : function(o2) {
-      return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-    }, _typeof(o);
-  }
   var indentIncrement = 4;
   var indent = 0;
-  var runsInPrince = typeof Prince !== "undefined";
   function logInfo(info) {
     {
-      if (runsInPrince) {
-        Prince.Log.info("|" + getIndentation() + info);
-      } else {
+      {
         console.log("|" + getIndentation() + info);
       }
     }
@@ -795,10 +778,7 @@ this.Pod = (function() {
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function getElementBoxWidth(el) {
-    if (runsInPrince) {
-      var boxes = el.getPrinceBoxes();
-      return boxes[0].w;
-    } else {
+    {
       return convertToPt(el.clientWidth + "px");
     }
   }
@@ -845,7 +825,7 @@ this.Pod = (function() {
     });
   }
   function calculateSqueezedLetterSpacing(element, maxWidthPt) {
-    var dpi = runsInPrince ? 1 : 0.74999943307122;
+    var dpi = 0.74999943307122;
     logInfo("--- CALCULATION STARTED");
     logInfo("");
     increaseIndentation();
@@ -923,9 +903,7 @@ this.Pod = (function() {
   }
   function convertToPt(size) {
     var dpi;
-    if (runsInPrince) {
-      dpi = 74.999943307122;
-    } else {
+    {
       dpi = 74.999943307122;
     }
     var pointsPerInch = 72;
@@ -967,20 +945,7 @@ this.Pod = (function() {
     return value * conversionFactors[unit];
   }
   function runSqueeze() {
-    if (runsInPrince) {
-      logInfo("--- STARTED");
-      Prince.Log.info(typeof window === "undefined" ? "undefined" : _typeof(window));
-      Prince.trackBoxes = true;
-      prepareElements();
-      prepareElementsForLetterSpacing();
-      Prince.registerPostLayoutFunc(function() {
-        squeezeAll();
-        squeezeAllLetterSpacing();
-        handleSeparators();
-      });
-      Prince.addEventListener("complete", function() {
-      }, false);
-    } else {
+    {
       prepareElements();
       prepareElementsForLetterSpacing();
       squeezeAll();
@@ -1058,17 +1023,8 @@ this.Pod = (function() {
     handleSeparators();
   };
   function addPodScripts() {
-    var runsInPrince2 = typeof Prince !== "undefined";
     function init() {
-      if (runsInPrince2) {
-        Prince.Log.info("POD_PRINCE");
-        Prince.trackBoxes = true;
-        Prince.registerPostLayoutFunc(function() {
-          smartCaps();
-          runSqueeze();
-          handleSeparators();
-        });
-      } else {
+      {
         setTemplateScripts(templateScripts);
         var rendered = renderTemplate({});
         if (!rendered) {
@@ -1076,9 +1032,7 @@ this.Pod = (function() {
         }
       }
     }
-    if (runsInPrince2) {
-      init();
-    } else {
+    {
       init();
     }
     window.__PROCESSING_DONE__ = true;

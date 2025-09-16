@@ -11,7 +11,8 @@ const templateScripts = () => {
 
 function addPodScripts() {
 
-    const runsInPrince = (typeof Prince !== "undefined");
+    const runsInPrince = false;
+    // const runsInPrince = (typeof Prince !== "undefined");
 
     function init() {
 

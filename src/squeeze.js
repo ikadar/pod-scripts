@@ -3,7 +3,8 @@ import handleSeparators from "./separator-mono";
 const indentIncrement = 4;
 var indent = 0;
 const debug = true;
-const runsInPrince = (typeof Prince !== "undefined");
+const runsInPrince = false;
+// const runsInPrince = (typeof Prince !== "undefined");
 
 function logInfo (info) {
     if (debug) {

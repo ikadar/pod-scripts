@@ -1,5 +1,6 @@
 import logInfo from "./logInfo";
-const runsInPrince = (typeof Prince !== "undefined");
+// const runsInPrince = (typeof Prince !== "undefined");
+const runsInPrince = false;
 
 const handleSeparators = () => {
 
