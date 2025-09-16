@@ -713,7 +713,20 @@ this.Pod = (function() {
   }
   requireArrayIteration();
   function smartCaps() {
-    var smartCapsNodeList = document.querySelectorAll(".smartCap");
+    function getTextNodesInSmartCap() {
+      var root = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
+      var result = [];
+      var elements = root.querySelectorAll(".smartCap");
+      elements.forEach(function(el) {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        var node;
+        while (node = walker.nextNode()) {
+          result.push(node);
+        }
+      });
+      return result;
+    }
+    var smartCapsNodeList = getTextNodesInSmartCap();
     var smartCaps2 = Array.from(smartCapsNodeList);
     smartCaps2.forEach(function(smartCap) {
       console.log(smartCap);

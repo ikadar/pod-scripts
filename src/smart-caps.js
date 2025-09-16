@@ -8,7 +8,22 @@ function smartCaps() {
 
     // d' l'
 
-    const smartCapsNodeList = document.querySelectorAll(".smartCap");
+    function getTextNodesInSmartCap(root = document) {
+        const result = [];
+        const elements = root.querySelectorAll('.smartCap');
+
+        elements.forEach(el => {
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            let node;
+            while ((node = walker.nextNode())) {
+                result.push(node);
+            }
+        });
+
+        return result;
+    }
+
+    const smartCapsNodeList = getTextNodesInSmartCap();
     const smartCaps = Array.from(smartCapsNodeList);
 
     smartCaps.forEach(smartCap => {
