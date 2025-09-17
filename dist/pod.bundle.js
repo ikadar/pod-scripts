@@ -148,6 +148,44 @@ this.Pod = (function() {
     smartCaps2.forEach(function(smartCap) {
     });
   }
+  function convertToPt(size) {
+    var dpi = 74.999943307122;
+    var pointsPerInch = 72;
+    var conversionFactors = {
+      pt: 1,
+      // 1 pt = 1 pt
+      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
+      px: dpi / 100,
+      // px to pt depends on DPI
+      mm: 3.7795275591 * dpi / 100,
+      // 1 mm = 1 inch / 25.4
+      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
+      cm: pointsPerInch / 2.54,
+      // 1 cm = 1 inch / 2.54
+      in: 96 * dpi / 100,
+      // 1 inch = 72 pt
+      // in: pointsPerInch,          // 1 inch = 72 pt
+      pc: 16 * dpi,
+      // 1 pica (pc) = 12 pt
+      em: 16 * dpi,
+      // Assuming 1 em ≈ 12 pt (adjust if needed)
+      rem: 16 * dpi
+      // Assuming 1 rem ≈ 12 pt (adjust if needed)
+    };
+    var match = size.match(/^([\d.]+)([a-z%]*)$/i);
+    if (!match) {
+      throw new Error("Invalid size format: " + size);
+    }
+    var value = parseFloat(match[1]);
+    var unit = match[2].toLowerCase();
+    if (!unit) {
+      unit = "px";
+    }
+    if (!conversionFactors[unit]) {
+      throw new Error("Unsupported unit: " + unit);
+    }
+    return value * conversionFactors[unit];
+  }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     logInfo$1("--- FONT SIZE CALCULATION STARTED");
@@ -211,7 +249,7 @@ this.Pod = (function() {
     });
   }
   function getElementBoxWidth$1(el) {
-    return convertToPt$1(el.getBoundingClientRect().width + "px");
+    return convertToPt(el.getBoundingClientRect().width + "px");
   }
   function getElementsToScaling() {
     var squeezeElements = document.querySelectorAll(".squeeze-scaling");
@@ -230,8 +268,8 @@ this.Pod = (function() {
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
-      var maxWidthPt = convertToPt$1(maxWidth);
-      var maxFontSizePt = convertToPt$1(maxFontSize);
+      var maxWidthPt = convertToPt(maxWidth);
+      var maxFontSizePt = convertToPt(maxFontSize);
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
@@ -407,7 +445,7 @@ this.Pod = (function() {
       if (!maxWidth || maxWidth === "none") {
         return;
       }
-      var maxWidthPt = convertToPt$1(maxWidth);
+      var maxWidthPt = convertToPt(maxWidth);
       elementsToSqueezeSpacing[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt
@@ -419,44 +457,6 @@ this.Pod = (function() {
       element.style.alignSelf = "flex-start";
       element.style.whiteSpace = "nowrap";
     });
-  }
-  function convertToPt$1(size) {
-    var dpi = 74.999943307122;
-    var pointsPerInch = 72;
-    var conversionFactors = {
-      pt: 1,
-      // 1 pt = 1 pt
-      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
-      px: dpi / 100,
-      // px to pt depends on DPI
-      mm: 3.7795275591 * dpi / 100,
-      // 1 mm = 1 inch / 25.4
-      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
-      cm: pointsPerInch / 2.54,
-      // 1 cm = 1 inch / 2.54
-      in: 96 * dpi / 100,
-      // 1 inch = 72 pt
-      // in: pointsPerInch,          // 1 inch = 72 pt
-      pc: 16 * dpi,
-      // 1 pica (pc) = 12 pt
-      em: 16 * dpi,
-      // Assuming 1 em ≈ 12 pt (adjust if needed)
-      rem: 16 * dpi
-      // Assuming 1 rem ≈ 12 pt (adjust if needed)
-    };
-    var match = size.match(/^([\d.]+)([a-z%]*)$/i);
-    if (!match) {
-      throw new Error("Invalid size format: " + size);
-    }
-    var value = parseFloat(match[1]);
-    var unit = match[2].toLowerCase();
-    if (!unit) {
-      unit = "px";
-    }
-    if (!conversionFactors[unit]) {
-      throw new Error("Unsupported unit: " + unit);
-    }
-    return value * conversionFactors[unit];
   }
   function runSqueeze() {
     prepareElements();

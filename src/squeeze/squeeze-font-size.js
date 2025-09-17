@@ -1,4 +1,6 @@
 import logInfo, {increaseIndentation, decreaseIndentation} from "../log-info";
+import convertToPt from "../conversion";
+
 const elementsToSqueeze = [];
 
 function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
