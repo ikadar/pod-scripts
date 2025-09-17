@@ -173,8 +173,7 @@ this.Pod = (function() {
     var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
     if (Number.isNaN(currentLSpx)) currentLSpx = 0;
     var currentLSPt = toPt(currentLSpx);
-    var currentWidthPx = getElementBoxWidth(element);
-    var currentWidthPt = toPt(currentWidthPx);
+    var currentWidthPt = getElementBoxWidth(element);
     logInfo("targetPt: " + targetPt);
     logInfo("currentWidthPt: " + currentWidthPt);
     logInfo("text length: " + text.length);

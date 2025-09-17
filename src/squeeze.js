@@ -144,8 +144,9 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     if (Number.isNaN(currentLSpx)) currentLSpx = 0;
     let currentLSPt = toPt(currentLSpx);
 
-    let currentWidthPx = getElementBoxWidth(element);
-    let currentWidthPt = toPt(currentWidthPx);
+    let currentWidthPt = getElementBoxWidth(element);
+    // let currentWidthPx = getElementBoxWidth(element);
+    // let currentWidthPt = toPt(currentWidthPx);
 
     logInfo("targetPt: " + targetPt);
     logInfo("currentWidthPt: " + currentWidthPt);
