@@ -78,6 +78,18 @@ function getElementsToSqueeze () {
     return squeezeElementsWithParams;
 }
 
+function getElementsToScaling () {
+    const squeezeElements = document.querySelectorAll('.squeeze-sclaing');
+    const squeezeElementsWithParams = [];
+
+    // convert nodeList to array
+    for (var i=0; i<squeezeElements.length; i++) {
+        squeezeElementsWithParams.push(squeezeElements[i]);
+    }
+
+    return squeezeElementsWithParams;
+}
+
 function squeezeAll () {
     // prepareElements();
     for (var i in elementsToSqueeze) {
@@ -111,6 +123,39 @@ function prepareElements () {
 
         element.style.fontSize = "1pt";
         // element.style.width = "fit-content";
+        element.style.display = "inline-block";
+        element.style.flex = "0 0 auto";
+        element.style.alignSelf = "flex-start";
+        element.style.maxWidth = "";
+        element.style.whiteSpace = "nowrap";
+
+    });
+}
+
+function prepareElementsForScaling() {
+    const elements = getElementsToScaling();
+    elements.map(function (element, index) {
+
+        logInfo(element.id);
+
+        const maxWidth = window.getComputedStyle(element).maxWidth;
+        const maxFontSize = window.getComputedStyle(element).fontSize;
+
+        if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
+            return;
+        }
+
+        const maxWidthPt = convertToPt(maxWidth);
+        const maxFontSizePt = convertToPt(maxFontSize);
+
+        elementsToSqueezeScaling[index] = {
+            element: elements[index],
+            maxWidthPt: maxWidthPt,
+            maxFontSizePt: maxFontSizePt,
+        };
+
+        element.style.transform = "scale(1, 1)";
+        element.style.transformOrigin = "left center";
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
@@ -329,7 +374,7 @@ function calculateSqueezedLetterSpacing_ (element, maxWidthPt) {
     return newLetterSpacing;
 }
 
-function squeezeLetterSpacing(s) {
+function squeezeScale(s) {
     logInfo("=== " + s.element.id + " ===");
 
     const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
@@ -345,21 +390,32 @@ function squeezeLetterSpacing(s) {
 
     s.element.style.scale = newScalePt.toString() + "pt" + " 0";
     s.element.style.maxWidth = s.maxWidth + "pt";
-    // const newLetterSpacingPt = calculateSqueezedLetterSpacing(
-    //     s.element,
-    //     s.maxWidthPt,
-    //     // getElementBoxWidth(s.element),
-    //     // originalLetterSpacing
-    // );
-    //
-    // s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
-    // s.element.style.maxWidth = s.maxWidth + "pt";
+}
+
+function squeezeLetterSpacing(s) {
+    logInfo("=== " + s.element.id + " ===");
+
+    const newLetterSpacingPt = calculateSqueezedLetterSpacing(
+        s.element,
+        s.maxWidthPt,
+        // getElementBoxWidth(s.element),
+        // originalLetterSpacing
+    );
+
+    s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
+    s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
 // Adjust letter-spacing for all elements
 function squeezeAllLetterSpacing() {
     for (var i in elementsToSqueezeSpacing) {
         squeezeLetterSpacing(elementsToSqueezeSpacing[i]);
+    }
+}
+
+function squeezeAllScaling() {
+    for (var i in elementsToSqueezeScaling) {
+        squeezeLetterSpacing(elementsToSqueezeScaling[i]);
     }
 }
 
@@ -377,6 +433,7 @@ function getElementsToSqueezeLetterSpacing () {
 
 
 const elementsToSqueezeSpacing = [];
+const elementsToSqueezeScaling = [];
 
 // Preparation logic remains mostly the same
 function prepareElementsForLetterSpacing() {
@@ -457,9 +514,11 @@ function convertToPt(size) {
 function runSqueeze() {
     prepareElements();
     prepareElementsForLetterSpacing();
+    prepareElementsForScaling();
 
     squeezeAll();
     squeezeAllLetterSpacing();
+    squeezeAllScaling();
     handleSeparators();
 }
 
