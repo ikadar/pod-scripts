@@ -186,6 +186,9 @@ this.Pod = (function() {
     }
     return value * conversionFactors[unit];
   }
+  function getElementBoxWidth(el) {
+    return convertToPt(el.getBoundingClientRect().width + "px");
+  }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     logInfo("--- FONT SIZE CALCULATION STARTED");
@@ -247,9 +250,6 @@ this.Pod = (function() {
       element.style.maxWidth = "";
       element.style.whiteSpace = "nowrap";
     });
-  }
-  function getElementBoxWidth$1(el) {
-    return convertToPt(el.getBoundingClientRect().width + "px");
   }
   function getElementsToScaling() {
     var squeezeElements = document.querySelectorAll(".squeeze-scaling");
@@ -344,7 +344,7 @@ this.Pod = (function() {
     var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
     if (Number.isNaN(currentLSpx)) currentLSpx = 0;
     var currentLSPt = toPt(currentLSpx);
-    var currentWidthPt = getElementBoxWidth$1(element);
+    var currentWidthPt = getElementBoxWidth(element);
     logInfo("targetPt: " + targetPt);
     logInfo("currentWidthPt: " + currentWidthPt);
     logInfo("text length: " + text.length);
@@ -357,7 +357,7 @@ this.Pod = (function() {
     }
     guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
     element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = getElementBoxWidth$1(element);
+    var wPt = getElementBoxWidth(element);
     if (Math.abs(wPt - targetPt) <= epsilonPt) {
       logInfo("newLetterSpacing (pt): " + guessPt);
       decreaseIndentation();
@@ -376,7 +376,7 @@ this.Pod = (function() {
     for (var i = 0; i < maxIter; i++) {
       var midPt = (loPt + hiPt) / 2;
       element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = getElementBoxWidth$1(element);
+      wPt = getElementBoxWidth(element);
       var diff = wPt - targetPt;
       if (Math.abs(diff) <= epsilonPt) {
         guessPt = midPt;

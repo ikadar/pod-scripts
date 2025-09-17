@@ -1,5 +1,6 @@
 import logInfo, {increaseIndentation, decreaseIndentation} from "../log-info";
 import convertToPt from "../conversion";
+import {getElementBoxWidth} from "../measurement";
 
 const elementsToSqueeze = [];
 
