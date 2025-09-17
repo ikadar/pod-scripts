@@ -47,7 +47,7 @@ this.Pod = (function() {
       if (prevInNewLine) {
         separator.style.display = "none";
       } else {
-        separator.style.display = "block";
+        separator.style.display = "inline-block";
       }
     });
   };
