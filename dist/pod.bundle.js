@@ -369,6 +369,7 @@ this.Pod = (function() {
       element.style.whiteSpace = "nowrap";
     });
   }
+  var elementsToSqueezeScaling = [];
   function getElementsToScaling() {
     var squeezeElements = document.querySelectorAll(".squeeze-scaling");
     var squeezeElementsWithParams = [];
@@ -457,7 +458,6 @@ this.Pod = (function() {
       squeezeScale(elementsToSqueezeScaling[i]);
     }
   }
-  var elementsToSqueezeScaling = [];
   function runSqueeze() {
     prepareElements();
     prepareElementsForLetterSpacing();
@@ -465,7 +465,6 @@ this.Pod = (function() {
     squeezeAll();
     squeezeAllLetterSpacing();
     squeezeAllScaling();
-    handleSeparators();
   }
   var templateScripts = function templateScripts2() {
     smartCaps();
