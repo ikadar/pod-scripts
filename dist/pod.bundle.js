@@ -2,7 +2,7 @@ this.Pod = (function() {
   "use strict";
   var indentIncrement = 4;
   var indent = 0;
-  function logInfo$1(info) {
+  function logInfo(info) {
     {
       console.log("|" + getIndentation() + info);
     }
@@ -21,7 +21,7 @@ this.Pod = (function() {
     indent -= indentIncrement;
   }
   var handleSeparators = function handleSeparators2() {
-    logInfo$1("HANDLING SEPARATORS");
+    logInfo("HANDLING SEPARATORS");
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
     separators.map(function(separator) {
@@ -80,7 +80,7 @@ this.Pod = (function() {
     }
   });
   function scriptFromTheTemplate() {
-    logInfo$1("scriptFromTheTemplate");
+    logInfo("scriptFromTheTemplate");
   }
   function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     var sourceNode = document.getElementById("entry-template");
@@ -188,25 +188,25 @@ this.Pod = (function() {
   }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
-    logInfo$1("--- FONT SIZE CALCULATION STARTED");
-    logInfo$1("");
+    logInfo("--- FONT SIZE CALCULATION STARTED");
+    logInfo("");
     increaseIndentation$1();
     var scale = maxWidthPt / actualWidthPt;
     var newFontSizePt = scale;
-    logInfo$1("maxFontSizePt: " + maxFontSizePt);
-    logInfo$1("actualFontSizePt: " + actualFontSizePt);
-    logInfo$1("maxWidthPt: " + maxWidthPt);
-    logInfo$1("actualWidthPt: " + actualWidthPt);
-    logInfo$1("scale: " + scale);
-    logInfo$1("NEW fontSize: " + newFontSizePt);
-    logInfo$1("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
+    logInfo("maxFontSizePt: " + maxFontSizePt);
+    logInfo("actualFontSizePt: " + actualFontSizePt);
+    logInfo("maxWidthPt: " + maxWidthPt);
+    logInfo("actualWidthPt: " + actualWidthPt);
+    logInfo("scale: " + scale);
+    logInfo("NEW fontSize: " + newFontSizePt);
+    logInfo("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
     decreaseIndentation$1();
-    logInfo$1("");
-    logInfo$1("--- FONT SIZE CALCULATION ENDED");
+    logInfo("");
+    logInfo("--- FONT SIZE CALCULATION ENDED");
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function squeeze(s) {
-    logInfo$1("=== " + s.element.id + " ===");
+    logInfo("=== " + s.element.id + " ===");
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
@@ -227,7 +227,7 @@ this.Pod = (function() {
   function prepareElements() {
     var elements = getElementsToSqueeze();
     elements.map(function(element, index) {
-      logInfo$1(element.id);
+      logInfo(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {

@@ -1,6 +1,8 @@
 import handleSeparators from "./separator";
 import {prepareElements, squeezeAll} from "./squeeze/squeeze-font-size";
 import convertToPt from "./conversion";
+import logInfo from "./log-info";
+
 
 function getElementBoxWidth (el) {
     return convertToPt(el.getBoundingClientRect().width + "px");
