@@ -415,7 +415,7 @@ function squeezeAllLetterSpacing() {
 
 function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
-        squeezeLetterSpacing(elementsToSqueezeScaling[i]);
+        squeezeScale(elementsToSqueezeScaling[i]);
     }
 }
 
