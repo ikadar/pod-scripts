@@ -336,13 +336,13 @@ this.Pod = (function() {
   }
   function squeezeLetterSpacing(s) {
     logInfo("=== " + s.element.id + " ===");
-    calculateSqueezedLetterSpacing(
+    var newLetterSpacingPt = calculateSqueezedLetterSpacing(
       s.element,
       s.maxWidthPt
       // getElementBoxWidth(s.element),
       // originalLetterSpacing
     );
-    var finalLetterSpacingPt = Math.max(Math.min(finalLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
+    var finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
     s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }

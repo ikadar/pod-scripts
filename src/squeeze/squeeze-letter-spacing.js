@@ -95,7 +95,7 @@ function squeezeLetterSpacing(s) {
         // originalLetterSpacing
     );
 
-    const finalLetterSpacingPt = Math.max(Math.min(finalLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
+    const finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
 
     s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
