@@ -110,7 +110,9 @@ function prepareElements () {
         };
 
         element.style.fontSize = "1pt";
-        element.style.width = "fit-content";
+        // element.style.width = "fit-content";
+        element.style.display = "inline-block";
+        element.style.flex = "0 0 auto";
         element.style.maxWidth = "";
         element.style.whiteSpace = "nowrap";
 
@@ -305,7 +307,9 @@ function prepareElementsForLetterSpacing() {
 
         element.style.letterSpacing = "0.1px";
         element.style.maxWidth = "";
-        element.style.width = "fit-content";
+        // element.style.width = "fit-content";
+        element.style.display = "inline-block";
+        element.style.flex = "0 0 auto";
         element.style.whiteSpace = "nowrap"; // Prevent wrapping
     });
 }
