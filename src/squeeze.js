@@ -79,7 +79,7 @@ function getElementsToSqueeze () {
 }
 
 function getElementsToScaling () {
-    const squeezeElements = document.querySelectorAll('.squeeze-sclaing');
+    const squeezeElements = document.querySelectorAll('.squeeze-scaling');
     const squeezeElementsWithParams = [];
 
     // convert nodeList to array

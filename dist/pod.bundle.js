@@ -123,7 +123,7 @@ this.Pod = (function() {
     return squeezeElementsWithParams;
   }
   function getElementsToScaling() {
-    var squeezeElements = document.querySelectorAll(".squeeze-sclaing");
+    var squeezeElements = document.querySelectorAll(".squeeze-scaling");
     var squeezeElementsWithParams = [];
     for (var i = 0; i < squeezeElements.length; i++) {
       squeezeElementsWithParams.push(squeezeElements[i]);
