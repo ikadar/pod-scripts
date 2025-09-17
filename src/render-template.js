@@ -1,8 +1,4 @@
-import handleSeparators from "./separator.js";
-import logInfo from "./logInfo";
-import smartCaps from "./smart-caps";
-import squeeze from "./squeeze";
-import runSqueeze from "./squeeze";
+import logInfo from "./log-info";
 
 let templateScripts = () => {}
 

@@ -1,4 +1,4 @@
-import logInfo from "./logInfo";
+import logInfo from "./log-info";
 
 const handleSeparators = () => {
 

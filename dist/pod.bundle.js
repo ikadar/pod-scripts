@@ -1,7 +1,24 @@
 this.Pod = (function() {
   "use strict";
+  var indentIncrement = 4;
+  var indent = 0;
   function logInfo$1(info) {
-    console.log(info);
+    {
+      console.log("|" + getIndentation() + info);
+    }
+  }
+  function getIndentation() {
+    var indentation = "";
+    for (var i = 0; i < indent; i++) {
+      indentation = indentation + " ";
+    }
+    return indentation;
+  }
+  function increaseIndentation$1() {
+    indent += indentIncrement;
+  }
+  function decreaseIndentation$1() {
+    indent -= indentIncrement;
   }
   var handleSeparators = function handleSeparators2() {
     logInfo$1("HANDLING SEPARATORS");
@@ -32,6 +49,70 @@ this.Pod = (function() {
   var getYCoordinate = function getYCoordinate2(element) {
     return element.getBoundingClientRect().top;
   };
+  var templateScripts$1 = function templateScripts2() {
+  };
+  var setTemplateScripts = function setTemplateScripts2(scripts) {
+    templateScripts$1 = scripts;
+  };
+  window.addEventListener("message", function(event) {
+    var sourceNode = document.getElementById("entry-template");
+    if (!event.data.data || !sourceNode) {
+      return;
+    }
+    var data = {};
+    Object.keys(event.data.data).map(function(key) {
+      if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
+        data[key] = event.data.data[key][0].label;
+      } else {
+        data[key] = event.data.data[key];
+      }
+    });
+    if (event.data.msgId === "dataChanged") {
+      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, false);
+      zoom(event.data.zoom / 100);
+    }
+    if (event.data.msgId === "getRenderedMarkup") {
+      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, true);
+      zoom(event.data.zoom / 100);
+    }
+    if (event.data.msgId === "zoom") {
+      zoom(event.data.data / 100);
+    }
+  });
+  function scriptFromTheTemplate() {
+    logInfo$1("scriptFromTheTemplate");
+  }
+  function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
+    var sourceNode = document.getElementById("entry-template");
+    if (!sourceNode) {
+      return false;
+    }
+    var source = sourceNode.innerHTML;
+    var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
+      return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
+    });
+    var renderer = Twig.twig({
+      data: source
+    });
+    var html = renderer.render(safeData);
+    document.getElementsByTagName("body")[0].outerHTML = html;
+    scriptFromTheTemplate();
+    templateScripts$1();
+    if (sendData) {
+      window.parent.postMessage({
+        source: "template-processor",
+        html: html,
+        data: data,
+        templateId: templateId,
+        orderLineUuid: orderLineUuid,
+        options: options
+      }, "*");
+    }
+    return true;
+  }
+  function zoom(ratio) {
+    document.getElementsByTagName("body")[0].style.scale = ratio;
+  }
   function smartCaps() {
     var ignore = ["rue", "avenue", "impasse", "allée", "boulevard", "place", "route", "voie", "de", "la", "le", "les", "lès", "au", "aux", "du", "quai", "promenade", "chemin", "sentier", "passage", "square", "cours", "traverse", "piétonne", "résidence", "esplanade", "rond-point", "carrefour", "giratoire", "faubourg", "cour", "courtil", "clos", "cité", "villa", "hameau", "lieu-dit", "lotissement", "enclos", "chaussée", "parvis", "digue", "port", "berges", "traboule", "estrade", "estay", "rampe", "immeuble", "batiment", "bâtiment"];
     function getTextNodesInSmartCap() {
@@ -67,49 +148,27 @@ this.Pod = (function() {
     smartCaps2.forEach(function(smartCap) {
     });
   }
-  var indentIncrement = 4;
-  var indent = 0;
-  function logInfo(info) {
-    {
-      console.log("|" + getIndentation() + info);
-    }
-  }
-  function getIndentation() {
-    var indentation = "";
-    for (var i = 0; i < indent; i++) {
-      indentation = indentation + " ";
-    }
-    return indentation;
-  }
-  function increaseIndentation() {
-    indent += indentIncrement;
-  }
-  function decreaseIndentation() {
-    indent -= indentIncrement;
-  }
+  var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
-    logInfo("--- FONT SIZE CALCULATION STARTED");
-    logInfo("");
-    increaseIndentation();
+    logInfo$1("--- FONT SIZE CALCULATION STARTED");
+    logInfo$1("");
+    increaseIndentation$1();
     var scale = maxWidthPt / actualWidthPt;
     var newFontSizePt = scale;
-    logInfo("maxFontSizePt: " + maxFontSizePt);
-    logInfo("actualFontSizePt: " + actualFontSizePt);
-    logInfo("maxWidthPt: " + maxWidthPt);
-    logInfo("actualWidthPt: " + actualWidthPt);
-    logInfo("scale: " + scale);
-    logInfo("NEW fontSize: " + newFontSizePt);
-    logInfo("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
-    decreaseIndentation();
-    logInfo("");
-    logInfo("--- FONT SIZE CALCULATION ENDED");
+    logInfo$1("maxFontSizePt: " + maxFontSizePt);
+    logInfo$1("actualFontSizePt: " + actualFontSizePt);
+    logInfo$1("maxWidthPt: " + maxWidthPt);
+    logInfo$1("actualWidthPt: " + actualWidthPt);
+    logInfo$1("scale: " + scale);
+    logInfo$1("NEW fontSize: " + newFontSizePt);
+    logInfo$1("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
+    decreaseIndentation$1();
+    logInfo$1("");
+    logInfo$1("--- FONT SIZE CALCULATION ENDED");
     return Math.min(newFontSizePt, maxFontSizePt);
   }
-  function getElementBoxWidth(el) {
-    return convertToPt(el.getBoundingClientRect().width + "px");
-  }
   function squeeze(s) {
-    logInfo("=== " + s.element.id + " ===");
+    logInfo$1("=== " + s.element.id + " ===");
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
@@ -122,24 +181,15 @@ this.Pod = (function() {
     }
     return squeezeElementsWithParams;
   }
-  function getElementsToScaling() {
-    var squeezeElements = document.querySelectorAll(".squeeze-scaling");
-    var squeezeElementsWithParams = [];
-    for (var i = 0; i < squeezeElements.length; i++) {
-      squeezeElementsWithParams.push(squeezeElements[i]);
-    }
-    return squeezeElementsWithParams;
-  }
   function squeezeAll() {
     for (var i in elementsToSqueeze) {
       squeeze(elementsToSqueeze[i]);
     }
   }
-  var elementsToSqueeze = [];
   function prepareElements() {
     var elements = getElementsToSqueeze();
     elements.map(function(element, index) {
-      logInfo(element.id);
+      logInfo$1(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
@@ -160,6 +210,17 @@ this.Pod = (function() {
       element.style.whiteSpace = "nowrap";
     });
   }
+  function getElementBoxWidth$1(el) {
+    return convertToPt$1(el.getBoundingClientRect().width + "px");
+  }
+  function getElementsToScaling() {
+    var squeezeElements = document.querySelectorAll(".squeeze-scaling");
+    var squeezeElementsWithParams = [];
+    for (var i = 0; i < squeezeElements.length; i++) {
+      squeezeElementsWithParams.push(squeezeElements[i]);
+    }
+    return squeezeElementsWithParams;
+  }
   function prepareElementsForScaling() {
     var elements = getElementsToScaling();
     elements.map(function(element, index) {
@@ -169,8 +230,8 @@ this.Pod = (function() {
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
-      var maxWidthPt = convertToPt(maxWidth);
-      var maxFontSizePt = convertToPt(maxFontSize);
+      var maxWidthPt = convertToPt$1(maxWidth);
+      var maxFontSizePt = convertToPt$1(maxFontSize);
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
@@ -245,7 +306,7 @@ this.Pod = (function() {
     var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
     if (Number.isNaN(currentLSpx)) currentLSpx = 0;
     var currentLSPt = toPt(currentLSpx);
-    var currentWidthPt = getElementBoxWidth(element);
+    var currentWidthPt = getElementBoxWidth$1(element);
     logInfo("targetPt: " + targetPt);
     logInfo("currentWidthPt: " + currentWidthPt);
     logInfo("text length: " + text.length);
@@ -258,7 +319,7 @@ this.Pod = (function() {
     }
     guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
     element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = getElementBoxWidth(element);
+    var wPt = getElementBoxWidth$1(element);
     if (Math.abs(wPt - targetPt) <= epsilonPt) {
       logInfo("newLetterSpacing (pt): " + guessPt);
       decreaseIndentation();
@@ -277,7 +338,7 @@ this.Pod = (function() {
     for (var i = 0; i < maxIter; i++) {
       var midPt = (loPt + hiPt) / 2;
       element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = getElementBoxWidth(element);
+      wPt = getElementBoxWidth$1(element);
       var diff = wPt - targetPt;
       if (Math.abs(diff) <= epsilonPt) {
         guessPt = midPt;
@@ -346,7 +407,7 @@ this.Pod = (function() {
       if (!maxWidth || maxWidth === "none") {
         return;
       }
-      var maxWidthPt = convertToPt(maxWidth);
+      var maxWidthPt = convertToPt$1(maxWidth);
       elementsToSqueezeSpacing[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt
@@ -359,7 +420,7 @@ this.Pod = (function() {
       element.style.whiteSpace = "nowrap";
     });
   }
-  function convertToPt(size) {
+  function convertToPt$1(size) {
     var dpi = 74.999943307122;
     var pointsPerInch = 72;
     var conversionFactors = {
@@ -405,70 +466,6 @@ this.Pod = (function() {
     squeezeAllLetterSpacing();
     squeezeAllScaling();
     handleSeparators();
-  }
-  var templateScripts$1 = function templateScripts2() {
-  };
-  var setTemplateScripts = function setTemplateScripts2(scripts) {
-    templateScripts$1 = scripts;
-  };
-  window.addEventListener("message", function(event) {
-    var sourceNode = document.getElementById("entry-template");
-    if (!event.data.data || !sourceNode) {
-      return;
-    }
-    var data = {};
-    Object.keys(event.data.data).map(function(key) {
-      if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
-        data[key] = event.data.data[key][0].label;
-      } else {
-        data[key] = event.data.data[key];
-      }
-    });
-    if (event.data.msgId === "dataChanged") {
-      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, false);
-      zoom(event.data.zoom / 100);
-    }
-    if (event.data.msgId === "getRenderedMarkup") {
-      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, true);
-      zoom(event.data.zoom / 100);
-    }
-    if (event.data.msgId === "zoom") {
-      zoom(event.data.data / 100);
-    }
-  });
-  function scriptFromTheTemplate() {
-    logInfo$1("scriptFromTheTemplate");
-  }
-  function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
-    var sourceNode = document.getElementById("entry-template");
-    if (!sourceNode) {
-      return false;
-    }
-    var source = sourceNode.innerHTML;
-    var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
-      return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
-    });
-    var renderer = Twig.twig({
-      data: source
-    });
-    var html = renderer.render(safeData);
-    document.getElementsByTagName("body")[0].outerHTML = html;
-    scriptFromTheTemplate();
-    templateScripts$1();
-    if (sendData) {
-      window.parent.postMessage({
-        source: "template-processor",
-        html: html,
-        data: data,
-        templateId: templateId,
-        orderLineUuid: orderLineUuid,
-        options: options
-      }, "*");
-    }
-    return true;
-  }
-  function zoom(ratio) {
-    document.getElementsByTagName("body")[0].style.scale = ratio;
   }
   var templateScripts = function templateScripts2() {
     smartCaps();
