@@ -113,7 +113,8 @@ function calculateSqueezedScale(
     let sy = (axis === 'uniform') ? sx : 1;
 
     // alkalmazzuk: a scale-t előre tesszük, a meglévő transform megmarad
-    element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
+    element.style.transform = `scale(${sx}, ${sy})`.trim();
+    // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
 
     // 5) Finomhangolás (iteratív, gyors konvergencia)
     for (let i = 0; i < maxIter; i++) {
@@ -125,7 +126,8 @@ function calculateSqueezedScale(
         const factor = targetPx / (w || 1);
         sx = clamp(sx * factor, minScale, maxScale);
         sy = (axis === 'uniform') ? sx : 1;
-        element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
+        element.style.transform = `scale(${sx}, ${sy})`.trim();
+        // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
     }
 
     // (opcionális) ha nem akarsz origin-t hagyni:
@@ -154,7 +156,7 @@ function squeezeScale(s) {
 
     const maxScale = s.maxScale ?? newScale;
     const finalScale = Math.min(newScale, Number(maxScale));
-    const finalScaleString = `scale(${finalScale}pt 0)`;
+    const finalScaleString = `scale(${finalScale} 1)`;
 
     s.element.style.transform = finalScaleString;
     s.element.style.maxWidth = s.maxWidth + "pt";

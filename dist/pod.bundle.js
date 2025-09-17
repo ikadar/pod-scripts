@@ -431,7 +431,7 @@ this.Pod = (function() {
     }
     var sx = clamp(targetPx / baseWidthPx, minScale, maxScale);
     var sy = axis === "uniform" ? sx : 1;
-    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ") ").concat(prevTransform).trim();
+    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
     for (var i = 0; i < maxIter; i++) {
       var w = element.getBoundingClientRect().width;
       var diffPx = targetPx - w;
@@ -439,7 +439,7 @@ this.Pod = (function() {
       var factor = targetPx / (w || 1);
       sx = clamp(sx * factor, minScale, maxScale);
       sy = axis === "uniform" ? sx : 1;
-      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ") ").concat(prevTransform).trim();
+      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
     }
     if (!setOrigin) element.style.transformOrigin = prevOrigin;
     return sx;
@@ -460,7 +460,7 @@ this.Pod = (function() {
     );
     var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
     var finalScale = Math.min(newScale, Number(maxScale));
-    var finalScaleString = "scale(".concat(finalScale, "pt 0)");
+    var finalScaleString = "scale(".concat(finalScale, " 1)");
     s.element.style.transform = finalScaleString;
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
