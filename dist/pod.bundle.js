@@ -305,8 +305,6 @@ this.Pod = (function() {
     if (!conversionFactors[unit]) {
       throw new Error("Unsupported unit: " + unit);
     }
-    logInfo("IN: " + size);
-    logInfo("OUT: " + value * conversionFactors[unit]);
     return value * conversionFactors[unit];
   }
   function runSqueeze() {

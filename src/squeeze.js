@@ -348,8 +348,8 @@ function convertToPt(size) {
         throw new Error("Unsupported unit: " + unit);
     }
 
-    logInfo("IN: " + size);
-    logInfo("OUT: " + value * conversionFactors[unit]);
+    // logInfo("IN: " + size);
+    // logInfo("OUT: " + value * conversionFactors[unit]);
 
     return value * conversionFactors[unit];
 
