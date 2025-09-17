@@ -155,7 +155,7 @@ function squeezeScale(s) {
     const maxScale = s.maxScale ?? newScale;
     const finalScale = Math.min(newScale, Number(maxScale));
 
-    s.element.style.scale = `${finalScale}pt 0`;
+    s.element.style.transform = `scale(${finalScale}pt 0)`;
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
