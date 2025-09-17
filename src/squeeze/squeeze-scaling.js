@@ -31,6 +31,11 @@ function prepareElementsForScaling() {
         const maxWidthPt = convertToPt(maxWidth);
         const maxFontSizePt = convertToPt(maxFontSize);
 
+        const classArray = Array.from(element.classList);
+        const match = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
+        const maxScale = match ? match[1] : null;
+        logInfo(maxScale);
+
         elementsToSqueezeScaling[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,

@@ -381,6 +381,7 @@ this.Pod = (function() {
   function prepareElementsForScaling() {
     var elements = getElementsToScaling();
     elements.map(function(element, index) {
+      var _classArray$find;
       logInfo(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
@@ -389,6 +390,12 @@ this.Pod = (function() {
       }
       var maxWidthPt = convertToPt(maxWidth);
       var maxFontSizePt = convertToPt(maxFontSize);
+      var classArray = Array.from(element.classList);
+      var match = (_classArray$find = classArray.find(function(c) {
+        return c.startsWith("max-scale-");
+      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
+      var maxScale = match ? match[1] : null;
+      logInfo(maxScale);
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
