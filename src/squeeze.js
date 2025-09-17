@@ -1,5 +1,6 @@
 import handleSeparators from "./separator";
-import {prepareElements, squeezeAll} from "./squeeze/squeeze-font-size";
+import { prepareElements, squeezeAll } from "./squeeze/squeeze-font-size";
+import { prepareElementsForLetterSpacing, squeezeAllLetterSpacing } from "./squeeze/squeeze-letter-spacing";
 import convertToPt from "./conversion";
 import logInfo, {increaseIndentation, decreaseIndentation} from "./log-info";
 import {getElementBoxWidth} from "./measurement";
@@ -74,7 +75,7 @@ function calculateSqueezedScale(
     element,
     maxWidthPt,
     {
-        pxToPt = 0.75,
+        pxToPt = 0.74999943307122,
         axis = 'x',         // 'x' vagy 'uniform'
         minScale = 0.2,
         maxScale = 5,
@@ -134,131 +135,7 @@ function calculateSqueezedScale(
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 }
 
-function calculateSqueezedLetterSpacing(element, maxWidthPt, {
-    pxToPt = 0.75,          // 1px = 0.75pt (96dpi-n)
-    epsilonPt = 0.05,       // pontosság (pt)
-    maxIter = 20,           // bináris keresés lépések
-    minLSpt = -5,           // korlátok pt-ben
-    maxLSpt = 20
-} = {}) {
 
-    const toPt = (px) => px * pxToPt;
-    const toPx = (pt) => pt / pxToPt;
-
-    logInfo("--- CALCULATION STARTED"); logInfo(""); increaseIndentation();
-
-    // 1) Cél szélesség pt-ben
-    const targetPt = maxWidthPt * 1; // már pt-ben érkezik
-    const text = element.textContent || "";
-    const gaps = Math.max(0, text.length - 1);
-    if (gaps === 0) {
-        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
-        return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
-    }
-
-    // 2) Jelenlegi állapot (px-ben mérünk → pt-re váltunk)
-    let currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
-    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
-    let currentLSPt = toPt(currentLSpx);
-
-    let currentWidthPt = getElementBoxWidth(element);
-    // let currentWidthPx = getElementBoxWidth(element);
-    // let currentWidthPt = toPt(currentWidthPx);
-
-    logInfo("targetPt: " + targetPt);
-    logInfo("currentWidthPt: " + currentWidthPt);
-    logInfo("text length: " + text.length);
-    logInfo("currentLSPt: " + currentLSPt + "pt");
-    logInfo("deltaPt: " + (targetPt - currentWidthPt));
-
-    // 3) Első becslés (lineáris modell)
-    let guessPt = currentLSPt;
-    if (gaps > 0) {
-        const extraPerGapPt = (targetPt - currentWidthPt) / gaps;
-        guessPt = currentLSPt + extraPerGapPt;
-    }
-    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
-
-    // alkalmazzuk ideiglenesen (px-ben kell beírni a style-ba!)
-    element.style.letterSpacing = toPx(guessPt) + "px";
-
-    // mérés
-    let wPt = getElementBoxWidth(element);
-    if (Math.abs(wPt - targetPt) <= epsilonPt) {
-        logInfo("newLetterSpacing (pt): " + guessPt);
-        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
-        return guessPt;
-    }
-
-    // 4) Bináris keresés a pontos illesztéshez
-    let loPt, hiPt;
-    if (wPt < targetPt) { loPt = guessPt; hiPt = maxLSpt; }
-    else { loPt = minLSpt; hiPt = guessPt; }
-
-    for (let i = 0; i < maxIter; i++) {
-        const midPt = (loPt + hiPt) / 2;
-        element.style.letterSpacing = toPx(midPt) + "px";
-
-        wPt = getElementBoxWidth(element);
-        const diff = wPt - targetPt;
-        if (Math.abs(diff) <= epsilonPt) {
-            guessPt = midPt;
-            break;
-        }
-        if (diff < 0) loPt = midPt; else hiPt = midPt;
-        guessPt = midPt;
-    }
-
-    logInfo("newLetterSpacing (pt): " + guessPt);
-    decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
-    return guessPt; // PT-ben ad vissza, a te konvencióddal egyezően
-}
-
-function calculateSqueezedLetterSpacing_ (element, maxWidthPt) {
-
-    const dpi = 0.74999943307122;
-    // const dpi = (runsInPrince ? 1 : 0.74999943307122);
-
-    logInfo("--- CALCULATION STARTED");
-    logInfo("");
-    increaseIndentation();
-
-    maxWidthPt = maxWidthPt * dpi;
-
-    // Gather current info
-    const text = element.textContent || "";
-
-    let currentLetterSpacing = parseFloat(window.getComputedStyle(element).letterSpacing) || 0;
-    currentLetterSpacing = currentLetterSpacing * dpi;
-
-    let currentWidth = getElementBoxWidth(element); // width in points or px, depending on environment
-    currentWidth = currentWidth * dpi;
-
-    logInfo("maxWidthPt: " + maxWidthPt);
-    logInfo("currentWidth: " + currentWidth);
-    logInfo("text: " + (typeof text == "undefined"));
-    logInfo("text: " + (typeof text == "string"));
-    logInfo("text: " + (!!text));
-    logInfo("text: " + ((!!text) ? "AAA" : "BBB"));
-    logInfo("text length: " + ((!!text) ? text.length : 0));
-    logInfo("currentLetterSpacing: " + currentLetterSpacing + "pt (assuming)");
-    logInfo("scale: " + (maxWidthPt - currentWidth));
-
-    // If there is at least 2 characters, we have (text.length - 1) gaps
-    let newLetterSpacing = currentLetterSpacing;
-    if (text.length > 1) {
-        const extraSpacing = (maxWidthPt - currentWidth) / (text.length - 1);
-        newLetterSpacing = currentLetterSpacing + extraSpacing;
-    }
-
-    logInfo("newLetterSpacing: " + newLetterSpacing);
-    decreaseIndentation();
-    logInfo("");
-    logInfo("--- CALCULATION ENDED");
-
-
-    return newLetterSpacing;
-}
 
 function squeezeScale(s) {
     logInfo("=== " + s.element.id + " ===");
@@ -278,26 +155,6 @@ function squeezeScale(s) {
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
-function squeezeLetterSpacing(s) {
-    logInfo("=== " + s.element.id + " ===");
-
-    const newLetterSpacingPt = calculateSqueezedLetterSpacing(
-        s.element,
-        s.maxWidthPt,
-        // getElementBoxWidth(s.element),
-        // originalLetterSpacing
-    );
-
-    s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
-    s.element.style.maxWidth = s.maxWidth + "pt";
-}
-
-// Adjust letter-spacing for all elements
-function squeezeAllLetterSpacing() {
-    for (var i in elementsToSqueezeSpacing) {
-        squeezeLetterSpacing(elementsToSqueezeSpacing[i]);
-    }
-}
 
 function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
@@ -305,51 +162,10 @@ function squeezeAllScaling() {
     }
 }
 
-function getElementsToSqueezeLetterSpacing () {
-    const squeezeElements = document.querySelectorAll('.squeeze-spacing');
-    const squeezeElementsWithParams = [];
 
-    // convert nodeList to array
-    for (var i=0; i<squeezeElements.length; i++) {
-        squeezeElementsWithParams.push(squeezeElements[i]);
-    }
-
-    return squeezeElementsWithParams;
-}
-
-
-const elementsToSqueezeSpacing = [];
 const elementsToSqueezeScaling = [];
 
-// Preparation logic remains mostly the same
-function prepareElementsForLetterSpacing() {
-    console.log("----------------------- prepareElementsForLetterSpacing");
-    const elements = getElementsToSqueezeLetterSpacing();
-    elements.map(function (element, index) {
-        logInfo(element.id);
 
-        const maxWidth = window.getComputedStyle(element).maxWidth;
-
-        if (!maxWidth || maxWidth === "none") {
-            return;
-        }
-
-        const maxWidthPt = convertToPt(maxWidth);
-
-        elementsToSqueezeSpacing[index] = {
-            element: elements[index],
-            maxWidthPt: maxWidthPt,
-        };
-
-        element.style.letterSpacing = "0.1px";
-        element.style.maxWidth = "";
-        // element.style.width = "fit-content";
-        element.style.display = "inline-block";
-        element.style.flex = "0 0 auto";
-        element.style.alignSelf = "flex-start";
-        element.style.whiteSpace = "nowrap"; // Prevent wrapping
-    });
-}
 
 
 
