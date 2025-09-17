@@ -34,12 +34,12 @@ function prepareElementsForScaling() {
         const classArray = Array.from(element.classList);
         const match = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
         const maxScale = match ? match[1] : null;
-        logInfo(maxScale);
 
         elementsToSqueezeScaling[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
             maxFontSizePt: maxFontSizePt,
+            maxScale: maxScale,
         };
 
         element.style.transform = "scale(1, 1)";
@@ -143,16 +143,19 @@ function squeezeScale(s) {
 
     const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
 
-    console.log("originalLetterSpacing: " + originalLetterSpacing);
+    logInfo("originalLetterSpacing: " + originalLetterSpacing);
 
-    const newScalePt = calculateSqueezedScale(
+    const newScale = calculateSqueezedScale(
         s.element,
         s.maxWidthPt,
         // getElementBoxWidth(s.element),
         // originalLetterSpacing
     );
 
-    s.element.style.scale = newScalePt.toString() + "pt" + " 0";
+    const maxScale = e.maxScale ?? newScale;
+    const finalScale = Math.min(newScale, Number(maxScale));
+
+    s.element.style.scale = `${finalScale}pt 0`;
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
 

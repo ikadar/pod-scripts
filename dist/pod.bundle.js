@@ -395,11 +395,11 @@ this.Pod = (function() {
         return c.startsWith("max-scale-");
       })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
       var maxScale = match ? match[1] : null;
-      logInfo(maxScale);
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
-        maxFontSizePt: maxFontSizePt
+        maxFontSizePt: maxFontSizePt,
+        maxScale: maxScale
       };
       element.style.transform = "scale(1, 1)";
       element.style.transformOrigin = "left center";
@@ -448,16 +448,19 @@ this.Pod = (function() {
     }
   }
   function squeezeScale(s) {
+    var _e$maxScale;
     logInfo("=== " + s.element.id + " ===");
     var originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
-    console.log("originalLetterSpacing: " + originalLetterSpacing);
-    var newScalePt = calculateSqueezedScale(
+    logInfo("originalLetterSpacing: " + originalLetterSpacing);
+    var newScale = calculateSqueezedScale(
       s.element,
       s.maxWidthPt
       // getElementBoxWidth(s.element),
       // originalLetterSpacing
     );
-    s.element.style.scale = newScalePt.toString() + "pt 0";
+    var maxScale = (_e$maxScale = e.maxScale) !== null && _e$maxScale !== void 0 ? _e$maxScale : newScale;
+    var finalScale = Math.min(newScale, Number(maxScale));
+    s.element.style.scale = "".concat(finalScale, "pt 0");
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function squeezeAllScaling() {
