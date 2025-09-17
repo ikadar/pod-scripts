@@ -1,7 +1,7 @@
 import handleSeparators from "./separator";
 import {prepareElements, squeezeAll} from "./squeeze/squeeze-font-size";
 import convertToPt from "./conversion";
-import logInfo from "./log-info";
+import logInfo, {increaseIndentation, decreaseIndentation} from "./log-info";
 import {getElementBoxWidth} from "./measurement";
 
 function getElementsToScaling () {

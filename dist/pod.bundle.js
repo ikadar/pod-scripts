@@ -14,10 +14,10 @@ this.Pod = (function() {
     }
     return indentation;
   }
-  function increaseIndentation$1() {
+  function increaseIndentation() {
     indent += indentIncrement;
   }
-  function decreaseIndentation$1() {
+  function decreaseIndentation() {
     indent -= indentIncrement;
   }
   var handleSeparators = function handleSeparators2() {
@@ -193,7 +193,7 @@ this.Pod = (function() {
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     logInfo("--- FONT SIZE CALCULATION STARTED");
     logInfo("");
-    increaseIndentation$1();
+    increaseIndentation();
     var scale = maxWidthPt / actualWidthPt;
     var newFontSizePt = scale;
     logInfo("maxFontSizePt: " + maxFontSizePt);
@@ -203,7 +203,7 @@ this.Pod = (function() {
     logInfo("scale: " + scale);
     logInfo("NEW fontSize: " + newFontSizePt);
     logInfo("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
-    decreaseIndentation$1();
+    decreaseIndentation();
     logInfo("");
     logInfo("--- FONT SIZE CALCULATION ENDED");
     return Math.min(newFontSizePt, maxFontSizePt);
