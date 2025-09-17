@@ -152,7 +152,7 @@ function squeezeScale(s) {
         // originalLetterSpacing
     );
 
-    const maxScale = e.maxScale ?? newScale;
+    const maxScale = s.maxScale ?? newScale;
     const finalScale = Math.min(newScale, Number(maxScale));
 
     s.element.style.scale = `${finalScale}pt 0`;

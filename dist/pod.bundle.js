@@ -448,7 +448,7 @@ this.Pod = (function() {
     }
   }
   function squeezeScale(s) {
-    var _e$maxScale;
+    var _s$maxScale;
     logInfo("=== " + s.element.id + " ===");
     var originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
     logInfo("originalLetterSpacing: " + originalLetterSpacing);
@@ -458,7 +458,7 @@ this.Pod = (function() {
       // getElementBoxWidth(s.element),
       // originalLetterSpacing
     );
-    var maxScale = (_e$maxScale = e.maxScale) !== null && _e$maxScale !== void 0 ? _e$maxScale : newScale;
+    var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
     var finalScale = Math.min(newScale, Number(maxScale));
     s.element.style.scale = "".concat(finalScale, "pt 0");
     s.element.style.maxWidth = s.maxWidth + "pt";
