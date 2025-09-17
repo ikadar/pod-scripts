@@ -460,7 +460,7 @@ this.Pod = (function() {
     );
     var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
     var finalScale = Math.min(newScale, Number(maxScale));
-    var finalScaleString = "scale(".concat(finalScale, " 1)");
+    var finalScaleString = "scale(".concat(finalScale, ", 1)");
     s.element.style.transform = finalScaleString;
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
