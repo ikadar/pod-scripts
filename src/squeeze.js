@@ -166,7 +166,7 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     element.style.letterSpacing = toPx(guessPt) + "px";
 
     // mérés
-    let wPt = toPt(getElementBoxWidth(element));
+    let wPt = getElementBoxWidth(element);
     if (Math.abs(wPt - targetPt) <= epsilonPt) {
         logInfo("newLetterSpacing (pt): " + guessPt);
         decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
@@ -182,7 +182,7 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
         const midPt = (loPt + hiPt) / 2;
         element.style.letterSpacing = toPx(midPt) + "px";
 
-        wPt = toPt(getElementBoxWidth(element));
+        wPt = getElementBoxWidth(element);
         const diff = wPt - targetPt;
         if (Math.abs(diff) <= epsilonPt) {
             guessPt = midPt;

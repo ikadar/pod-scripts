@@ -186,7 +186,7 @@ this.Pod = (function() {
     }
     guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
     element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = toPt(getElementBoxWidth(element));
+    var wPt = getElementBoxWidth(element);
     if (Math.abs(wPt - targetPt) <= epsilonPt) {
       logInfo("newLetterSpacing (pt): " + guessPt);
       decreaseIndentation();
@@ -205,7 +205,7 @@ this.Pod = (function() {
     for (var i = 0; i < maxIter; i++) {
       var midPt = (loPt + hiPt) / 2;
       element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = toPt(getElementBoxWidth(element));
+      wPt = getElementBoxWidth(element);
       var diff = wPt - targetPt;
       if (Math.abs(diff) <= epsilonPt) {
         guessPt = midPt;
