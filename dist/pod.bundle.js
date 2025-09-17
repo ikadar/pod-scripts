@@ -381,7 +381,7 @@ this.Pod = (function() {
   function prepareElementsForScaling() {
     var elements = getElementsToScaling();
     elements.map(function(element, index) {
-      var _classArray$find;
+      var _classArray$find, _classArray$find2;
       logInfo(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
@@ -391,15 +391,20 @@ this.Pod = (function() {
       var maxWidthPt = convertToPt(maxWidth);
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
-      var match = (_classArray$find = classArray.find(function(c) {
+      var maxMatch = (_classArray$find = classArray.find(function(c) {
         return c.startsWith("max-scale-");
       })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
-      var maxScale = match ? match[1] : null;
+      var maxScale = maxMatch ? maxMatch[1] : null;
+      var minMatch = (_classArray$find2 = classArray.find(function(c) {
+        return c.startsWith("min-scale-");
+      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
+      var minScale = minMatch ? minMatch[1] : null;
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxFontSizePt: maxFontSizePt,
-        maxScale: maxScale
+        maxScale: maxScale,
+        minScale: minScale
       };
       element.style.transform = "scale(1, 1)";
       element.style.transformOrigin = "left center";
@@ -448,7 +453,7 @@ this.Pod = (function() {
     }
   }
   function squeezeScale(s) {
-    var _s$maxScale;
+    var _s$maxScale, _s$minScale;
     logInfo("=== " + s.element.id + " ===");
     var originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
     logInfo("originalLetterSpacing: " + originalLetterSpacing);
@@ -459,7 +464,8 @@ this.Pod = (function() {
       // originalLetterSpacing
     );
     var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
-    var finalScale = Math.min(newScale, Number(maxScale));
+    var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
+    var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     var finalScaleString = "scale(".concat(finalScale, ", 1)");
     s.element.style.transform = finalScaleString;
     s.element.style.maxWidth = s.maxWidth + "pt";

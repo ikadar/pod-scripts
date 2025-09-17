@@ -32,14 +32,17 @@ function prepareElementsForScaling() {
         const maxFontSizePt = convertToPt(maxFontSize);
 
         const classArray = Array.from(element.classList);
-        const match = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
-        const maxScale = match ? match[1] : null;
+        const maxMatch = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
+        const maxScale = maxMatch ? maxMatch[1] : null;
+        const minMatch = classArray.find(c => c.startsWith('min-scale-'))?.match(/^min-scale-\[([^\]]+)\]$/);
+        const minScale = minMatch ? minMatch[1] : null;
 
         elementsToSqueezeScaling[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
             maxFontSizePt: maxFontSizePt,
             maxScale: maxScale,
+            minScale: minScale,
         };
 
         element.style.transform = "scale(1, 1)";
@@ -155,7 +158,8 @@ function squeezeScale(s) {
     );
 
     const maxScale = s.maxScale ?? newScale;
-    const finalScale = Math.min(newScale, Number(maxScale));
+    const minScale = s.minScale ?? newScale;
+    const finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     const finalScaleString = `scale(${finalScale}, 1)`;
 
     s.element.style.transform = finalScaleString;
