@@ -95,7 +95,9 @@ function squeezeLetterSpacing(s) {
         // originalLetterSpacing
     );
 
-    s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
+    const finalLetterSpacingPt = Math.max(Math.min(finalLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
+
+    s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
@@ -133,9 +135,17 @@ function prepareElementsForLetterSpacing() {
 
         const maxWidthPt = convertToPt(maxWidth);
 
+        const classArray = Array.from(element.classList);
+        const maxMatch = classArray.find(c => c.startsWith('max-letter-spacing-'))?.match(/^max-letter-spacing-\[([^\]]+)\]$/);
+        const maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : null;
+        const minMatch = classArray.find(c => c.startsWith('min-letter-spacing-'))?.match(/^min-letter-spacing-\[([^\]]+)\]$/);
+        const minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
+
         elementsToSqueezeSpacing[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
+            maxLetterSpacingPt: maxLetterSpacingPt,
+            minLetterSpacingPt: minLetterSpacingPt,
         };
 
         element.style.letterSpacing = "0.1px";

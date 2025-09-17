@@ -336,13 +336,14 @@ this.Pod = (function() {
   }
   function squeezeLetterSpacing(s) {
     logInfo("=== " + s.element.id + " ===");
-    var newLetterSpacingPt = calculateSqueezedLetterSpacing(
+    calculateSqueezedLetterSpacing(
       s.element,
       s.maxWidthPt
       // getElementBoxWidth(s.element),
       // originalLetterSpacing
     );
-    s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
+    var finalLetterSpacingPt = Math.max(Math.min(finalLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
+    s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function squeezeAllLetterSpacing() {
@@ -362,15 +363,27 @@ this.Pod = (function() {
     console.log("----------------------- prepareElementsForLetterSpacing");
     var elements = getElementsToSqueezeLetterSpacing();
     elements.map(function(element, index) {
+      var _classArray$find, _classArray$find2;
       logInfo(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       if (!maxWidth || maxWidth === "none") {
         return;
       }
       var maxWidthPt = convertToPt(maxWidth);
+      var classArray = Array.from(element.classList);
+      var maxMatch = (_classArray$find = classArray.find(function(c) {
+        return c.startsWith("max-letter-spacing-");
+      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-letter-spacing-\[([^\]]+)\]$/);
+      var maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : null;
+      var minMatch = (_classArray$find2 = classArray.find(function(c) {
+        return c.startsWith("min-letter-spacing-");
+      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-letter-spacing-\[([^\]]+)\]$/);
+      var minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
       elementsToSqueezeSpacing[index] = {
         element: elements[index],
-        maxWidthPt: maxWidthPt
+        maxWidthPt: maxWidthPt,
+        maxLetterSpacingPt: maxLetterSpacingPt,
+        minLetterSpacingPt: minLetterSpacingPt
       };
       element.style.letterSpacing = "0.1px";
       element.style.maxWidth = "";
