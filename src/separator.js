@@ -27,14 +27,18 @@ const handleSeparators = () => {
         }
 
         if (nextInNewLine) {
+            console.log("VISIBILIITY HIDDEN");
             separator.style.visibility = "hidden";
         } else {
+            console.log("VISIBILIITY VISIBLE");
             separator.style.visibility = "visible";
         }
 
         if (prevInNewLine) {
+            console.log("DISPLAY NONE");
             separator.style.display = "none";
         } else {
+            console.log("DISPLAY INLINE-BLOCK");
             separator.style.display = "inline-block";
         }
 

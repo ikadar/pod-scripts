@@ -1,4 +1,3 @@
-import logInfo from "../log-info";
 import convertToPt from "../conversion";
 
 const elementsToSqueezeScaling = [];
@@ -18,8 +17,6 @@ function getElementsToScaling () {
 function prepareElementsForScaling() {
     const elements = getElementsToScaling();
     elements.map(function (element, index) {
-
-        logInfo(element.id);
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         const maxFontSize = window.getComputedStyle(element).fontSize;
@@ -144,11 +141,8 @@ function calculateSqueezedScale(
 
 
 function squeezeScale(s) {
-    logInfo("=== " + s.element.id + " ===");
 
     const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
-
-    logInfo("originalLetterSpacing: " + originalLetterSpacing);
 
     const newScale = calculateSqueezedScale(
         s.element,

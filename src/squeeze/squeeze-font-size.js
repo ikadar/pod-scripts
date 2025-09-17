@@ -1,4 +1,3 @@
-import logInfo, {increaseIndentation, decreaseIndentation} from "../log-info";
 import convertToPt from "../conversion";
 import {getElementBoxWidth} from "../measurement";
 
@@ -6,33 +5,14 @@ const elementsToSqueeze = [];
 
 function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
 
-    logInfo("--- FONT SIZE CALCULATION STARTED");
-    logInfo("");
-    increaseIndentation();
-
     const scale = maxWidthPt / actualWidthPt;
     const newFontSizePt = scale;
-
-    logInfo("maxFontSizePt: " + maxFontSizePt);
-    logInfo("actualFontSizePt: " + actualFontSizePt);
-    logInfo("maxWidthPt: " + maxWidthPt);
-    logInfo("actualWidthPt: " + actualWidthPt);
-    logInfo("scale: " + scale);
-    logInfo("NEW fontSize: " + newFontSizePt);
-    logInfo("NEW fontSize: " + Math.min(newFontSizePt, maxFontSizePt));
-
-    decreaseIndentation();
-
-    logInfo("");
-    logInfo("--- FONT SIZE CALCULATION ENDED");
-
     // return newFontSizePt;
     return Math.min(newFontSizePt, maxFontSizePt);
 }
 
 function squeeze (s) {
     // console.log(s);
-    logInfo("=== " + s.element.id + " ===");
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
@@ -62,8 +42,6 @@ function squeezeAll () {
 function prepareElements () {
     const elements = getElementsToSqueeze();
     elements.map(function (element, index) {
-
-        logInfo(element.id);
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         let maxFontSize = window.getComputedStyle(element).fontSize;

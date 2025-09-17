@@ -41,7 +41,7 @@ window.addEventListener('message', (event) => {
 });
 
 function scriptFromTheTemplate() {
-    logInfo("scriptFromTheTemplate");
+    // logInfo("scriptFromTheTemplate");
     // replace by the scriptFromTheTemplate
 }
 

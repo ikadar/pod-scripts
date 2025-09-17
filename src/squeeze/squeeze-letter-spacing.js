@@ -1,7 +1,5 @@
-import logInfo, {decreaseIndentation, increaseIndentation} from "../log-info";
 import {getElementBoxWidth} from "../measurement";
 import convertToPt from "../conversion";
-
 
 const elementsToSqueezeSpacing = [];
 
@@ -16,14 +14,11 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     const toPt = (px) => px * pxToPt;
     const toPx = (pt) => pt / pxToPt;
 
-    logInfo("--- CALCULATION STARTED"); logInfo(""); increaseIndentation();
-
     // 1) Cél szélesség pt-ben
     const targetPt = maxWidthPt * 1; // már pt-ben érkezik
     const text = element.textContent || "";
     const gaps = Math.max(0, text.length - 1);
     if (gaps === 0) {
-        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
         return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
     }
 
@@ -33,14 +28,6 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     let currentLSPt = toPt(currentLSpx);
 
     let currentWidthPt = getElementBoxWidth(element);
-    // let currentWidthPx = getElementBoxWidth(element);
-    // let currentWidthPt = toPt(currentWidthPx);
-
-    logInfo("targetPt: " + targetPt);
-    logInfo("currentWidthPt: " + currentWidthPt);
-    logInfo("text length: " + text.length);
-    logInfo("currentLSPt: " + currentLSPt + "pt");
-    logInfo("deltaPt: " + (targetPt - currentWidthPt));
 
     // 3) Első becslés (lineáris modell)
     let guessPt = currentLSPt;
@@ -56,8 +43,6 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     // mérés
     let wPt = getElementBoxWidth(element);
     if (Math.abs(wPt - targetPt) <= epsilonPt) {
-        logInfo("newLetterSpacing (pt): " + guessPt);
-        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
         return guessPt;
     }
 
@@ -80,13 +65,10 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
         guessPt = midPt;
     }
 
-    logInfo("newLetterSpacing (pt): " + guessPt);
-    decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
     return guessPt; // PT-ben ad vissza, a te konvencióddal egyezően
 }
 
 function squeezeLetterSpacing(s) {
-    logInfo("=== " + s.element.id + " ===");
 
     const newLetterSpacingPt = calculateSqueezedLetterSpacing(
         s.element,
@@ -125,7 +107,6 @@ function prepareElementsForLetterSpacing() {
     console.log("----------------------- prepareElementsForLetterSpacing");
     const elements = getElementsToSqueezeLetterSpacing();
     elements.map(function (element, index) {
-        logInfo(element.id);
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
 
