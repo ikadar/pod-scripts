@@ -117,7 +117,86 @@ function prepareElements () {
     });
 }
 
-function calculateSqueezedLetterSpacing (element, maxWidthPt) {
+function calculateSqueezedLetterSpacing(element, maxWidthPt, {
+    pxToPt = 0.75,          // 1px = 0.75pt (96dpi-n)
+    epsilonPt = 0.05,       // pontosság (pt)
+    maxIter = 20,           // bináris keresés lépések
+    minLSpt = -5,           // korlátok pt-ben
+    maxLSpt = 20
+} = {}) {
+
+    const toPt = (px) => px * pxToPt;
+    const toPx = (pt) => pt / pxToPt;
+
+    logInfo("--- CALCULATION STARTED"); logInfo(""); increaseIndentation();
+
+    // 1) Cél szélesség pt-ben
+    const targetPt = maxWidthPt * 1; // már pt-ben érkezik
+    const text = element.textContent || "";
+    const gaps = Math.max(0, text.length - 1);
+    if (gaps === 0) {
+        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
+        return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
+    }
+
+    // 2) Jelenlegi állapot (px-ben mérünk → pt-re váltunk)
+    let currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
+    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
+    let currentLSPt = toPt(currentLSpx);
+
+    let currentWidthPx = getElementBoxWidth(element);
+    let currentWidthPt = toPt(currentWidthPx);
+
+    logInfo("targetPt: " + targetPt);
+    logInfo("currentWidthPt: " + currentWidthPt);
+    logInfo("text length: " + text.length);
+    logInfo("currentLSPt: " + currentLSPt + "pt");
+    logInfo("deltaPt: " + (targetPt - currentWidthPt));
+
+    // 3) Első becslés (lineáris modell)
+    let guessPt = currentLSPt;
+    if (gaps > 0) {
+        const extraPerGapPt = (targetPt - currentWidthPt) / gaps;
+        guessPt = currentLSPt + extraPerGapPt;
+    }
+    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
+
+    // alkalmazzuk ideiglenesen (px-ben kell beírni a style-ba!)
+    element.style.letterSpacing = toPx(guessPt) + "px";
+
+    // mérés
+    let wPt = toPt(getElementBoxWidth(element));
+    if (Math.abs(wPt - targetPt) <= epsilonPt) {
+        logInfo("newLetterSpacing (pt): " + guessPt);
+        decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
+        return guessPt;
+    }
+
+    // 4) Bináris keresés a pontos illesztéshez
+    let loPt, hiPt;
+    if (wPt < targetPt) { loPt = guessPt; hiPt = maxLSpt; }
+    else { loPt = minLSpt; hiPt = guessPt; }
+
+    for (let i = 0; i < maxIter; i++) {
+        const midPt = (loPt + hiPt) / 2;
+        element.style.letterSpacing = toPx(midPt) + "px";
+
+        wPt = toPt(getElementBoxWidth(element));
+        const diff = wPt - targetPt;
+        if (Math.abs(diff) <= epsilonPt) {
+            guessPt = midPt;
+            break;
+        }
+        if (diff < 0) loPt = midPt; else hiPt = midPt;
+        guessPt = midPt;
+    }
+
+    logInfo("newLetterSpacing (pt): " + guessPt);
+    decreaseIndentation(); logInfo(""); logInfo("--- CALCULATION ENDED");
+    return guessPt; // PT-ben ad vissza, a te konvencióddal egyezően
+}
+
+function calculateSqueezedLetterSpacing_ (element, maxWidthPt) {
 
     const dpi = 0.74999943307122;
     // const dpi = (runsInPrince ? 1 : 0.74999943307122);

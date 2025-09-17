@@ -151,35 +151,76 @@ this.Pod = (function() {
     });
   }
   function calculateSqueezedLetterSpacing(element, maxWidthPt) {
-    var dpi = 0.74999943307122;
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.75 : _ref$pxToPt, _ref$epsilonPt = _ref.epsilonPt, epsilonPt = _ref$epsilonPt === void 0 ? 0.05 : _ref$epsilonPt, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 20 : _ref$maxIter, _ref$minLSpt = _ref.minLSpt, minLSpt = _ref$minLSpt === void 0 ? -5 : _ref$minLSpt, _ref$maxLSpt = _ref.maxLSpt, maxLSpt = _ref$maxLSpt === void 0 ? 20 : _ref$maxLSpt;
+    var toPt = function toPt2(px) {
+      return px * pxToPt;
+    };
+    var toPx = function toPx2(pt) {
+      return pt / pxToPt;
+    };
     logInfo("--- CALCULATION STARTED");
     logInfo("");
     increaseIndentation();
-    maxWidthPt = maxWidthPt * dpi;
+    var targetPt = maxWidthPt * 1;
     var text = element.textContent || "";
-    var currentLetterSpacing = parseFloat(window.getComputedStyle(element).letterSpacing) || 0;
-    currentLetterSpacing = currentLetterSpacing * dpi;
-    var currentWidth = getElementBoxWidth(element);
-    currentWidth = currentWidth * dpi;
-    logInfo("maxWidthPt: " + maxWidthPt);
-    logInfo("currentWidth: " + currentWidth);
-    logInfo("text: " + (typeof text == "undefined"));
-    logInfo("text: " + (typeof text == "string"));
-    logInfo("text: " + !!text);
-    logInfo("text: " + (!!text ? "AAA" : "BBB"));
-    logInfo("text length: " + (!!text ? text.length : 0));
-    logInfo("currentLetterSpacing: " + currentLetterSpacing + "pt (assuming)");
-    logInfo("scale: " + (maxWidthPt - currentWidth));
-    var newLetterSpacing = currentLetterSpacing;
-    if (text.length > 1) {
-      var extraSpacing = (maxWidthPt - currentWidth) / (text.length - 1);
-      newLetterSpacing = currentLetterSpacing + extraSpacing;
+    var gaps = Math.max(0, text.length - 1);
+    if (gaps === 0) {
+      decreaseIndentation();
+      logInfo("");
+      logInfo("--- CALCULATION ENDED");
+      return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
     }
-    logInfo("newLetterSpacing: " + newLetterSpacing);
+    var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
+    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
+    var currentLSPt = toPt(currentLSpx);
+    var currentWidthPx = getElementBoxWidth(element);
+    var currentWidthPt = toPt(currentWidthPx);
+    logInfo("targetPt: " + targetPt);
+    logInfo("currentWidthPt: " + currentWidthPt);
+    logInfo("text length: " + text.length);
+    logInfo("currentLSPt: " + currentLSPt + "pt");
+    logInfo("deltaPt: " + (targetPt - currentWidthPt));
+    var guessPt = currentLSPt;
+    if (gaps > 0) {
+      var extraPerGapPt = (targetPt - currentWidthPt) / gaps;
+      guessPt = currentLSPt + extraPerGapPt;
+    }
+    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
+    element.style.letterSpacing = toPx(guessPt) + "px";
+    var wPt = toPt(getElementBoxWidth(element));
+    if (Math.abs(wPt - targetPt) <= epsilonPt) {
+      logInfo("newLetterSpacing (pt): " + guessPt);
+      decreaseIndentation();
+      logInfo("");
+      logInfo("--- CALCULATION ENDED");
+      return guessPt;
+    }
+    var loPt, hiPt;
+    if (wPt < targetPt) {
+      loPt = guessPt;
+      hiPt = maxLSpt;
+    } else {
+      loPt = minLSpt;
+      hiPt = guessPt;
+    }
+    for (var i = 0; i < maxIter; i++) {
+      var midPt = (loPt + hiPt) / 2;
+      element.style.letterSpacing = toPx(midPt) + "px";
+      wPt = toPt(getElementBoxWidth(element));
+      var diff = wPt - targetPt;
+      if (Math.abs(diff) <= epsilonPt) {
+        guessPt = midPt;
+        break;
+      }
+      if (diff < 0) loPt = midPt;
+      else hiPt = midPt;
+      guessPt = midPt;
+    }
+    logInfo("newLetterSpacing (pt): " + guessPt);
     decreaseIndentation();
     logInfo("");
     logInfo("--- CALCULATION ENDED");
-    return newLetterSpacing;
+    return guessPt;
   }
   function squeezeLetterSpacing(s) {
     logInfo("=== " + s.element.id + " ===");
