@@ -34,6 +34,7 @@ function squeeze (s) {
     // console.log(s);
     logInfo("=== " + s.element.id + " ===");
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
+    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
@@ -65,19 +66,27 @@ function prepareElements () {
         logInfo(element.id);
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
-        const maxFontSize = window.getComputedStyle(element).fontSize;
+        let maxFontSize = window.getComputedStyle(element).fontSize;
 
         if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
             return;
         }
 
+        const classArray = Array.from(element.classList);
+        const maxMatch = classArray.find(c => c.startsWith('max-font-size-'))?.match(/^max-font-size-\[([^\]]+)\]$/);
+        const maxFontSizePt = maxMatch ? convertToPt(maxMatch[1]) : convertToPt(maxFontSize);
+        const minMatch = classArray.find(c => c.startsWith('min-font-size-'))?.match(/^min-font-size-\[([^\]]+)\]$/);
+        const minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
+
+
         const maxWidthPt = convertToPt(maxWidth);
-        const maxFontSizePt = convertToPt(maxFontSize);
+        // const maxFontSizePt = convertToPt(maxFontSize);
 
         elementsToSqueeze[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
             maxFontSizePt: maxFontSizePt,
+            minFontSizePt: minFontSizePt,
         };
 
         element.style.fontSize = "1pt";

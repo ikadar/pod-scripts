@@ -211,6 +211,7 @@ this.Pod = (function() {
   function squeeze(s) {
     logInfo("=== " + s.element.id + " ===");
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
+    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
@@ -230,18 +231,28 @@ this.Pod = (function() {
   function prepareElements() {
     var elements = getElementsToSqueeze();
     elements.map(function(element, index) {
+      var _classArray$find, _classArray$find2;
       logInfo(element.id);
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
+      var classArray = Array.from(element.classList);
+      var maxMatch = (_classArray$find = classArray.find(function(c) {
+        return c.startsWith("max-font-size-");
+      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-font-size-\[([^\]]+)\]$/);
+      var maxFontSizePt = maxMatch ? convertToPt(maxMatch[1]) : convertToPt(maxFontSize);
+      var minMatch = (_classArray$find2 = classArray.find(function(c) {
+        return c.startsWith("min-font-size-");
+      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-font-size-\[([^\]]+)\]$/);
+      var minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
       var maxWidthPt = convertToPt(maxWidth);
-      var maxFontSizePt = convertToPt(maxFontSize);
       elementsToSqueeze[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
-        maxFontSizePt: maxFontSizePt
+        maxFontSizePt: maxFontSizePt,
+        minFontSizePt: minFontSizePt
       };
       element.style.fontSize = "1pt";
       element.style.display = "inline-block";
