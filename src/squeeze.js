@@ -113,6 +113,7 @@ function prepareElements () {
         // element.style.width = "fit-content";
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
+        element.style.alignSelf = "flex-start";
         element.style.maxWidth = "";
         element.style.whiteSpace = "nowrap";
 
@@ -310,6 +311,7 @@ function prepareElementsForLetterSpacing() {
         // element.style.width = "fit-content";
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
+        element.style.alignSelf = "flex-start";
         element.style.whiteSpace = "nowrap"; // Prevent wrapping
     });
 }

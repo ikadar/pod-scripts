@@ -147,6 +147,7 @@ this.Pod = (function() {
       element.style.fontSize = "1pt";
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
+      element.style.alignSelf = "flex-start";
       element.style.maxWidth = "";
       element.style.whiteSpace = "nowrap";
     });
@@ -267,6 +268,7 @@ this.Pod = (function() {
       element.style.maxWidth = "";
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
+      element.style.alignSelf = "flex-start";
       element.style.whiteSpace = "nowrap";
     });
   }
