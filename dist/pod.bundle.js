@@ -39,10 +39,15 @@ this.Pod = (function() {
           prevInNewLine = true;
         }
       }
-      if (nextInNewLine || prevInNewLine) {
+      if (nextInNewLine) {
         separator.style.visibility = "hidden";
       } else {
         separator.style.visibility = "visible";
+      }
+      if (prevInNewLine) {
+        separator.style.display = "none";
+      } else {
+        separator.style.display = "block";
       }
     });
   };
