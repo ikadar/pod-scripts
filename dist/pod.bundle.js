@@ -152,88 +152,54 @@ this.Pod = (function() {
       element.style.whiteSpace = "nowrap";
     });
   }
-  function calculateSqueezedLetterSpacing(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.75 : _ref$pxToPt, _ref$epsilonPt = _ref.epsilonPt, epsilonPt = _ref$epsilonPt === void 0 ? 0.05 : _ref$epsilonPt, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 20 : _ref$maxIter, _ref$minLSpt = _ref.minLSpt, minLSpt = _ref$minLSpt === void 0 ? -5 : _ref$minLSpt, _ref$maxLSpt = _ref.maxLSpt, maxLSpt = _ref$maxLSpt === void 0 ? 20 : _ref$maxLSpt;
+  function calculateSqueezedScale(element, maxWidthPt) {
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.75 : _ref$pxToPt, _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 5 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
     var toPt = function toPt2(px) {
       return px * pxToPt;
     };
     var toPx = function toPx2(pt) {
       return pt / pxToPt;
     };
-    logInfo("--- CALCULATION STARTED");
-    logInfo("");
-    increaseIndentation();
-    var targetPt = maxWidthPt * 1;
-    var text = element.textContent || "";
-    var gaps = Math.max(0, text.length - 1);
-    if (gaps === 0) {
-      decreaseIndentation();
-      logInfo("");
-      logInfo("--- CALCULATION ENDED");
-      return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
+    var targetPx = toPx(maxWidthPt);
+    var prevTransform = element.style.transform || "";
+    var prevOrigin = element.style.transformOrigin || "";
+    element.style.transform = "none";
+    if (setOrigin) element.style.transformOrigin = "left center";
+    var baseWidthPx = element.getBoundingClientRect().width || 0;
+    if (baseWidthPx <= 0) {
+      element.style.transform = prevTransform;
+      element.style.transformOrigin = prevOrigin;
+      return 1;
     }
-    var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
-    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
-    var currentLSPt = toPt(currentLSpx);
-    var currentWidthPt = getElementBoxWidth(element);
-    logInfo("targetPt: " + targetPt);
-    logInfo("currentWidthPt: " + currentWidthPt);
-    logInfo("text length: " + text.length);
-    logInfo("currentLSPt: " + currentLSPt + "pt");
-    logInfo("deltaPt: " + (targetPt - currentWidthPt));
-    var guessPt = currentLSPt;
-    if (gaps > 0) {
-      var extraPerGapPt = (targetPt - currentWidthPt) / gaps;
-      guessPt = currentLSPt + extraPerGapPt;
-    }
-    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
-    element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = getElementBoxWidth(element);
-    if (Math.abs(wPt - targetPt) <= epsilonPt) {
-      logInfo("newLetterSpacing (pt): " + guessPt);
-      decreaseIndentation();
-      logInfo("");
-      logInfo("--- CALCULATION ENDED");
-      return guessPt;
-    }
-    var loPt, hiPt;
-    if (wPt < targetPt) {
-      loPt = guessPt;
-      hiPt = maxLSpt;
-    } else {
-      loPt = minLSpt;
-      hiPt = guessPt;
-    }
+    var sx = clamp(targetPx / baseWidthPx, minScale, maxScale);
+    var sy = axis === "uniform" ? sx : 1;
+    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ") ").concat(prevTransform).trim();
     for (var i = 0; i < maxIter; i++) {
-      var midPt = (loPt + hiPt) / 2;
-      element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = getElementBoxWidth(element);
-      var diff = wPt - targetPt;
-      if (Math.abs(diff) <= epsilonPt) {
-        guessPt = midPt;
-        break;
-      }
-      if (diff < 0) loPt = midPt;
-      else hiPt = midPt;
-      guessPt = midPt;
+      var w = element.getBoundingClientRect().width;
+      var diffPx = targetPx - w;
+      if (Math.abs(toPt(diffPx)) <= epsilon) break;
+      var factor = targetPx / (w || 1);
+      sx = clamp(sx * factor, minScale, maxScale);
+      sy = axis === "uniform" ? sx : 1;
+      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ") ").concat(prevTransform).trim();
     }
-    logInfo("newLetterSpacing (pt): " + guessPt);
-    decreaseIndentation();
-    logInfo("");
-    logInfo("--- CALCULATION ENDED");
-    return guessPt;
+    if (!setOrigin) element.style.transformOrigin = prevOrigin;
+    return sx;
+    function clamp(v, lo, hi) {
+      return Math.max(lo, Math.min(hi, v));
+    }
   }
   function squeezeLetterSpacing(s) {
     logInfo("=== " + s.element.id + " ===");
     var originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
     console.log("originalLetterSpacing: " + originalLetterSpacing);
-    var newLetterSpacingPt = calculateSqueezedLetterSpacing(
+    var newScalePt = calculateSqueezedScale(
       s.element,
       s.maxWidthPt
       // getElementBoxWidth(s.element),
       // originalLetterSpacing
     );
-    s.element.style.letterSpacing = newLetterSpacingPt.toString() + "pt";
+    s.element.style.scale = newScalePt.toString() + "pt 0";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function squeezeAllLetterSpacing() {
