@@ -21,13 +21,16 @@ this.Pod = (function() {
       var next = separator.nextElementSibling;
       var prev = separator.previousElementSibling;
       var nextInNewLine = false;
+      var prevInNewLine = false;
       if (next) {
         if (getYCoordinate(separator) !== getYCoordinate(next)) {
           nextInNewLine = true;
         }
       }
       if (prev) {
-        if (getYCoordinate(separator) !== getYCoordinate(prev)) ;
+        if (getYCoordinate(separator) !== getYCoordinate(prev)) {
+          prevInNewLine = true;
+        }
       }
       if (nextInNewLine) {
         console.log("VISIBILIITY HIDDEN");
@@ -35,6 +38,13 @@ this.Pod = (function() {
       } else {
         console.log("VISIBILIITY VISIBLE");
         separator.style.visibility = "visible";
+      }
+      if (prevInNewLine) {
+        console.log("DISPLAY NONE");
+        separator.style.display = "none";
+      } else {
+        console.log("DISPLAY INLINE-BLOCK");
+        separator.style.display = "inline";
       }
     });
   };
