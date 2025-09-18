@@ -1,20 +1,6 @@
 this.Pod = (function() {
   "use strict";
-  var indent = 0;
-  function logInfo(info) {
-    {
-      console.log("|" + getIndentation() + info);
-    }
-  }
-  function getIndentation() {
-    var indentation = "";
-    for (var i = 0; i < indent; i++) {
-      indentation = indentation + " ";
-    }
-    return indentation;
-  }
   var handleSeparators = function handleSeparators2() {
-    logInfo("HANDLING SEPARATORS");
     var results = Array.from(document.querySelectorAll('[class*="separator-["]')).map(function(el) {
       var m = el.className.match(/separator-\[([^\]]+)\]/);
       return m ? {
@@ -24,7 +10,6 @@ this.Pod = (function() {
     }).filter(Boolean);
     results.forEach(function(_ref) {
       var element = _ref.element, value = _ref.value;
-      console.log("Element:", element, " → value:", value);
       var textNodes = getAllTextNodes(element);
       textNodes.forEach(function(node) {
         return wrapMatchesWithSeparatorAndSegments(node, value);
@@ -48,17 +33,13 @@ this.Pod = (function() {
         }
       }
       if (nextInNewLine) {
-        console.log("VISIBILIITY HIDDEN");
         separator.style.visibility = "hidden";
       } else {
-        console.log("VISIBILIITY VISIBLE");
         separator.style.visibility = "visible";
       }
       if (prevInNewLine) {
-        console.log("DISPLAY NONE");
         separator.style.display = "none";
       } else {
-        console.log("DISPLAY INLINE-BLOCK");
         separator.style.display = "inline";
       }
     });
