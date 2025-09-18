@@ -9,7 +9,7 @@ function getElementBoxWidth (el) {
     const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
 
     el.style.maxWidth = computedStyle.maxWidth;
-    el.style.whiteSpace = computedStyle.whiteSpace;
+    el.style.whiteSpace = computedStyle.whiteSpace; //
 
     return boxWidth;
 }
