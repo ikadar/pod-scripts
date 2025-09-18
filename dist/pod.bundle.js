@@ -254,7 +254,7 @@ this.Pod = (function() {
   }
   var elementsToSqueeze = [];
   function squeeze(s) {
-    console.log(getTextNodeLineCount(s.element));
+    console.log(getTextNodeLineCount(s.element.childNodes[0]));
     return;
   }
   function getElementsToSqueeze() {

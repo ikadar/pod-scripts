@@ -14,7 +14,7 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
 function squeeze (s) {
     // console.log(s);
 
-    console.log(getTextNodeLineCount(s.element));
+    console.log(getTextNodeLineCount(s.element.childNodes[0]));
     return;
 
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
