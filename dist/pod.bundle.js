@@ -253,16 +253,9 @@ this.Pod = (function() {
     return convertToPt(el.getBoundingClientRect().width + "px");
   }
   var elementsToSqueeze = [];
-  function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
-    var scale = maxWidthPt / actualWidthPt;
-    var newFontSizePt = scale;
-    return Math.min(newFontSizePt, maxFontSizePt);
-  }
   function squeeze(s) {
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
-    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-    s.element.style.fontSize = newFontSizePt.toString() + "pt";
-    s.element.style.maxWidth = s.maxWidth + "pt";
+    console.log(getTextNodeLineCount(s.element));
+    return;
   }
   function getElementsToSqueeze() {
     var squeezeElements = document.querySelectorAll(".squeeze");
@@ -309,6 +302,13 @@ this.Pod = (function() {
       element.style.maxWidth = "";
       element.style.whiteSpace = "nowrap";
     });
+  }
+  function getTextNodeLineCount(textNode) {
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
+    var range = document.createRange();
+    range.selectNodeContents(textNode);
+    var rects = range.getClientRects();
+    return rects.length;
   }
   var elementsToSqueezeSpacing = [];
   function calculateSqueezedLetterSpacing(element, maxWidthPt) {

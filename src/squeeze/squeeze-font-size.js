@@ -13,6 +13,10 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
 
 function squeeze (s) {
     // console.log(s);
+
+    console.log(getTextNodeLineCount(s.element));
+    return;
+
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
@@ -76,6 +80,20 @@ function prepareElements () {
         element.style.whiteSpace = "nowrap";
 
     });
+}
+
+// ---------
+
+function getTextNodeLineCount(textNode) {
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
+
+    const range = document.createRange();
+    range.selectNodeContents(textNode);
+
+    // Ez egy NodeList-szerű objektum, minden rect egy sor vagy fragment
+    const rects = range.getClientRects();
+
+    return rects.length;
 }
 
 export { prepareElements, squeezeAll };
