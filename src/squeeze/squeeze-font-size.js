@@ -15,7 +15,7 @@ function squeeze (s) {
     // console.log(s);
 
     const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows) {
+    if (rowCount <= s.maxRows && maxRows > 1) {
         return;
     }
 

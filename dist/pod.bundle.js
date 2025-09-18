@@ -247,7 +247,7 @@ this.Pod = (function() {
   }
   function squeeze(s) {
     var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows) {
+    if (rowCount <= s.maxRows && maxRows > 1) {
       return;
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
@@ -290,14 +290,14 @@ this.Pod = (function() {
       var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
-      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
+      var maxRows2 = maxRowsMatch ? maxRowsMatch[1] : 1;
       var maxWidthPt = convertToPt(maxWidth);
       elementsToSqueeze[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxFontSizePt: maxFontSizePt,
         minFontSizePt: minFontSizePt,
-        maxRows: maxRows
+        maxRows: maxRows2
       };
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
