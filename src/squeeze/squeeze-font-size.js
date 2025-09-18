@@ -14,8 +14,10 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
 function squeeze (s) {
     // console.log(s);
 
-    console.log(getTextNodeLineCount(s.element.childNodes[0]));
-    // return;
+    const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    if (rowCount <= s.maxRows) {
+        return;
+    }
 
     const actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
 
@@ -63,6 +65,9 @@ function prepareElements () {
         const minMatch = classArray.find(c => c.startsWith('min-font-size-'))?.match(/^min-font-size-\[([^\]]+)\]$/);
         const minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
 
+        const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
+        const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
+
         const maxWidthPt = convertToPt(maxWidth);
         // const maxFontSizePt = convertToPt(maxFontSize);
 
@@ -71,6 +76,7 @@ function prepareElements () {
             maxWidthPt: maxWidthPt,
             maxFontSizePt: maxFontSizePt,
             minFontSizePt: minFontSizePt,
+            maxRows: maxRows,
         };
 
         // element.style.fontSize = "1pt";

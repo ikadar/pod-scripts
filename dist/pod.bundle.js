@@ -246,7 +246,10 @@ this.Pod = (function() {
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function squeeze(s) {
-    console.log(getTextNodeLineCount(s.element.childNodes[0]));
+    var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    if (rowCount <= s.maxRows) {
+      return;
+    }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), actualFontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
@@ -269,7 +272,7 @@ this.Pod = (function() {
   function prepareElements() {
     var elements = getElementsToSqueeze();
     elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2;
+      var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
@@ -284,12 +287,17 @@ this.Pod = (function() {
         return c.startsWith("min-font-size-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-font-size-\[([^\]]+)\]$/);
       var minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
+      var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
+        return c.startsWith("max-rows-");
+      })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
+      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
       var maxWidthPt = convertToPt(maxWidth);
       elementsToSqueeze[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxFontSizePt: maxFontSizePt,
-        minFontSizePt: minFontSizePt
+        minFontSizePt: minFontSizePt,
+        maxRows: maxRows
       };
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
