@@ -6,7 +6,7 @@ const elementsToSqueeze = [];
 function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
 
     const scale = maxWidthPt / actualWidthPt;
-    const newFontSizePt = scale;
+    const newFontSizePt = parseFloat(actualFontSizePt) * scale;
     // return newFontSizePt;
     return Math.min(newFontSizePt, maxFontSizePt);
 }

@@ -255,7 +255,7 @@ this.Pod = (function() {
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     var scale = maxWidthPt / actualWidthPt;
-    var newFontSizePt = scale;
+    var newFontSizePt = parseFloat(actualFontSizePt) * scale;
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function squeeze(s) {
