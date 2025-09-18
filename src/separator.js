@@ -4,6 +4,17 @@ const handleSeparators = () => {
 
     logInfo("HANDLING SEPARATORS");
 
+    const results = Array.from(document.querySelectorAll('[class*="separator-["]'))
+        .map(el => {
+            const m = el.className.match(/separator-\[([^\]]+)\]/);
+            return m ? { element: el, value: m[1] } : null;
+        })
+        .filter(Boolean);
+
+    results.forEach(({ element, value }) => {
+        console.log(`Element:`, element, ` → value:`, value);
+    });
+
     const separatorNodeList = document.querySelectorAll(".separator");
     const separators = Array.from(separatorNodeList);
 

@@ -15,6 +15,17 @@ this.Pod = (function() {
   }
   var handleSeparators = function handleSeparators2() {
     logInfo("HANDLING SEPARATORS");
+    var results = Array.from(document.querySelectorAll('[class*="separator-["]')).map(function(el) {
+      var m = el.className.match(/separator-\[([^\]]+)\]/);
+      return m ? {
+        element: el,
+        value: m[1]
+      } : null;
+    }).filter(Boolean);
+    results.forEach(function(_ref) {
+      var element = _ref.element, value = _ref.value;
+      console.log("Element:", element, " → value:", value);
+    });
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
     separators.map(function(separator) {
