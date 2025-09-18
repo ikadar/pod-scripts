@@ -78,7 +78,7 @@ function prepareElements () {
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
         element.style.maxWidth = "";
-        element.style.whiteSpace = "nowrap";
+        // element.style.whiteSpace = "nowrap";
 
     });
 }
