@@ -60,7 +60,6 @@ function prepareElements () {
         const minMatch = classArray.find(c => c.startsWith('min-font-size-'))?.match(/^min-font-size-\[([^\]]+)\]$/);
         const minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
 
-
         const maxWidthPt = convertToPt(maxWidth);
         // const maxFontSizePt = convertToPt(maxFontSize);
 
@@ -71,7 +70,7 @@ function prepareElements () {
             minFontSizePt: minFontSizePt,
         };
 
-        element.style.fontSize = "10pt";
+        // element.style.fontSize = "1pt";
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
