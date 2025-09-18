@@ -17,7 +17,10 @@ function squeeze (s) {
     console.log(getTextNodeLineCount(s.element.childNodes[0]));
     // return;
 
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
+    const actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
+
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), actualFontSize);
+    // var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
