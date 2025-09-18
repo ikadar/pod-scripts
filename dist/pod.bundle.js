@@ -250,7 +250,13 @@ this.Pod = (function() {
     return value * conversionFactors[unit];
   }
   function getElementBoxWidth(el) {
-    return convertToPt(el.getBoundingClientRect().width + "px");
+    var computedStyle = window.getComputedStyle(el);
+    el.style.maxWidth = "";
+    el.style.whiteSpace = "nowrap";
+    var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
+    el.style.maxWidth = computedStyle.maxWidth;
+    el.style.whiteSpace = computedStyle.whiteSpace;
+    return boxWidth;
   }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
@@ -307,7 +313,6 @@ this.Pod = (function() {
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
-      element.style.maxWidth = "";
     });
   }
   function getTextNodeLineCount(textNode) {

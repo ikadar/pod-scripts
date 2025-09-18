@@ -77,7 +77,7 @@ function prepareElements () {
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
-        element.style.maxWidth = "";
+        // element.style.maxWidth = "";
         // element.style.whiteSpace = "nowrap";
 
     });
