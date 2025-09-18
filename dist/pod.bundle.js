@@ -253,9 +253,17 @@ this.Pod = (function() {
     return convertToPt(el.getBoundingClientRect().width + "px");
   }
   var elementsToSqueeze = [];
+  function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
+    var scale = maxWidthPt / actualWidthPt;
+    var newFontSizePt = scale;
+    return Math.min(newFontSizePt, maxFontSizePt);
+  }
   function squeeze(s) {
     console.log(getTextNodeLineCount(s.element.childNodes[0]));
-    return;
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
+    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
+    s.element.style.fontSize = newFontSizePt.toString() + "pt";
+    s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function getElementsToSqueeze() {
     var squeezeElements = document.querySelectorAll(".squeeze");
@@ -295,7 +303,6 @@ this.Pod = (function() {
         maxFontSizePt: maxFontSizePt,
         minFontSizePt: minFontSizePt
       };
-      element.style.fontSize = "1pt";
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
