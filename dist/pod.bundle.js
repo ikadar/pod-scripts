@@ -25,6 +25,10 @@ this.Pod = (function() {
     results.forEach(function(_ref) {
       var element = _ref.element, value = _ref.value;
       console.log("Element:", element, " → value:", value);
+      var textNodes = getAllTextNodes(element);
+      textNodes.forEach(function(node) {
+        return wrapMatchesInTextNode(node, value);
+      });
     });
     var separatorNodeList = document.querySelectorAll(".separator");
     var separators = Array.from(separatorNodeList);
@@ -59,6 +63,38 @@ this.Pod = (function() {
       }
     });
   };
+  function getAllTextNodes(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    var n;
+    while (n = walker.nextNode()) nodes.push(n);
+    return nodes;
+  }
+  function wrapMatchesInTextNode(textNode, value) {
+    if (!value) return;
+    var text = textNode.nodeValue;
+    var valLen = value.length;
+    if (valLen === 0) return;
+    var idx = text.indexOf(value);
+    if (idx === -1) return;
+    var frag = document.createDocumentFragment();
+    var start = 0;
+    while (idx !== -1) {
+      if (idx > start) {
+        frag.appendChild(document.createTextNode(text.slice(start, idx)));
+      }
+      var span = document.createElement("span");
+      span.className = "separator";
+      span.textContent = value;
+      frag.appendChild(span);
+      start = idx + valLen;
+      idx = text.indexOf(value, start);
+    }
+    if (start < text.length) {
+      frag.appendChild(document.createTextNode(text.slice(start)));
+    }
+    textNode.parentNode.replaceChild(frag, textNode);
+  }
   var getYCoordinate = function getYCoordinate2(element) {
     return element.getBoundingClientRect().top;
   };
@@ -334,7 +370,6 @@ this.Pod = (function() {
     return squeezeElementsWithParams;
   }
   function prepareElementsForLetterSpacing() {
-    console.log("----------------------- prepareElementsForLetterSpacing");
     var elements = getElementsToSqueezeLetterSpacing();
     elements.map(function(element, index) {
       var _classArray$find, _classArray$find2;

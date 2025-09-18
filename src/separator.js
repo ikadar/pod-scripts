@@ -13,6 +13,8 @@ const handleSeparators = () => {
 
     results.forEach(({ element, value }) => {
         console.log(`Element:`, element, ` → value:`, value);
+        const textNodes = getAllTextNodes(element);
+        textNodes.forEach(node => wrapMatchesInTextNode(node, value));
     });
 
     const separatorNodeList = document.querySelectorAll(".separator");
@@ -55,6 +57,46 @@ const handleSeparators = () => {
 
     });
 };
+
+function getAllTextNodes(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    return nodes;
+}
+
+function wrapMatchesInTextNode(textNode, value) {
+    if (!value) return;
+    const text = textNode.nodeValue;
+    const valLen = value.length;
+    if (valLen === 0) return;
+
+    let idx = text.indexOf(value);
+    if (idx === -1) return; // nincs találat
+
+    const frag = document.createDocumentFragment();
+    let start = 0;
+
+    while (idx !== -1) {
+        if (idx > start) {
+            frag.appendChild(document.createTextNode(text.slice(start, idx)));
+        }
+        const span = document.createElement('span');
+        span.className = 'separator';
+        span.textContent = value; // pontos egyezés, nem HTML
+        frag.appendChild(span);
+
+        start = idx + valLen;
+        idx = text.indexOf(value, start);
+    }
+
+    if (start < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(start)));
+    }
+
+    textNode.parentNode.replaceChild(frag, textNode);
+}
 
 const getYCoordinate = (element) => {
     return element.getBoundingClientRect().top;

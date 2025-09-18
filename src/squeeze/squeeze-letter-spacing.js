@@ -104,7 +104,6 @@ function getElementsToSqueezeLetterSpacing () {
 
 // Preparation logic remains mostly the same
 function prepareElementsForLetterSpacing() {
-    console.log("----------------------- prepareElementsForLetterSpacing");
     const elements = getElementsToSqueezeLetterSpacing();
     elements.map(function (element, index) {
 
