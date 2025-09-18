@@ -247,7 +247,11 @@ this.Pod = (function() {
   }
   function squeeze(s) {
     var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows && maxRows > 1) {
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+      return;
+    }
+    if (s.maxRows > 1) {
+      fitTextToMaxRows(s.element.childNodes[0], s.maxRows);
       return;
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
@@ -290,19 +294,35 @@ this.Pod = (function() {
       var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
-      var maxRows2 = maxRowsMatch ? maxRowsMatch[1] : 1;
+      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
       var maxWidthPt = convertToPt(maxWidth);
       elementsToSqueeze[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxFontSizePt: maxFontSizePt,
         minFontSizePt: minFontSizePt,
-        maxRows: maxRows2
+        maxRows: maxRows
       };
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
     });
+  }
+  function fitTextToMaxRows(textNode, maxRowCount) {
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+    var parent = textNode.parentElement;
+    if (!parent) return;
+    var style = window.getComputedStyle(parent);
+    var currentFontSize = parseFloat(style.fontSize);
+    var iter = 0;
+    while (iter < maxIter) {
+      var rowCount = getTextNodeLineCount(textNode);
+      if (rowCount <= maxRowCount) break;
+      currentFontSize = Math.max(currentFontSize - step, minFontSize);
+      parent.style.fontSize = "".concat(currentFontSize, "px");
+      iter++;
+    }
   }
   function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;

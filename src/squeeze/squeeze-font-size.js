@@ -15,7 +15,12 @@ function squeeze (s) {
     // console.log(s);
 
     const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows && maxRows > 1) {
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+        return;
+    }
+
+    if (s.maxRows > 1) {
+        fitTextToMaxRows(s.element.childNodes[0], s.maxRows);
         return;
     }
 
@@ -90,6 +95,32 @@ function prepareElements () {
 }
 
 // ---------
+
+function fitTextToMaxRows(textNode, maxRowCount, {
+    minFontSize = 6,         // px
+    step = 0.5,              // mennyivel csökkentsen egy lépésben
+    maxIter = 50,            // végtelen ciklus elkerülésére
+} = {}) {
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+
+    const parent = textNode.parentElement;
+    if (!parent) return;
+
+    let style = window.getComputedStyle(parent);
+    let currentFontSize = parseFloat(style.fontSize); // px-ben
+    let iter = 0;
+
+    while (iter < maxIter) {
+        const rowCount = getTextNodeLineCount(textNode);
+        if (rowCount <= maxRowCount) break;
+
+        currentFontSize = Math.max(currentFontSize - step, minFontSize);
+        parent.style.fontSize = `${currentFontSize}px`;
+
+        iter++;
+    }
+}
+
 
 function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
