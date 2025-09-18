@@ -303,6 +303,7 @@ this.Pod = (function() {
         maxFontSizePt: maxFontSizePt,
         minFontSizePt: minFontSizePt
       };
+      element.style.fontSize = "1pt";
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
