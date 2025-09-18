@@ -27,7 +27,7 @@ this.Pod = (function() {
       console.log("Element:", element, " → value:", value);
       var textNodes = getAllTextNodes(element);
       textNodes.forEach(function(node) {
-        return wrapMatchesInTextNode(node, value);
+        return wrapMatchesWithSeparatorAndSegments(node, value);
       });
     });
     var separatorNodeList = document.querySelectorAll(".separator");
@@ -70,30 +70,48 @@ this.Pod = (function() {
     while (n = walker.nextNode()) nodes.push(n);
     return nodes;
   }
-  function wrapMatchesInTextNode(textNode, value) {
+  function wrapMatchesWithSeparatorAndSegments(textNode, value) {
+    var _textNode$parentNode;
     if (!value) return;
     var text = textNode.nodeValue;
     var valLen = value.length;
-    if (valLen === 0) return;
+    if (!valLen) return;
     var idx = text.indexOf(value);
     if (idx === -1) return;
     var frag = document.createDocumentFragment();
     var start = 0;
     while (idx !== -1) {
-      if (idx > start) {
-        frag.appendChild(document.createTextNode(text.slice(start, idx)));
+      var before = text.slice(start, idx);
+      var beforeTrim = before.trim();
+      if (beforeTrim.length > 0) {
+        var spanBefore = document.createElement("span");
+        spanBefore.textContent = beforeTrim;
+        frag.appendChild(spanBefore);
       }
-      var span = document.createElement("span");
-      span.className = "separator";
-      span.textContent = value;
-      frag.appendChild(span);
+      frag.appendChild(document.createTextNode(" "));
+      var sep = document.createElement("span");
+      sep.className = "separator";
+      sep.textContent = value;
+      frag.appendChild(sep);
+      frag.appendChild(document.createTextNode(" "));
       start = idx + valLen;
       idx = text.indexOf(value, start);
     }
-    if (start < text.length) {
-      frag.appendChild(document.createTextNode(text.slice(start)));
+    var after = text.slice(start);
+    var afterTrim = after.trim();
+    if (afterTrim.length > 0) {
+      var _after$match$, _after$match, _after$match$2, _after$match2;
+      var leadingWs = (_after$match$ = (_after$match = after.match(/^\s*/)) === null || _after$match === void 0 ? void 0 : _after$match[0]) !== null && _after$match$ !== void 0 ? _after$match$ : "";
+      var trailingWs = (_after$match$2 = (_after$match2 = after.match(/\s*$/)) === null || _after$match2 === void 0 ? void 0 : _after$match2[0]) !== null && _after$match$2 !== void 0 ? _after$match$2 : "";
+      if (leadingWs) frag.appendChild(document.createTextNode(leadingWs));
+      var spanAfter = document.createElement("span");
+      spanAfter.textContent = afterTrim;
+      frag.appendChild(spanAfter);
+      if (trailingWs) frag.appendChild(document.createTextNode(trailingWs));
+    } else {
+      if (after) frag.appendChild(document.createTextNode(after));
     }
-    textNode.parentNode.replaceChild(frag, textNode);
+    (_textNode$parentNode = textNode.parentNode) === null || _textNode$parentNode === void 0 || _textNode$parentNode.replaceChild(frag, textNode);
   }
   var getYCoordinate = function getYCoordinate2(element) {
     return element.getBoundingClientRect().top;
