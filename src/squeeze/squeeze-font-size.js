@@ -1,5 +1,5 @@
 import convertToPt from "../conversion";
-import {getElementBoxWidth} from "../measurement";
+import {getElementBoxWidth, getTextNodeLineCount} from "../measurement";
 
 const elementsToSqueeze = [];
 
@@ -124,19 +124,6 @@ function fitTextToMaxRows(textNode, maxRowCount, {
 
     console.log(iter);
 
-}
-
-
-function getTextNodeLineCount(textNode) {
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
-
-    const range = document.createRange();
-    range.selectNodeContents(textNode);
-
-    // Ez egy NodeList-szerű objektum, minden rect egy sor vagy fragment
-    const rects = range.getClientRects();
-
-    return rects.length;
 }
 
 export { prepareElements, squeezeAll };

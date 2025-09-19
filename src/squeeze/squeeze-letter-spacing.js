@@ -1,4 +1,4 @@
-import {getElementBoxWidth} from "../measurement";
+import {getElementBoxWidth, getTextNodeLineCount} from "../measurement";
 import convertToPt from "../conversion";
 
 const elementsToSqueezeSpacing = [];
@@ -69,6 +69,19 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
 }
 
 function squeezeLetterSpacing(s) {
+
+    const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+        return;
+    }
+
+    if (s.maxRows > 1) {
+        fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+            minFontSize: s.minFontSizePt
+        });
+        return;
+    }
+
 
     const newLetterSpacingPt = calculateSqueezedLetterSpacing(
         s.element,
