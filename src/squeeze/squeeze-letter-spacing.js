@@ -166,15 +166,15 @@ function fitLetterSpacingToMaxRows(textNode, maxRows, {
     if (!parent) return;
 
     const style = window.getComputedStyle(parent);
-    let currentSpacing = parseFloat(style.letterSpacing) || 0;
+    let currentSpacingPt = convertToPt(`${parseFloat(style.letterSpacing)}px`) || 0;
     let iter = 0;
 
     while (iter < maxIter) {
         const rowCount = getTextNodeLineCount(textNode);
         if (rowCount <= maxRows) break; // elértük vagy alatta vagyunk → kész
 
-        currentSpacing = Math.max(currentSpacing - step, minSpacing);
-        parent.style.letterSpacing = `${currentSpacing}px`;
+        currentSpacingPt = Math.max(currentSpacingPt - step, minSpacing);
+        parent.style.letterSpacing = `${currentSpacingPt}pt`;
 
         iter++;
     }

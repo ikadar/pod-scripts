@@ -463,13 +463,13 @@ this.Pod = (function() {
     var parent = textNode.parentElement;
     if (!parent) return;
     var style = window.getComputedStyle(parent);
-    var currentSpacing = parseFloat(style.letterSpacing) || 0;
+    var currentSpacingPt = convertToPt("".concat(parseFloat(style.letterSpacing), "px")) || 0;
     var iter = 0;
     while (iter < maxIter) {
       var rowCount = getTextNodeLineCount(textNode);
       if (rowCount <= maxRows) break;
-      currentSpacing = Math.max(currentSpacing - step, minSpacing);
-      parent.style.letterSpacing = "".concat(currentSpacing, "px");
+      currentSpacingPt = Math.max(currentSpacingPt - step, minSpacing);
+      parent.style.letterSpacing = "".concat(currentSpacingPt, "pt");
       iter++;
     }
     return currentSpacing;
