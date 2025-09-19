@@ -260,7 +260,7 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows$1(s.element.childNodes[0], s.maxRows, {
+      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
         minFontSize: s.minFontSizePt
       });
       return;
@@ -319,7 +319,7 @@ this.Pod = (function() {
       element.style.alignSelf = "flex-start";
     });
   }
-  function fitTextToMaxRows$1(textNode, maxRowCount) {
+  function fitTextToMaxRows(textNode, maxRowCount) {
     var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
     var parent = textNode.parentElement;
@@ -395,7 +395,7 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+      fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
         minFontSize: s.minFontSizePt
       });
       return;
@@ -456,6 +456,23 @@ this.Pod = (function() {
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
     });
+  }
+  function fitLetterSpacingToMaxRows(textNode, maxRows) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref2$minSpacing = _ref2.minSpacing, minSpacing = _ref2$minSpacing === void 0 ? -5 : _ref2$minSpacing, _ref2$step = _ref2.step, step = _ref2$step === void 0 ? 0.2 : _ref2$step, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 50 : _ref2$maxIter;
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+    var parent = textNode.parentElement;
+    if (!parent) return;
+    var style = window.getComputedStyle(parent);
+    var currentSpacing = parseFloat(style.letterSpacing) || 0;
+    var iter = 0;
+    while (iter < maxIter) {
+      var rowCount = getTextNodeLineCount(textNode);
+      if (rowCount <= maxRows) break;
+      currentSpacing = Math.max(currentSpacing - step, minSpacing);
+      parent.style.letterSpacing = "".concat(currentSpacing, "px");
+      iter++;
+    }
+    return currentSpacing;
   }
   var elementsToSqueezeScaling = [];
   function getElementsToScaling() {

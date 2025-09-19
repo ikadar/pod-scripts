@@ -76,7 +76,7 @@ function squeezeLetterSpacing(s) {
     }
 
     if (s.maxRows > 1) {
-        fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+        fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
             minFontSize: s.minFontSizePt
         });
         return;
@@ -153,6 +153,33 @@ function prepareElementsForLetterSpacing() {
         element.style.alignSelf = "flex-start";
         // element.style.whiteSpace = "nowrap"; // Prevent wrapping
     });
+}
+
+function fitLetterSpacingToMaxRows(textNode, maxRows, {
+    minSpacing = -5,   // px – alsó korlát
+    step = 0.2,        // px – ennyivel csökkentünk iterációnként
+    maxIter = 50,      // véd a végtelen ciklus ellen
+} = {}) {
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+
+    const parent = textNode.parentElement;
+    if (!parent) return;
+
+    const style = window.getComputedStyle(parent);
+    let currentSpacing = parseFloat(style.letterSpacing) || 0;
+    let iter = 0;
+
+    while (iter < maxIter) {
+        const rowCount = getTextNodeLineCount(textNode);
+        if (rowCount <= maxRows) break; // elértük vagy alatta vagyunk → kész
+
+        currentSpacing = Math.max(currentSpacing - step, minSpacing);
+        parent.style.letterSpacing = `${currentSpacing}px`;
+
+        iter++;
+    }
+
+    return currentSpacing; // visszaadja a végső értéket
 }
 
 export { prepareElementsForLetterSpacing, squeezeAllLetterSpacing };
