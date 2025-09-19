@@ -20,7 +20,8 @@ function convertToPt(size) {
 
     // Extract the numeric value and the unit from the size string
     // const match = size.match(/^([\d.]+)([a-z%]*)$/i);
-    const match = size.match(/^-?([\d.]+)([a-z%]*)$/i);
+    // const match = size.match(/^-?([\d.]+)([a-z%]*)$/i);
+    const match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
 
     if (!match) {
         throw new Error("Invalid size format: " + size);

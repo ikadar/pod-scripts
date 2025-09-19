@@ -216,7 +216,7 @@ this.Pod = (function() {
       rem: 16 * dpi
       // Assuming 1 rem ≈ 12 pt (adjust if needed)
     };
-    var match = size.match(/^-?([\d.]+)([a-z%]*)$/i);
+    var match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
     if (!match) {
       throw new Error("Invalid size format: " + size);
     }
