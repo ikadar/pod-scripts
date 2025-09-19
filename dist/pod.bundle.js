@@ -251,7 +251,9 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, s.minFontSizePt);
+      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+        minFontSize: s.minFontSizePt
+      });
       return;
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
