@@ -179,7 +179,7 @@ function fitLetterSpacingToMaxRows(textNode, maxRows, {
         iter++;
     }
 
-    return currentSpacing; // visszaadja a végső értéket
+    return currentSpacingPt; // visszaadja a végső értéket
 }
 
 export { prepareElementsForLetterSpacing, squeezeAllLetterSpacing };

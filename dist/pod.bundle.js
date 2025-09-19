@@ -472,7 +472,7 @@ this.Pod = (function() {
       parent.style.letterSpacing = "".concat(currentSpacingPt, "pt");
       iter++;
     }
-    return currentSpacing;
+    return currentSpacingPt;
   }
   var elementsToSqueezeScaling = [];
   function getElementsToScaling() {
