@@ -109,15 +109,15 @@ function fitTextToMaxRows(textNode, maxRowCount, {
     if (!parent) return;
 
     let style = window.getComputedStyle(parent);
-    let currentFontSize = parseFloat(style.fontSize); // px-ben
+    let currentFontSizePt = convertToPt(`${parseFloat(style.fontSize)}px`); // px-ben
     let iter = 0;
 
     while (iter < maxIter) {
         const rowCount = getTextNodeLineCount(textNode);
         if (rowCount <= maxRowCount) break;
 
-        currentFontSize = Math.max(currentFontSize - step, minFontSize);
-        parent.style.fontSize = `${currentFontSize}px`;
+        currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
+        parent.style.fontSize = `${currentFontSizePt}pt`;
 
         iter++;
     }

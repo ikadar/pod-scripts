@@ -316,13 +316,13 @@ this.Pod = (function() {
     var parent = textNode.parentElement;
     if (!parent) return;
     var style = window.getComputedStyle(parent);
-    var currentFontSize = parseFloat(style.fontSize);
+    var currentFontSizePt = convertToPt("".concat(parseFloat(style.fontSize), "px"));
     var iter = 0;
     while (iter < maxIter) {
       var rowCount = getTextNodeLineCount(textNode);
       if (rowCount <= maxRowCount) break;
-      currentFontSize = Math.max(currentFontSize - step, minFontSize);
-      parent.style.fontSize = "".concat(currentFontSize, "px");
+      currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
+      parent.style.fontSize = "".concat(currentFontSizePt, "pt");
       iter++;
     }
     console.log(iter);
