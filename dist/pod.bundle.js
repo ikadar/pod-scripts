@@ -233,10 +233,8 @@ this.Pod = (function() {
   function getElementBoxWidth(el) {
     var computedStyle = window.getComputedStyle(el);
     el.style.maxWidth = "";
-    el.style.whiteSpace = "nowrap";
     var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
     el.style.maxWidth = computedStyle.maxWidth;
-    el.style.whiteSpace = computedStyle.whiteSpace;
     return boxWidth;
   }
   function getTextNodeLineCount(textNode) {
