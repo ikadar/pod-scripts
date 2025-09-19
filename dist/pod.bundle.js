@@ -426,7 +426,7 @@ this.Pod = (function() {
   function prepareElementsForLetterSpacing() {
     var elements = getElementsToSqueezeLetterSpacing();
     elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2;
+      var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       if (!maxWidth || maxWidth === "none") {
         return;
@@ -441,11 +441,16 @@ this.Pod = (function() {
         return c.startsWith("min-letter-spacing-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-letter-spacing-\[([^\]]+)\]$/);
       var minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
+      var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
+        return c.startsWith("max-rows-");
+      })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
+      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
       elementsToSqueezeSpacing[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxLetterSpacingPt: maxLetterSpacingPt,
-        minLetterSpacingPt: minLetterSpacingPt
+        minLetterSpacingPt: minLetterSpacingPt,
+        maxRows: maxRows
       };
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";

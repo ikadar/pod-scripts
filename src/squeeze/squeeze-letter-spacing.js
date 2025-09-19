@@ -134,11 +134,15 @@ function prepareElementsForLetterSpacing() {
         const minMatch = classArray.find(c => c.startsWith('min-letter-spacing-'))?.match(/^min-letter-spacing-\[([^\]]+)\]$/);
         const minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
 
+        const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
+        const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
+
         elementsToSqueezeSpacing[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
             maxLetterSpacingPt: maxLetterSpacingPt,
             minLetterSpacingPt: minLetterSpacingPt,
+            maxRows: maxRows,
         };
 
         // element.style.letterSpacing = "0.1px";
