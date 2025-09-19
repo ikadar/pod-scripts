@@ -3,13 +3,16 @@ import convertToPt from "./conversion";
 function getElementBoxWidth (el) {
 
     const computedStyle = window.getComputedStyle(el);
+    const computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
+    const computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
+
     el.style.maxWidth = "";
     el.style.whiteSpace = "nowrap";
 
     const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
 
-    el.style.maxWidth = computedStyle.maxWidth;
-    el.style.whiteSpace = computedStyle.whiteSpace; //
+    el.style.maxWidth = computedMaxWidth;
+    el.style.whiteSpace = computedWhiteSpace; //
 
     return boxWidth;
 }

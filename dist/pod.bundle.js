@@ -232,11 +232,13 @@ this.Pod = (function() {
   }
   function getElementBoxWidth(el) {
     var computedStyle = window.getComputedStyle(el);
+    var computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
+    var computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
     el.style.maxWidth = "";
     el.style.whiteSpace = "nowrap";
     var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
-    el.style.maxWidth = computedStyle.maxWidth;
-    el.style.whiteSpace = computedStyle.whiteSpace;
+    el.style.maxWidth = computedMaxWidth;
+    el.style.whiteSpace = computedWhiteSpace;
     return boxWidth;
   }
   function getTextNodeLineCount(textNode) {
