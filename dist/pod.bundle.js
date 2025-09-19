@@ -396,7 +396,7 @@ this.Pod = (function() {
     }
     if (s.maxRows > 1) {
       fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
-        minFontSize: s.minFontSizePt
+        minFontSize: s.minLetterSpacingPt
       });
       return;
     }
