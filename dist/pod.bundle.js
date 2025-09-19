@@ -554,6 +554,7 @@ this.Pod = (function() {
     }
   }
   function runSqueeze() {
+    console.log("SQUEEZING");
     prepareElements();
     prepareElementsForLetterSpacing();
     prepareElementsForScaling();

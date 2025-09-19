@@ -4,6 +4,7 @@ import { prepareElementsForLetterSpacing, squeezeAllLetterSpacing } from "./sque
 import { prepareElementsForScaling, squeezeAllScaling } from "./squeeze/squeeze-scaling";
 
 function runSqueeze() {
+    console.log("SQUEEZING");
     prepareElements();
     prepareElementsForLetterSpacing();
     prepareElementsForScaling();
