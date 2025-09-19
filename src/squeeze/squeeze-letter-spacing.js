@@ -77,7 +77,7 @@ function squeezeLetterSpacing(s) {
 
     if (s.maxRows > 1) {
         fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
-            minFontSize: s.minLetterSpacingPt
+            minSpacing: s.minLetterSpacingPt
         });
         return;
     }
