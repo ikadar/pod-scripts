@@ -463,7 +463,7 @@ this.Pod = (function() {
     var parent = textNode.parentElement;
     if (!parent) return;
     var style = window.getComputedStyle(parent);
-    var currentSpacingPt = convertToPt("".concat(parseFloat(style.letterSpacing), "px")) || 0;
+    var currentSpacingPt = convertToPt("".concat(parseFloat(style.letterSpacing) || 0, "px"));
     var iter = 0;
     while (iter < maxIter) {
       var rowCount = getTextNodeLineCount(textNode);
