@@ -445,12 +445,9 @@ this.Pod = (function() {
         maxLetterSpacingPt: maxLetterSpacingPt,
         minLetterSpacingPt: minLetterSpacingPt
       };
-      element.style.letterSpacing = "0.1px";
-      element.style.maxWidth = "";
       element.style.display = "inline-block";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
-      element.style.whiteSpace = "nowrap";
     });
   }
   var elementsToSqueezeScaling = [];

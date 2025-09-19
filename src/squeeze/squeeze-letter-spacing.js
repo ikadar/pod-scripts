@@ -141,13 +141,13 @@ function prepareElementsForLetterSpacing() {
             minLetterSpacingPt: minLetterSpacingPt,
         };
 
-        element.style.letterSpacing = "0.1px";
-        element.style.maxWidth = "";
+        // element.style.letterSpacing = "0.1px";
+        // element.style.maxWidth = "";
         // element.style.width = "fit-content";
         element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
-        element.style.whiteSpace = "nowrap"; // Prevent wrapping
+        // element.style.whiteSpace = "nowrap"; // Prevent wrapping
     });
 }
 
