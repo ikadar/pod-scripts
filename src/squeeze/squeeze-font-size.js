@@ -20,7 +20,7 @@ function squeeze (s) {
     }
 
     if (s.maxRows > 1) {
-        fitTextToMaxRows(s.element.childNodes[0], s.maxRows);
+        fitTextToMaxRows(s.element.childNodes[0], s.maxRows, s.minFontSizePt);
         return;
     }
 
@@ -119,6 +119,9 @@ function fitTextToMaxRows(textNode, maxRowCount, {
 
         iter++;
     }
+
+    console.log(iter);
+
 }
 
 

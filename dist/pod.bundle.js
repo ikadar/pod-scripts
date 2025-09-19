@@ -251,7 +251,7 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element.childNodes[0], s.maxRows);
+      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, s.minFontSizePt);
       return;
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
@@ -323,6 +323,7 @@ this.Pod = (function() {
       parent.style.fontSize = "".concat(currentFontSize, "px");
       iter++;
     }
+    console.log(iter);
   }
   function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
