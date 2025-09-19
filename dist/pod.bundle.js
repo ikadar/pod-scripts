@@ -216,7 +216,7 @@ this.Pod = (function() {
       rem: 16 * dpi
       // Assuming 1 rem ≈ 12 pt (adjust if needed)
     };
-    var match = size.match(/^([\d.]+)([a-z%]*)$/i);
+    var match = size.match(/^-?([\d.]+)([a-z%]*)$/i);
     if (!match) {
       throw new Error("Invalid size format: " + size);
     }
@@ -239,6 +239,13 @@ this.Pod = (function() {
     el.style.whiteSpace = computedStyle.whiteSpace;
     return boxWidth;
   }
+  function getTextNodeLineCount(textNode) {
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
+    var range = document.createRange();
+    range.selectNodeContents(textNode);
+    var rects = range.getClientRects();
+    return rects.length;
+  }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     var scale = maxWidthPt / actualWidthPt;
@@ -251,7 +258,7 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+      fitTextToMaxRows$1(s.element.childNodes[0], s.maxRows, {
         minFontSize: s.minFontSizePt
       });
       return;
@@ -310,7 +317,7 @@ this.Pod = (function() {
       element.style.alignSelf = "flex-start";
     });
   }
-  function fitTextToMaxRows(textNode, maxRowCount) {
+  function fitTextToMaxRows$1(textNode, maxRowCount) {
     var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
     var parent = textNode.parentElement;
@@ -326,13 +333,6 @@ this.Pod = (function() {
       iter++;
     }
     console.log(iter);
-  }
-  function getTextNodeLineCount(textNode) {
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
-    var range = document.createRange();
-    range.selectNodeContents(textNode);
-    var rects = range.getClientRects();
-    return rects.length;
   }
   var elementsToSqueezeSpacing = [];
   function calculateSqueezedLetterSpacing(element, maxWidthPt) {
@@ -388,6 +388,16 @@ this.Pod = (function() {
     return guessPt;
   }
   function squeezeLetterSpacing(s) {
+    var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+      return;
+    }
+    if (s.maxRows > 1) {
+      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+        minFontSize: s.minFontSizePt
+      });
+      return;
+    }
     var newLetterSpacingPt = calculateSqueezedLetterSpacing(
       s.element,
       s.maxWidthPt
