@@ -80,7 +80,7 @@ function calculateSqueezedScale(
         pxToPt = 0.74999943307122,
         axis = 'x',         // 'x' vagy 'uniform'
         minScale = 0.2,
-        maxScale = 5,
+        maxScale = 1,
         epsilon = 0.05,
         maxIter = 5,
         setOrigin = true,
