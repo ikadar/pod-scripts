@@ -380,7 +380,7 @@ this.Pod = (function() {
     var actualWidthPt = getElementBoxWidth(s.element);
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-    newFontSizePt = Math.floor(newFontSizePt * 100) / 100;
+    newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
