@@ -266,7 +266,8 @@ this.Pod = (function() {
       return;
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), actualFontSize);
+    var actualWidthPt = getElementBoxWidth(s.element);
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     s.element.style.maxWidth = s.maxWidth + "pt";

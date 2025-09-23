@@ -27,8 +27,9 @@ function squeeze (s) {
     }
 
     const actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
+    const actualWidthPt = getElementBoxWidth(s.element);
 
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), actualFontSize);
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     // var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
