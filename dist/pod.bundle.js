@@ -645,7 +645,7 @@ this.Pod = (function() {
     var prevOrigin = element.style.transformOrigin || "";
     element.style.transform = "none";
     if (setOrigin) element.style.transformOrigin = "left center";
-    var baseWidthPx = element.getBoundingClientRect().width || 0;
+    var baseWidthPx = getElementBoxWidth(element) || 0;
     if (baseWidthPx <= 0) {
       element.style.transform = prevTransform;
       element.style.transformOrigin = prevOrigin;
@@ -655,7 +655,7 @@ this.Pod = (function() {
     var sy = axis === "uniform" ? sx : 1;
     element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
     for (var i = 0; i < maxIter; i++) {
-      var w = element.getBoundingClientRect().width;
+      var w = getElementBoxWidth(element);
       var diffPx = targetPx - w;
       if (Math.abs(toPt(diffPx)) <= epsilon) break;
       var factor = targetPx / (w || 1);

@@ -1,4 +1,5 @@
 import convertToPt from "../conversion";
+import {getElementBoxWidth} from "../measurement";
 
 const elementsToSqueezeScaling = [];
 
@@ -100,7 +101,8 @@ function calculateSqueezedScale(
     if (setOrigin) element.style.transformOrigin = 'left center';
 
     // 3) Nyers (skála nélküli) szélesség
-    const baseWidthPx = element.getBoundingClientRect().width || 0;
+    const baseWidthPx = getElementBoxWidth(element) || 0;
+    // const baseWidthPx = element.getBoundingClientRect().width || 0;
     if (baseWidthPx <= 0) {
         // nincs értelmezhető szélesség – ne robbanjon
         element.style.transform = prevTransform;
@@ -118,7 +120,8 @@ function calculateSqueezedScale(
 
     // 5) Finomhangolás (iteratív, gyors konvergencia)
     for (let i = 0; i < maxIter; i++) {
-        const w = element.getBoundingClientRect().width;
+        const w = getElementBoxWidth(element);
+        // const w = element.getBoundingClientRect().width;
         const diffPx = targetPx - w;
         if (Math.abs(toPt(diffPx)) <= epsilon) break;
 
