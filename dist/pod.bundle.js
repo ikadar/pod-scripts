@@ -10,7 +10,7 @@ this.Pod = (function() {
     }).filter(Boolean);
     results.forEach(function(_ref) {
       var element = _ref.element, value = _ref.value;
-      var textNodes = getAllTextNodes(element);
+      var textNodes = getAllTextNodes$1(element);
       textNodes.forEach(function(node) {
         return wrapMatchesWithSeparatorAndSegments(node, value);
       });
@@ -44,7 +44,7 @@ this.Pod = (function() {
       }
     });
   };
-  function getAllTextNodes(root) {
+  function getAllTextNodes$1(root) {
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     var nodes = [];
     var n;
@@ -230,6 +230,64 @@ this.Pod = (function() {
     }
     return value * conversionFactors[unit];
   }
+  function _arrayLikeToArray(r, a) {
+    (null == a || a > r.length) && (a = r.length);
+    for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+    return n;
+  }
+  function _createForOfIteratorHelper(r, e) {
+    var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (!t) {
+      if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e) {
+        t && (r = t);
+        var n = 0, F = function() {
+        };
+        return {
+          s: F,
+          n: function() {
+            return n >= r.length ? {
+              done: true
+            } : {
+              done: false,
+              value: r[n++]
+            };
+          },
+          e: function(r2) {
+            throw r2;
+          },
+          f: F
+        };
+      }
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+    var o, a = true, u = false;
+    return {
+      s: function() {
+        t = t.call(r);
+      },
+      n: function() {
+        var r2 = t.next();
+        return a = r2.done, r2;
+      },
+      e: function(r2) {
+        u = true, o = r2;
+      },
+      f: function() {
+        try {
+          a || null == t.return || t.return();
+        } finally {
+          if (u) throw o;
+        }
+      }
+    };
+  }
+  function _unsupportedIterableToArray(r, a) {
+    if (r) {
+      if ("string" == typeof r) return _arrayLikeToArray(r, a);
+      var t = {}.toString.call(r).slice(8, -1);
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+    }
+  }
   function getElementBoxWidth(el) {
     var computedStyle = window.getComputedStyle(el);
     var computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
@@ -248,6 +306,59 @@ this.Pod = (function() {
     var rects = range.getClientRects();
     return rects.length;
   }
+  function getAllTextNodes(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var out = [];
+    var n;
+    while (n = walker.nextNode()) {
+      if (n.nodeValue && n.nodeValue.trim().length) out.push(n);
+    }
+    return out;
+  }
+  function getRenderedLineCountForNode(node) {
+    var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.5 : _ref$epsilon;
+    if (!node) return 0;
+    var rects = [];
+    var _iterator = _createForOfIteratorHelper(getAllTextNodes(node)), _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+        var tn = _step.value;
+        var range = document.createRange();
+        range.selectNodeContents(tn);
+        var rlist = range.getClientRects();
+        for (var i = 0; i < rlist.length; i++) {
+          var _r = rlist[i];
+          if (_r.width > 0 && _r.height > 0) {
+            rects.push({
+              top: _r.top,
+              bottom: _r.bottom,
+              left: _r.left,
+              right: _r.right,
+              height: _r.height
+            });
+          }
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+    if (rects.length === 0) return 0;
+    rects.sort(function(a, b) {
+      return a.top - b.top;
+    });
+    var lines = 0;
+    var currentTop = rects[0].top;
+    for (var _i = 0, _rects = rects; _i < _rects.length; _i++) {
+      var r = _rects[_i];
+      if (Math.abs(r.top - currentTop) > epsilon) {
+        lines++;
+        currentTop = r.top;
+      }
+    }
+    return lines + 1;
+  }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     var scale = maxWidthPt / actualWidthPt;
@@ -255,7 +366,7 @@ this.Pod = (function() {
     return Math.min(newFontSizePt, maxFontSizePt);
   }
   function squeeze(s) {
-    var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    var rowCount = getRenderedLineCountForNode(s.element);
     if (rowCount <= s.maxRows && s.maxRows > 1) {
       return;
     }

@@ -1,5 +1,5 @@
 import convertToPt from "../conversion";
-import {getElementBoxWidth, getTextNodeLineCount} from "../measurement";
+import {getElementBoxWidth, getRenderedLineCountForNode, getTextNodeLineCount} from "../measurement";
 
 const elementsToSqueeze = [];
 
@@ -14,7 +14,8 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
 function squeeze (s) {
     // console.log(s);
 
-    const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+    const rowCount = getRenderedLineCountForNode(s.element);
+    // const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
     if (rowCount <= s.maxRows && s.maxRows > 1) {
         return;
     }
