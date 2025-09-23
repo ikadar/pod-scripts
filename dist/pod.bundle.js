@@ -633,32 +633,28 @@ this.Pod = (function() {
     });
   }
   function calculateSqueezedScale(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.74999943307122 : _ref$pxToPt, _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 5 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
-    var toPt = function toPt2(px) {
-      return px * pxToPt;
-    };
-    var toPx = function toPx2(pt) {
-      return pt / pxToPt;
-    };
-    var targetPx = toPx(maxWidthPt);
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+    _ref.pxToPt;
+    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 5 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
+    var targetPt = maxWidthPt;
     var prevTransform = element.style.transform || "";
     var prevOrigin = element.style.transformOrigin || "";
     element.style.transform = "none";
     if (setOrigin) element.style.transformOrigin = "left center";
-    var baseWidthPx = getElementBoxWidth(element) || 0;
-    if (baseWidthPx <= 0) {
+    var baseWidthPt = getElementBoxWidth(element) || 0;
+    if (baseWidthPt <= 0) {
       element.style.transform = prevTransform;
       element.style.transformOrigin = prevOrigin;
       return 1;
     }
-    var sx = clamp(targetPx / baseWidthPx, minScale, maxScale);
+    var sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
     var sy = axis === "uniform" ? sx : 1;
     element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
     for (var i = 0; i < maxIter; i++) {
       var w = getElementBoxWidth(element);
-      var diffPx = targetPx - w;
-      if (Math.abs(toPt(diffPx)) <= epsilon) break;
-      var factor = targetPx / (w || 1);
+      var diffPt = targetPt - w;
+      if (Math.abs(diffPt) <= epsilon) break;
+      var factor = targetPt / (w || 1);
       sx = clamp(sx * factor, minScale, maxScale);
       sy = axis === "uniform" ? sx : 1;
       element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();

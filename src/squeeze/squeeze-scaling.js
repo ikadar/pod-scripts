@@ -90,7 +90,8 @@ function calculateSqueezedScale(
     const toPx = (pt) => pt / pxToPt;
 
     // 1) Cél szélesség px-ben
-    const targetPx = toPx(maxWidthPt);
+    const targetPt = maxWidthPt;
+    // const targetPx = toPx(maxWidthPt);
 
     // 2) Eredeti transform elmentése, méréshez ideiglenesen kikapcsoljuk a skálát
     const prevTransform = element.style.transform || '';
@@ -101,9 +102,9 @@ function calculateSqueezedScale(
     if (setOrigin) element.style.transformOrigin = 'left center';
 
     // 3) Nyers (skála nélküli) szélesség
-    const baseWidthPx = getElementBoxWidth(element) || 0;
+    const baseWidthPt = getElementBoxWidth(element) || 0;
     // const baseWidthPx = element.getBoundingClientRect().width || 0;
-    if (baseWidthPx <= 0) {
+    if (baseWidthPt <= 0) {
         // nincs értelmezhető szélesség – ne robbanjon
         element.style.transform = prevTransform;
         element.style.transformOrigin = prevOrigin;
@@ -111,7 +112,7 @@ function calculateSqueezedScale(
     }
 
     // 4) Első becslés: arányos skála
-    let sx = clamp(targetPx / baseWidthPx, minScale, maxScale);
+    let sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
     let sy = (axis === 'uniform') ? sx : 1;
 
     // alkalmazzuk: a scale-t előre tesszük, a meglévő transform megmarad
@@ -122,11 +123,11 @@ function calculateSqueezedScale(
     for (let i = 0; i < maxIter; i++) {
         const w = getElementBoxWidth(element);
         // const w = element.getBoundingClientRect().width;
-        const diffPx = targetPx - w;
-        if (Math.abs(toPt(diffPx)) <= epsilon) break;
+        const diffPt = targetPt - w;
+        if (Math.abs(diffPt) <= epsilon) break;
 
         // multiplikatív korrekció: új sx = régi sx * (cél / mért)
-        const factor = targetPx / (w || 1);
+        const factor = targetPt / (w || 1);
         sx = clamp(sx * factor, minScale, maxScale);
         sy = (axis === 'uniform') ? sx : 1;
         element.style.transform = `scale(${sx}, ${sy})`.trim();
