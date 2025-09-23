@@ -100,26 +100,22 @@ function prepareElements () {
 
 // ---------
 
-function fitTextToMaxRows(textNode, maxRowCount, {
+function fitTextToMaxRows(element, maxRowCount, {
     minFontSize = 6,         // px
     step = 0.5,              // mennyivel csökkentsen egy lépésben
     maxIter = 50,            // végtelen ciklus elkerülésére
 } = {}) {
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
 
-    const parent = textNode.parentElement;
-    if (!parent) return;
-
-    let style = window.getComputedStyle(parent);
+    let style = window.getComputedStyle(element);
     let currentFontSizePt = convertToPt(`${parseFloat(style.fontSize)}px`); // px-ben
     let iter = 0;
 
     while (iter < maxIter) {
-        const rowCount = getTextNodeLineCount(textNode);
+        const rowCount = getRenderedLineCountForNode(element);
         if (rowCount <= maxRowCount) break;
 
         currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
-        parent.style.fontSize = `${currentFontSizePt}pt`;
+        element.style.fontSize = `${currentFontSizePt}pt`;
 
         iter++;
     }
@@ -128,4 +124,32 @@ function fitTextToMaxRows(textNode, maxRowCount, {
 
 }
 
+// function fitTextToMaxRows(textNode, maxRowCount, {
+//     minFontSize = 6,         // px
+//     step = 0.5,              // mennyivel csökkentsen egy lépésben
+//     maxIter = 50,            // végtelen ciklus elkerülésére
+// } = {}) {
+//     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+//
+//     const parent = textNode.parentElement;
+//     if (!parent) return;
+//
+//     let style = window.getComputedStyle(parent);
+//     let currentFontSizePt = convertToPt(`${parseFloat(style.fontSize)}px`); // px-ben
+//     let iter = 0;
+//
+//     while (iter < maxIter) {
+//         const rowCount = getTextNodeLineCount(textNode);
+//         if (rowCount <= maxRowCount) break;
+//
+//         currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
+//         parent.style.fontSize = `${currentFontSizePt}pt`;
+//
+//         iter++;
+//     }
+//
+//     console.log(iter);
+//
+// }
+//
 export { prepareElements, squeezeAll };

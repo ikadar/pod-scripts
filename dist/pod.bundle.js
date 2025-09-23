@@ -431,19 +431,16 @@ this.Pod = (function() {
       element.style.alignSelf = "flex-start";
     });
   }
-  function fitTextToMaxRows(textNode, maxRowCount) {
+  function fitTextToMaxRows(element, maxRowCount) {
     var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
-    var parent = textNode.parentElement;
-    if (!parent) return;
-    var style = window.getComputedStyle(parent);
+    var style = window.getComputedStyle(element);
     var currentFontSizePt = convertToPt("".concat(parseFloat(style.fontSize), "px"));
     var iter = 0;
     while (iter < maxIter) {
-      var rowCount = getTextNodeLineCount(textNode);
+      var rowCount = getRenderedLineCountForNode(element);
       if (rowCount <= maxRowCount) break;
       currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
-      parent.style.fontSize = "".concat(currentFontSizePt, "pt");
+      element.style.fontSize = "".concat(currentFontSizePt, "pt");
       iter++;
     }
     console.log(iter);
