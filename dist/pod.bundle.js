@@ -382,6 +382,7 @@ this.Pod = (function() {
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
+    console.log(getRenderedLineCountForNode(s.element));
     s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function getElementsToSqueeze() {
