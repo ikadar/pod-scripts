@@ -37,7 +37,10 @@ function squeeze (s) {
     newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
 
-    console.log(getRenderedLineCountForNode(s.element));
+    while (getRenderedLineCountForNode(s.element) > 1) {
+        newFontSizePt -= 0.1;
+        s.element.style.fontSize = newFontSizePt.toString() + "pt";
+    }
 
     s.element.style.maxWidth = s.maxWidth + "pt";
 }
