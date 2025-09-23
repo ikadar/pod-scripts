@@ -371,7 +371,7 @@ this.Pod = (function() {
       return;
     }
     if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element.childNodes[0], s.maxRows, {
+      fitTextToMaxRows(s.element, s.maxRows, {
         minFontSize: s.minFontSizePt
       });
       return;
