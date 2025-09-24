@@ -712,7 +712,9 @@ this.Pod = (function() {
         templateScripts();
       }
     }
-    init();
+    document.addEventListener("DOMContentLoaded", function(event) {
+      init();
+    });
     console.log("INIT END");
     window.__PROCESSING_DONE__ = true;
   }

@@ -25,7 +25,9 @@ function addPodScripts() {
         }
     }
 
-    init();
+    document.addEventListener("DOMContentLoaded", (event) => {
+        init();
+    });
 
     console.log("INIT END");
 
