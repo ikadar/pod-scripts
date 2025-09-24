@@ -34,7 +34,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     if (document.getElementsByTagName('body').length === 0) {
         const body = document.createElement("body");
-        document.appendChild(body);
+        document.documentElement.appendChild(body);
     }
 
     document.getElementsByTagName('body')[0].outerHTML = html;
