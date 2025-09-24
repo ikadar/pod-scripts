@@ -21,9 +21,9 @@ function addPodScripts(data) {
         const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 
-        if (!rendered) {
+        // if (!rendered) {
             templateScripts();
-        }
+        // }
     }
 
     document.addEventListener("DOMContentLoaded", (event) => {
