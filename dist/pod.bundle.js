@@ -115,7 +115,8 @@ this.Pod = (function() {
       data: source
     });
     var html = renderer.render(safeData);
-    document.documentElement.outerHTML = html;
+    console.log("rendered template", html);
+    document.getElementsByTagName("body")[0].outerHTML = html;
     templateScripts$1();
     if (sendData) {
       window.parent.postMessage({

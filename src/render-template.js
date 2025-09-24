@@ -31,14 +31,9 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     });
 
     const html = renderer.render(safeData);
+    console.log("rendered template", html);
 
-    // if (document.getElementsByTagName('body').length === 0) {
-    //     const body = document.createElement("body");
-    //     document.documentElement.appendChild(body);
-    // }
-
-    document.documentElement.outerHTML = html;
-    // document.getElementsByTagName('body')[0].outerHTML = html;
+    document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
     templateScripts();
 
