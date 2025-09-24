@@ -102,31 +102,6 @@ this.Pod = (function() {
   var setTemplateScripts = function setTemplateScripts2(scripts) {
     templateScripts$1 = scripts;
   };
-  window.addEventListener("message", function(event) {
-    var sourceNode = document.getElementById("entry-template");
-    if (!event.data.data || !sourceNode) {
-      return;
-    }
-    var data = {};
-    Object.keys(event.data.data).map(function(key) {
-      if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
-        data[key] = event.data.data[key][0].label;
-      } else {
-        data[key] = event.data.data[key];
-      }
-    });
-    if (event.data.msgId === "dataChanged") {
-      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, false);
-      zoom(event.data.zoom / 100);
-    }
-    if (event.data.msgId === "getRenderedMarkup") {
-      renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, true);
-      zoom(event.data.zoom / 100);
-    }
-    if (event.data.msgId === "zoom") {
-      zoom(event.data.data / 100);
-    }
-  });
   function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     var sourceNode = document.getElementById("entry-template");
     if (!sourceNode) {
@@ -695,6 +670,33 @@ this.Pod = (function() {
     squeezeAllLetterSpacing();
     squeezeAllScaling();
   }
+  function addPostMessageHandler() {
+    window.addEventListener("message", function(event) {
+      var sourceNode = document.getElementById("entry-template");
+      if (!event.data.data || !sourceNode) {
+        return;
+      }
+      var data = {};
+      Object.keys(event.data.data).map(function(key) {
+        if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
+          data[key] = event.data.data[key][0].label;
+        } else {
+          data[key] = event.data.data[key];
+        }
+      });
+      if (event.data.msgId === "dataChanged") {
+        renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, false);
+        zoom(event.data.zoom / 100);
+      }
+      if (event.data.msgId === "getRenderedMarkup") {
+        renderTemplate(data, event.data.templateId, event.data.orderLineUuid, event.data.options, true);
+        zoom(event.data.zoom / 100);
+      }
+      if (event.data.msgId === "zoom") {
+        zoom(event.data.data / 100);
+      }
+    });
+  }
   var templateScripts = function templateScripts2() {
     smartCaps();
     runSqueeze();
@@ -703,6 +705,7 @@ this.Pod = (function() {
   function addPodScripts() {
     function init() {
       setTemplateScripts(templateScripts);
+      addPostMessageHandler();
       var rendered = renderTemplate({});
       if (!rendered) {
         templateScripts();
