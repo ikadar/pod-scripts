@@ -703,17 +703,17 @@ this.Pod = (function() {
     runSqueeze();
     handleSeparators();
   };
-  function addPodScripts() {
-    function init() {
+  function addPodScripts(data) {
+    function init(data2) {
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
-      var rendered = renderTemplate({});
+      var rendered = renderTemplate(data2);
       if (!rendered) {
         templateScripts();
       }
     }
     document.addEventListener("DOMContentLoaded", function(event) {
-      init();
+      init(data);
     });
     console.log("INIT END");
     window.__PROCESSING_DONE__ = true;

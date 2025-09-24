@@ -10,15 +10,16 @@ const templateScripts = () => {
     handleSeparators();
 }
 
-function addPodScripts() {
+function addPodScripts(data) {
 
-    function init() {
+    function init(data) {
 
         setTemplateScripts(templateScripts);
 
         addPostMessageHandler();
 
-        const rendered = renderTemplate({});
+        const rendered = renderTemplate(data);
+        // const rendered = renderTemplate({});
 
         if (!rendered) {
             templateScripts();
@@ -26,7 +27,7 @@ function addPodScripts() {
     }
 
     document.addEventListener("DOMContentLoaded", (event) => {
-        init();
+        init(data);
     });
 
     console.log("INIT END");
