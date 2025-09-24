@@ -32,6 +32,11 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     const html = renderer.render(safeData);
 
+    if (document.getElementsByTagName('body').length === 0) {
+        const body = document.createElement("body");
+        document.appendChild(body);
+    }
+
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();
     templateScripts();
