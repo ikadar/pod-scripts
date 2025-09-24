@@ -712,6 +712,7 @@ this.Pod = (function() {
       }
     }
     init();
+    console.log("INIT END");
     window.__PROCESSING_DONE__ = true;
   }
   return addPodScripts;

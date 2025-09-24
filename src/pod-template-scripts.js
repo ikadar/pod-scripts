@@ -27,6 +27,8 @@ function addPodScripts() {
 
     init();
 
+    console.log("INIT END");
+
     window.__PROCESSING_DONE__ = true;
 }
 
