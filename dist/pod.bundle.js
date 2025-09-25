@@ -830,6 +830,7 @@ this.Pod = (function() {
             return _context.a(2, 1);
           case 3:
             sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
+            console.log("sx1: ".concat(sx));
             sy = axis === "uniform" ? sx : 1;
             element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
             i = 0;
@@ -857,6 +858,7 @@ this.Pod = (function() {
             break;
           case 7:
             if (!setOrigin) element.style.transformOrigin = prevOrigin;
+            console.log("sx2: ".concat(sx));
             return _context.a(2, sx);
         }
       }, _callee);

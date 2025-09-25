@@ -113,6 +113,7 @@ async function calculateSqueezedScale(
 
     // 4) Első becslés: arányos skála
     let sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
+    console.log(`sx1: ${sx}`);
     let sy = (axis === 'uniform') ? sx : 1;
 
     // alkalmazzuk: a scale-t előre tesszük, a meglévő transform megmarad
@@ -137,6 +138,7 @@ async function calculateSqueezedScale(
     // (opcionális) ha nem akarsz origin-t hagyni:
     if (!setOrigin) element.style.transformOrigin = prevOrigin;
 
+    console.log(`sx2: ${sx}`);
     return sx;
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
