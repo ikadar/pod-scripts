@@ -420,7 +420,6 @@ this.Pod = (function() {
             _context.p = 6;
             el.style.maxWidth = "none";
             el.style.whiteSpace = "nowrap";
-            el.style.transform = "none";
             el.offsetWidth;
             wPx = el.getBoundingClientRect().width;
             return _context.a(2, convertToPt("".concat(wPx, "px")));
@@ -428,7 +427,6 @@ this.Pod = (function() {
             _context.p = 7;
             el.style.maxWidth = prev.maxWidth;
             el.style.whiteSpace = prev.whiteSpace;
-            el.style.transform = prev.transform;
             return _context.f(7);
           case 8:
             return _context.a(2);
