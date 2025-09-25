@@ -531,8 +531,8 @@ this.Pod = (function() {
             return getElementBoxWidth(s.element);
           case 3:
             actualWidthPt = _context.v;
-            console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
             newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
+            console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(newFontSizePt, " | ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
             newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
             newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
             s.element.style.fontSize = newFontSizePt.toString() + "pt";

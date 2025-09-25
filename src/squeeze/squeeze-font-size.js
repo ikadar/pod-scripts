@@ -30,9 +30,9 @@ async function squeeze (s) {
 
     const actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
     const actualWidthPt = await getElementBoxWidth(s.element);
-    console.log(`${s.element.id}: ${actualFontSize} - ${actualWidthPt} - ${s.maxWidthPt}`);
 
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
+    console.log(`${s.element.id}: ${actualFontSize} - ${newFontSizePt} | ${actualWidthPt} - ${s.maxWidthPt}`);
     // var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, getElementBoxWidth(s.element), s.element.style.fontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
