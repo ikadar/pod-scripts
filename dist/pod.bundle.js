@@ -270,7 +270,6 @@ this.Pod = (function() {
     el.style.maxWidth = "";
     el.style.whiteSpace = "nowrap";
     var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
-    console.log("".concat(el.id, ": ").concat(boxWidth));
     el.style.maxWidth = computedMaxWidth;
     el.style.whiteSpace = computedWhiteSpace;
     return boxWidth;
@@ -354,6 +353,7 @@ this.Pod = (function() {
     }
     var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
     var actualWidthPt = getElementBoxWidth(s.element);
+    console.log("".concat(s.element, ": ").concat(actualFontSize, " - ").concat(actualWidthPt));
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
     newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
