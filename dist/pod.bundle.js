@@ -708,7 +708,6 @@ this.Pod = (function() {
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
       renderTemplate(data2);
-      templateScripts();
     }
     document.addEventListener("DOMContentLoaded", function(event) {
       init(data);

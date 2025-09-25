@@ -22,7 +22,7 @@ function addPodScripts(data) {
         // const rendered = renderTemplate({});
 
         // if (!rendered) {
-            templateScripts();
+        //     templateScripts();
         // }
     }
 
