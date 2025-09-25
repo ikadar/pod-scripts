@@ -24,7 +24,7 @@ async function getElementBoxWidth(el) {
         // 3) mérési állapot
         el.style.maxWidth   = 'none';
         el.style.whiteSpace = 'nowrap';
-        // el.style.transform  = 'none'; // scale/rotate ne torzítson
+        el.style.transform  = 'none'; // scale/rotate ne torzítson
 
         // 4) reflow trigger (biztos ami biztos)
         // eslint-disable-next-line no-unused-expressions
@@ -37,7 +37,7 @@ async function getElementBoxWidth(el) {
         // 6) visszaállítás
         el.style.maxWidth   = prev.maxWidth;
         el.style.whiteSpace = prev.whiteSpace;
-        // el.style.transform  = prev.transform;
+        el.style.transform  = prev.transform;
     }
 }
 
