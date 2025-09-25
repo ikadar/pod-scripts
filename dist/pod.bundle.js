@@ -270,7 +270,7 @@ this.Pod = (function() {
     el.style.maxWidth = "";
     el.style.whiteSpace = "nowrap";
     var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
-    console.log(boxWidth);
+    console.log("".concat(el.id, ": ").concat(boxWidth));
     el.style.maxWidth = computedMaxWidth;
     el.style.whiteSpace = computedWhiteSpace;
     return boxWidth;
