@@ -122,7 +122,7 @@ async function calculateSqueezedScale(
 
     // 5) Finomhangolás (iteratív, gyors konvergencia)
     for (let i = 0; i < maxIter; i++) {
-        const w = getElementBoxWidth(element);
+        const w = await getElementBoxWidth(element);
         // const w = element.getBoundingClientRect().width;
         const diffPt = targetPt - w;
         if (Math.abs(diffPt) <= epsilon) break;

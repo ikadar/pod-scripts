@@ -836,27 +836,30 @@ this.Pod = (function() {
             i = 0;
           case 4:
             if (!(i < maxIter)) {
-              _context.n = 7;
+              _context.n = 8;
               break;
             }
-            w = getElementBoxWidth(element);
+            _context.n = 5;
+            return getElementBoxWidth(element);
+          case 5:
+            w = _context.v;
             diffPt = targetPt - w;
             if (!(Math.abs(diffPt) <= epsilon)) {
-              _context.n = 5;
+              _context.n = 6;
               break;
             }
-            return _context.a(3, 7);
-          case 5:
+            return _context.a(3, 8);
+          case 6:
             factor = targetPt / (w || 1);
             sx = clamp(sx * factor, minScale, maxScale);
             sy = axis === "uniform" ? sx : 1;
             element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
           // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
-          case 6:
+          case 7:
             i++;
             _context.n = 4;
             break;
-          case 7:
+          case 8:
             if (!setOrigin) element.style.transformOrigin = prevOrigin;
             console.log("sx2: ".concat(sx));
             return _context.a(2, sx);
