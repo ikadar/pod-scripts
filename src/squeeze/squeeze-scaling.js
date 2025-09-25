@@ -73,7 +73,7 @@ function prepareElementsForScaling() {
  *
  * @returns {number}    - a végső X scale érték
  */
-function calculateSqueezedScale(
+async function calculateSqueezedScale(
     element,
     maxWidthPt,
     {
@@ -102,7 +102,7 @@ function calculateSqueezedScale(
     if (setOrigin) element.style.transformOrigin = 'left center';
 
     // 3) Nyers (skála nélküli) szélesség
-    const baseWidthPt = getElementBoxWidth(element) || 0;
+    const baseWidthPt = await getElementBoxWidth(element) || 0;
     // const baseWidthPx = element.getBoundingClientRect().width || 0;
     if (baseWidthPt <= 0) {
         // nincs értelmezhető szélesség – ne robbanjon

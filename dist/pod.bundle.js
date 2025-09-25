@@ -792,38 +792,76 @@ this.Pod = (function() {
       element.style.maxWidth = "";
     });
   }
-  function calculateSqueezedScale(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-    _ref.pxToPt;
-    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
-    var targetPt = maxWidthPt;
-    var prevTransform = element.style.transform || "";
-    var prevOrigin = element.style.transformOrigin || "";
-    element.style.transform = "none";
-    if (setOrigin) element.style.transformOrigin = "left center";
-    var baseWidthPt = getElementBoxWidth(element) || 0;
-    if (baseWidthPt <= 0) {
-      element.style.transform = prevTransform;
-      element.style.transformOrigin = prevOrigin;
-      return 1;
-    }
-    var sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
-    var sy = axis === "uniform" ? sx : 1;
-    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-    for (var i = 0; i < maxIter; i++) {
-      var w = getElementBoxWidth(element);
-      var diffPt = targetPt - w;
-      if (Math.abs(diffPt) <= epsilon) break;
-      var factor = targetPt / (w || 1);
-      sx = clamp(sx * factor, minScale, maxScale);
-      sy = axis === "uniform" ? sx : 1;
-      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-    }
-    if (!setOrigin) element.style.transformOrigin = prevOrigin;
-    return sx;
-    function clamp(v, lo, hi) {
-      return Math.max(lo, Math.min(hi, v));
-    }
+  function calculateSqueezedScale(_x, _x2) {
+    return _calculateSqueezedScale.apply(this, arguments);
+  }
+  function _calculateSqueezedScale() {
+    _calculateSqueezedScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(element, maxWidthPt) {
+      var _ref, _ref$axis, axis, _ref$minScale, minScale, _ref$maxScale, maxScale, _ref$epsilon, epsilon, _ref$maxIter, maxIter, _ref$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args = arguments, _t;
+      return _regenerator().w(function(_context) {
+        while (1) switch (_context.n) {
+          case 0:
+            clamp = function _clamp(v, lo, hi) {
+              return Math.max(lo, Math.min(hi, v));
+            };
+            _ref = _args.length > 2 && _args[2] !== void 0 ? _args[2] : {}, _ref.pxToPt, _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
+            targetPt = maxWidthPt;
+            prevTransform = element.style.transform || "";
+            prevOrigin = element.style.transformOrigin || "";
+            element.style.transform = "none";
+            if (setOrigin) element.style.transformOrigin = "left center";
+            _context.n = 1;
+            return getElementBoxWidth(element);
+          case 1:
+            _t = _context.v;
+            if (_t) {
+              _context.n = 2;
+              break;
+            }
+            _t = 0;
+          case 2:
+            baseWidthPt = _t;
+            if (!(baseWidthPt <= 0)) {
+              _context.n = 3;
+              break;
+            }
+            element.style.transform = prevTransform;
+            element.style.transformOrigin = prevOrigin;
+            return _context.a(2, 1);
+          case 3:
+            sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
+            sy = axis === "uniform" ? sx : 1;
+            element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
+            i = 0;
+          case 4:
+            if (!(i < maxIter)) {
+              _context.n = 7;
+              break;
+            }
+            w = getElementBoxWidth(element);
+            diffPt = targetPt - w;
+            if (!(Math.abs(diffPt) <= epsilon)) {
+              _context.n = 5;
+              break;
+            }
+            return _context.a(3, 7);
+          case 5:
+            factor = targetPt / (w || 1);
+            sx = clamp(sx * factor, minScale, maxScale);
+            sy = axis === "uniform" ? sx : 1;
+            element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
+          // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
+          case 6:
+            i++;
+            _context.n = 4;
+            break;
+          case 7:
+            if (!setOrigin) element.style.transformOrigin = prevOrigin;
+            return _context.a(2, sx);
+        }
+      }, _callee);
+    }));
+    return _calculateSqueezedScale.apply(this, arguments);
   }
   function squeezeScale(s) {
     var _s$maxScale, _s$minScale;
