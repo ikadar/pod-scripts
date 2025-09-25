@@ -10,6 +10,7 @@ function getElementBoxWidth (el) {
     el.style.whiteSpace = "nowrap";
 
     const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
+    console.log(boxWidth);
 
     el.style.maxWidth = computedMaxWidth;
     el.style.whiteSpace = computedWhiteSpace; //

@@ -115,7 +115,6 @@ this.Pod = (function() {
       data: source
     });
     var html = renderer.render(safeData);
-    console.log("rendered template", html);
     document.getElementsByTagName("body")[0].outerHTML = html;
     templateScripts$1();
     if (sendData) {
@@ -271,6 +270,7 @@ this.Pod = (function() {
     el.style.maxWidth = "";
     el.style.whiteSpace = "nowrap";
     var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
+    console.log(boxWidth);
     el.style.maxWidth = computedMaxWidth;
     el.style.whiteSpace = computedWhiteSpace;
     return boxWidth;
@@ -713,7 +713,6 @@ this.Pod = (function() {
     document.addEventListener("DOMContentLoaded", function(event) {
       init(data);
     });
-    console.log("INIT END");
     window.__PROCESSING_DONE__ = true;
   }
   return addPodScripts;

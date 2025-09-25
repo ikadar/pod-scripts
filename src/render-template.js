@@ -31,7 +31,6 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     });
 
     const html = renderer.render(safeData);
-    console.log("rendered template", html);
 
     document.getElementsByTagName('body')[0].outerHTML = html;
     scriptFromTheTemplate();

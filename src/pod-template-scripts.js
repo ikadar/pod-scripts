@@ -30,8 +30,6 @@ function addPodScripts(data) {
         init(data);
     });
 
-    console.log("INIT END");
-
     window.__PROCESSING_DONE__ = true;
 }
 
