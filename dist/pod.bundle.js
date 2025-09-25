@@ -167,48 +167,33 @@ this.Pod = (function() {
     smartCaps2.forEach(function(smartCap) {
     });
   }
-  function convertToPt(size) {
-    var dpi = 74.999943307122;
-    var pointsPerInch = 72;
-    var conversionFactors = {
-      pt: 1,
-      // 1 pt = 1 pt
-      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
-      px: dpi / 100,
-      // px to pt depends on DPI
-      mm: 3.7795275591 * dpi / 100,
-      // 1 mm = 1 inch / 25.4
-      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
-      cm: pointsPerInch / 2.54,
-      // 1 cm = 1 inch / 2.54
-      in: 96 * dpi / 100,
-      // 1 inch = 72 pt
-      // in: pointsPerInch,          // 1 inch = 72 pt
-      pc: 16 * dpi,
-      // 1 pica (pc) = 12 pt
-      em: 16 * dpi,
-      // Assuming 1 em ≈ 12 pt (adjust if needed)
-      rem: 16 * dpi
-      // Assuming 1 rem ≈ 12 pt (adjust if needed)
-    };
-    var match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
-    if (!match) {
-      throw new Error("Invalid size format: " + size);
-    }
-    var value = parseFloat(match[1]);
-    var unit = match[2].toLowerCase();
-    if (!unit) {
-      unit = "px";
-    }
-    if (!conversionFactors[unit]) {
-      throw new Error("Unsupported unit: " + unit);
-    }
-    return value * conversionFactors[unit];
-  }
   function _arrayLikeToArray(r, a) {
     (null == a || a > r.length) && (a = r.length);
     for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
     return n;
+  }
+  function asyncGeneratorStep(n, t, e, r, o, a, c) {
+    try {
+      var i = n[a](c), u = i.value;
+    } catch (n2) {
+      return void e(n2);
+    }
+    i.done ? t(u) : Promise.resolve(u).then(r, o);
+  }
+  function _asyncToGenerator(n) {
+    return function() {
+      var t = this, e = arguments;
+      return new Promise(function(r, o) {
+        var a = n.apply(t, e);
+        function _next(n2) {
+          asyncGeneratorStep(a, r, o, _next, _throw, "next", n2);
+        }
+        function _throw(n2) {
+          asyncGeneratorStep(a, r, o, _next, _throw, "throw", n2);
+        }
+        _next(void 0);
+      });
+    };
   }
   function _createForOfIteratorHelper(r, e) {
     var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
@@ -256,6 +241,102 @@ this.Pod = (function() {
       }
     };
   }
+  function _regenerator() {
+    /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
+    var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag";
+    function i(r2, n2, o2, i2) {
+      var c2 = n2 && n2.prototype instanceof Generator ? n2 : Generator, u2 = Object.create(c2.prototype);
+      return _regeneratorDefine(u2, "_invoke", (function(r3, n3, o3) {
+        var i3, c3, u3, f2 = 0, p = o3 || [], y = false, G = {
+          p: 0,
+          n: 0,
+          v: e,
+          a: d,
+          f: d.bind(e, 4),
+          d: function(t2, r4) {
+            return i3 = t2, c3 = 0, u3 = e, G.n = r4, a;
+          }
+        };
+        function d(r4, n4) {
+          for (c3 = r4, u3 = n4, t = 0; !y && f2 && !o4 && t < p.length; t++) {
+            var o4, i4 = p[t], d2 = G.p, l = i4[2];
+            r4 > 3 ? (o4 = l === n4) && (u3 = i4[(c3 = i4[4]) ? 5 : (c3 = 3, 3)], i4[4] = i4[5] = e) : i4[0] <= d2 && ((o4 = r4 < 2 && d2 < i4[1]) ? (c3 = 0, G.v = n4, G.n = i4[1]) : d2 < l && (o4 = r4 < 3 || i4[0] > n4 || n4 > l) && (i4[4] = r4, i4[5] = n4, G.n = l, c3 = 0));
+          }
+          if (o4 || r4 > 1) return a;
+          throw y = true, n4;
+        }
+        return function(o4, p2, l) {
+          if (f2 > 1) throw TypeError("Generator is already running");
+          for (y && 1 === p2 && d(p2, l), c3 = p2, u3 = l; (t = c3 < 2 ? e : u3) || !y; ) {
+            i3 || (c3 ? c3 < 3 ? (c3 > 1 && (G.n = -1), d(c3, u3)) : G.n = u3 : G.v = u3);
+            try {
+              if (f2 = 2, i3) {
+                if (c3 || (o4 = "next"), t = i3[o4]) {
+                  if (!(t = t.call(i3, u3))) throw TypeError("iterator result is not an object");
+                  if (!t.done) return t;
+                  u3 = t.value, c3 < 2 && (c3 = 0);
+                } else 1 === c3 && (t = i3.return) && t.call(i3), c3 < 2 && (u3 = TypeError("The iterator does not provide a '" + o4 + "' method"), c3 = 1);
+                i3 = e;
+              } else if ((t = (y = G.n < 0) ? u3 : r3.call(n3, G)) !== a) break;
+            } catch (t2) {
+              i3 = e, c3 = 1, u3 = t2;
+            } finally {
+              f2 = 1;
+            }
+          }
+          return {
+            value: t,
+            done: y
+          };
+        };
+      })(r2, o2, i2), true), u2;
+    }
+    var a = {};
+    function Generator() {
+    }
+    function GeneratorFunction() {
+    }
+    function GeneratorFunctionPrototype() {
+    }
+    t = Object.getPrototypeOf;
+    var c = [][n] ? t(t([][n]())) : (_regeneratorDefine(t = {}, n, function() {
+      return this;
+    }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
+    function f(e2) {
+      return Object.setPrototypeOf ? Object.setPrototypeOf(e2, GeneratorFunctionPrototype) : (e2.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine(e2, o, "GeneratorFunction")), e2.prototype = Object.create(u), e2;
+    }
+    return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine(u), _regeneratorDefine(u, o, "Generator"), _regeneratorDefine(u, n, function() {
+      return this;
+    }), _regeneratorDefine(u, "toString", function() {
+      return "[object Generator]";
+    }), (_regenerator = function() {
+      return {
+        w: i,
+        m: f
+      };
+    })();
+  }
+  function _regeneratorDefine(e, r, n, t) {
+    var i = Object.defineProperty;
+    try {
+      i({}, "", {});
+    } catch (e2) {
+      i = 0;
+    }
+    _regeneratorDefine = function(e2, r2, n2, t2) {
+      function o(r3, n3) {
+        _regeneratorDefine(e2, r3, function(e3) {
+          return this._invoke(r3, n3, e3);
+        });
+      }
+      r2 ? i ? i(e2, r2, {
+        value: n2,
+        enumerable: !t2,
+        configurable: !t2,
+        writable: !t2
+      }) : e2[r2] = n2 : (o("next", 0), o("throw", 1), o("return", 2));
+    }, _regeneratorDefine(e, r, n, t);
+  }
   function _unsupportedIterableToArray(r, a) {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray(r, a);
@@ -263,16 +344,98 @@ this.Pod = (function() {
       return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
     }
   }
-  function getElementBoxWidth(el) {
-    var computedStyle = window.getComputedStyle(el);
-    var computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
-    var computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
-    el.style.maxWidth = "";
-    el.style.whiteSpace = "nowrap";
-    var boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
-    el.style.maxWidth = computedMaxWidth;
-    el.style.whiteSpace = computedWhiteSpace;
-    return boxWidth;
+  function convertToPt(size) {
+    var dpi = 74.999943307122;
+    var pointsPerInch = 72;
+    var conversionFactors = {
+      pt: 1,
+      // 1 pt = 1 pt
+      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
+      px: dpi / 100,
+      // px to pt depends on DPI
+      mm: 3.7795275591 * dpi / 100,
+      // 1 mm = 1 inch / 25.4
+      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
+      cm: pointsPerInch / 2.54,
+      // 1 cm = 1 inch / 2.54
+      in: 96 * dpi / 100,
+      // 1 inch = 72 pt
+      // in: pointsPerInch,          // 1 inch = 72 pt
+      pc: 16 * dpi,
+      // 1 pica (pc) = 12 pt
+      em: 16 * dpi,
+      // Assuming 1 em ≈ 12 pt (adjust if needed)
+      rem: 16 * dpi
+      // Assuming 1 rem ≈ 12 pt (adjust if needed)
+    };
+    var match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
+    if (!match) {
+      throw new Error("Invalid size format: " + size);
+    }
+    var value = parseFloat(match[1]);
+    var unit = match[2].toLowerCase();
+    if (!unit) {
+      unit = "px";
+    }
+    if (!conversionFactors[unit]) {
+      throw new Error("Unsupported unit: " + unit);
+    }
+    return value * conversionFactors[unit];
+  }
+  function getElementBoxWidth(_x) {
+    return _getElementBoxWidth.apply(this, arguments);
+  }
+  function _getElementBoxWidth() {
+    _getElementBoxWidth = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(el) {
+      var _document$fonts;
+      var prev, wPx;
+      return _regenerator().w(function(_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            if (el instanceof Element) {
+              _context.n = 1;
+              break;
+            }
+            throw new Error("measureInlineWidthNowrap: el must be Element");
+          case 1:
+            if (!((_document$fonts = document.fonts) !== null && _document$fonts !== void 0 && _document$fonts.ready)) {
+              _context.n = 5;
+              break;
+            }
+            _context.p = 2;
+            _context.n = 3;
+            return document.fonts.ready;
+          case 3:
+            _context.n = 5;
+            break;
+          case 4:
+            _context.p = 4;
+            _context.v;
+          case 5:
+            prev = {
+              maxWidth: el.style.maxWidth,
+              whiteSpace: el.style.whiteSpace,
+              transform: el.style.transform
+            };
+            _context.p = 6;
+            el.style.maxWidth = "none";
+            el.style.whiteSpace = "nowrap";
+            el.style.transform = "none";
+            el.offsetWidth;
+            wPx = el.getBoundingClientRect().width;
+            return _context.a(2, convertToPt("".concat(wPx, "px")));
+          case 7:
+            _context.p = 7;
+            el.style.maxWidth = prev.maxWidth;
+            el.style.whiteSpace = prev.whiteSpace;
+            el.style.transform = prev.transform;
+            return _context.f(7);
+          case 8:
+            return _context.a(2);
+        }
+      }, _callee, null, [[6, , 7, 8], [2, 4]]);
+    }));
+    return _getElementBoxWidth.apply(this, arguments);
   }
   function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
@@ -340,29 +503,52 @@ this.Pod = (function() {
     var newFontSizePt = parseFloat(actualFontSizePt) * scale;
     return Math.min(newFontSizePt, maxFontSizePt);
   }
-  function squeeze(s) {
-    var rowCount = getRenderedLineCountForNode(s.element);
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
-      return;
-    }
-    if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element, s.maxRows, {
-        minFontSize: s.minFontSizePt
-      });
-      return;
-    }
-    var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
-    var actualWidthPt = getElementBoxWidth(s.element);
-    console.log("".concat(s.element, ": ").concat(actualFontSize, " - ").concat(actualWidthPt));
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
-    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-    newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
-    s.element.style.fontSize = newFontSizePt.toString() + "pt";
-    while (getRenderedLineCountForNode(s.element) > 1) {
-      newFontSizePt -= 0.1;
-      s.element.style.fontSize = newFontSizePt.toString() + "pt";
-    }
-    s.element.style.maxWidth = s.maxWidth + "pt";
+  function squeeze(_x) {
+    return _squeeze.apply(this, arguments);
+  }
+  function _squeeze() {
+    _squeeze = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(s) {
+      var rowCount, actualFontSize, actualWidthPt, newFontSizePt;
+      return _regenerator().w(function(_context) {
+        while (1) switch (_context.n) {
+          case 0:
+            rowCount = getRenderedLineCountForNode(s.element);
+            if (!(rowCount <= s.maxRows && s.maxRows > 1)) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
+          case 1:
+            if (!(s.maxRows > 1)) {
+              _context.n = 2;
+              break;
+            }
+            fitTextToMaxRows(s.element, s.maxRows, {
+              minFontSize: s.minFontSizePt
+            });
+            return _context.a(2);
+          case 2:
+            actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
+            _context.n = 3;
+            return getElementBoxWidth(s.element);
+          case 3:
+            actualWidthPt = _context.v;
+            console.log("".concat(s.element, ": ").concat(actualFontSize, " - ").concat(actualWidthPt));
+            newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
+            newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
+            newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
+            s.element.style.fontSize = newFontSizePt.toString() + "pt";
+            while (getRenderedLineCountForNode(s.element) > 1) {
+              newFontSizePt -= 0.1;
+              s.element.style.fontSize = newFontSizePt.toString() + "pt";
+            }
+            s.element.style.maxWidth = s.maxWidth + "pt";
+          case 4:
+            return _context.a(2);
+        }
+      }, _callee);
+    }));
+    return _squeeze.apply(this, arguments);
   }
   function getElementsToSqueeze() {
     var squeezeElements = document.querySelectorAll(".squeeze");

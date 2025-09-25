@@ -1,21 +1,63 @@
 import convertToPt from "./conversion";
 
-function getElementBoxWidth (el) {
+/**
+ * Megméri egy elem „természetes” szélességét: max-width nélkül, egy sorban.
+ * A mérés előtt megvárja a webfontok betöltését.
+ * Visszatérési érték: px (number). Ha pt kell, szorozd 0.75-tel (96dpi).
+ */
+async function getElementBoxWidth(el) {
+    if (!(el instanceof Element)) throw new Error('measureInlineWidthNowrap: el must be Element');
 
-    const computedStyle = window.getComputedStyle(el);
-    const computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
-    const computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
+    // 1) várj a fontokra (ha támogatott)
+    if (document.fonts?.ready) {
+        try { await document.fonts.ready; } catch {}
+    }
 
-    el.style.maxWidth = "";
-    el.style.whiteSpace = "nowrap";
+    // 2) eredeti inline stílusok mentése
+    const prev = {
+        maxWidth: el.style.maxWidth,
+        whiteSpace: el.style.whiteSpace,
+        transform: el.style.transform,
+    };
 
-    const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
+    try {
+        // 3) mérési állapot
+        el.style.maxWidth   = 'none';
+        el.style.whiteSpace = 'nowrap';
+        el.style.transform  = 'none'; // scale/rotate ne torzítson
 
-    el.style.maxWidth = computedMaxWidth;
-    el.style.whiteSpace = computedWhiteSpace; //
+        // 4) reflow trigger (biztos ami biztos)
+        // eslint-disable-next-line no-unused-expressions
+        el.offsetWidth;
 
-    return boxWidth;
+        // 5) mérés
+        const wPx = el.getBoundingClientRect().width;
+        return convertToPt(`${wPx}px`);
+    } finally {
+        // 6) visszaállítás
+        el.style.maxWidth   = prev.maxWidth;
+        el.style.whiteSpace = prev.whiteSpace;
+        el.style.transform  = prev.transform;
+    }
 }
+
+// function getElementBoxWidth (el) {
+//
+//     const computedStyle = window.getComputedStyle(el);
+//     const computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
+//     const computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
+//
+//     el.style.maxWidth = "";
+//     el.style.whiteSpace = "nowrap";
+//
+//     const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
+//
+//     el.style.maxWidth = computedMaxWidth;
+//     el.style.whiteSpace = computedWhiteSpace; //
+//
+//     return boxWidth;
+// }
+
 
 function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
