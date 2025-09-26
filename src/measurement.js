@@ -5,13 +5,15 @@ import convertToPt from "./conversion";
  * A mérés előtt megvárja a webfontok betöltését.
  * Visszatérési érték: px (number). Ha pt kell, szorozd 0.75-tel (96dpi).
  */
-async function getElementBoxWidth(el) {
+function getElementBoxWidth(el) {
     if (!(el instanceof Element)) throw new Error('measureInlineWidthNowrap: el must be Element');
 
     // 1) várj a fontokra (ha támogatott)
-    if (document.fonts?.ready) {
-        try { await document.fonts.ready; } catch {}
-    }
+
+    console.log(`document.fonts?.ready: ${document.fonts?.ready}`);
+    // if (document.fonts?.ready) {
+    //     try { await document.fonts.ready; } catch {}
+    // }
 
     // 2) eredeti inline stílusok mentése
     const prev = {

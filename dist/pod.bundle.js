@@ -167,33 +167,48 @@ this.Pod = (function() {
     smartCaps2.forEach(function(smartCap) {
     });
   }
+  function convertToPt(size) {
+    var dpi = 74.999943307122;
+    var pointsPerInch = 72;
+    var conversionFactors = {
+      pt: 1,
+      // 1 pt = 1 pt
+      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
+      px: dpi / 100,
+      // px to pt depends on DPI
+      mm: 3.7795275591 * dpi / 100,
+      // 1 mm = 1 inch / 25.4
+      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
+      cm: pointsPerInch / 2.54,
+      // 1 cm = 1 inch / 2.54
+      in: 96 * dpi / 100,
+      // 1 inch = 72 pt
+      // in: pointsPerInch,          // 1 inch = 72 pt
+      pc: 16 * dpi,
+      // 1 pica (pc) = 12 pt
+      em: 16 * dpi,
+      // Assuming 1 em ≈ 12 pt (adjust if needed)
+      rem: 16 * dpi
+      // Assuming 1 rem ≈ 12 pt (adjust if needed)
+    };
+    var match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
+    if (!match) {
+      throw new Error("Invalid size format: " + size);
+    }
+    var value = parseFloat(match[1]);
+    var unit = match[2].toLowerCase();
+    if (!unit) {
+      unit = "px";
+    }
+    if (!conversionFactors[unit]) {
+      throw new Error("Unsupported unit: " + unit);
+    }
+    return value * conversionFactors[unit];
+  }
   function _arrayLikeToArray(r, a) {
     (null == a || a > r.length) && (a = r.length);
     for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
     return n;
-  }
-  function asyncGeneratorStep(n, t, e, r, o, a, c) {
-    try {
-      var i = n[a](c), u = i.value;
-    } catch (n2) {
-      return void e(n2);
-    }
-    i.done ? t(u) : Promise.resolve(u).then(r, o);
-  }
-  function _asyncToGenerator(n) {
-    return function() {
-      var t = this, e = arguments;
-      return new Promise(function(r, o) {
-        var a = n.apply(t, e);
-        function _next(n2) {
-          asyncGeneratorStep(a, r, o, _next, _throw, "next", n2);
-        }
-        function _throw(n2) {
-          asyncGeneratorStep(a, r, o, _next, _throw, "throw", n2);
-        }
-        _next(void 0);
-      });
-    };
   }
   function _createForOfIteratorHelper(r, e) {
     var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
@@ -241,102 +256,6 @@ this.Pod = (function() {
       }
     };
   }
-  function _regenerator() {
-    /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
-    var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag";
-    function i(r2, n2, o2, i2) {
-      var c2 = n2 && n2.prototype instanceof Generator ? n2 : Generator, u2 = Object.create(c2.prototype);
-      return _regeneratorDefine(u2, "_invoke", (function(r3, n3, o3) {
-        var i3, c3, u3, f2 = 0, p = o3 || [], y = false, G = {
-          p: 0,
-          n: 0,
-          v: e,
-          a: d,
-          f: d.bind(e, 4),
-          d: function(t2, r4) {
-            return i3 = t2, c3 = 0, u3 = e, G.n = r4, a;
-          }
-        };
-        function d(r4, n4) {
-          for (c3 = r4, u3 = n4, t = 0; !y && f2 && !o4 && t < p.length; t++) {
-            var o4, i4 = p[t], d2 = G.p, l = i4[2];
-            r4 > 3 ? (o4 = l === n4) && (u3 = i4[(c3 = i4[4]) ? 5 : (c3 = 3, 3)], i4[4] = i4[5] = e) : i4[0] <= d2 && ((o4 = r4 < 2 && d2 < i4[1]) ? (c3 = 0, G.v = n4, G.n = i4[1]) : d2 < l && (o4 = r4 < 3 || i4[0] > n4 || n4 > l) && (i4[4] = r4, i4[5] = n4, G.n = l, c3 = 0));
-          }
-          if (o4 || r4 > 1) return a;
-          throw y = true, n4;
-        }
-        return function(o4, p2, l) {
-          if (f2 > 1) throw TypeError("Generator is already running");
-          for (y && 1 === p2 && d(p2, l), c3 = p2, u3 = l; (t = c3 < 2 ? e : u3) || !y; ) {
-            i3 || (c3 ? c3 < 3 ? (c3 > 1 && (G.n = -1), d(c3, u3)) : G.n = u3 : G.v = u3);
-            try {
-              if (f2 = 2, i3) {
-                if (c3 || (o4 = "next"), t = i3[o4]) {
-                  if (!(t = t.call(i3, u3))) throw TypeError("iterator result is not an object");
-                  if (!t.done) return t;
-                  u3 = t.value, c3 < 2 && (c3 = 0);
-                } else 1 === c3 && (t = i3.return) && t.call(i3), c3 < 2 && (u3 = TypeError("The iterator does not provide a '" + o4 + "' method"), c3 = 1);
-                i3 = e;
-              } else if ((t = (y = G.n < 0) ? u3 : r3.call(n3, G)) !== a) break;
-            } catch (t2) {
-              i3 = e, c3 = 1, u3 = t2;
-            } finally {
-              f2 = 1;
-            }
-          }
-          return {
-            value: t,
-            done: y
-          };
-        };
-      })(r2, o2, i2), true), u2;
-    }
-    var a = {};
-    function Generator() {
-    }
-    function GeneratorFunction() {
-    }
-    function GeneratorFunctionPrototype() {
-    }
-    t = Object.getPrototypeOf;
-    var c = [][n] ? t(t([][n]())) : (_regeneratorDefine(t = {}, n, function() {
-      return this;
-    }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
-    function f(e2) {
-      return Object.setPrototypeOf ? Object.setPrototypeOf(e2, GeneratorFunctionPrototype) : (e2.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine(e2, o, "GeneratorFunction")), e2.prototype = Object.create(u), e2;
-    }
-    return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine(u), _regeneratorDefine(u, o, "Generator"), _regeneratorDefine(u, n, function() {
-      return this;
-    }), _regeneratorDefine(u, "toString", function() {
-      return "[object Generator]";
-    }), (_regenerator = function() {
-      return {
-        w: i,
-        m: f
-      };
-    })();
-  }
-  function _regeneratorDefine(e, r, n, t) {
-    var i = Object.defineProperty;
-    try {
-      i({}, "", {});
-    } catch (e2) {
-      i = 0;
-    }
-    _regeneratorDefine = function(e2, r2, n2, t2) {
-      function o(r3, n3) {
-        _regeneratorDefine(e2, r3, function(e3) {
-          return this._invoke(r3, n3, e3);
-        });
-      }
-      r2 ? i ? i(e2, r2, {
-        value: n2,
-        enumerable: !t2,
-        configurable: !t2,
-        writable: !t2
-      }) : e2[r2] = n2 : (o("next", 0), o("throw", 1), o("return", 2));
-    }, _regeneratorDefine(e, r, n, t);
-  }
   function _unsupportedIterableToArray(r, a) {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray(r, a);
@@ -344,100 +263,29 @@ this.Pod = (function() {
       return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
     }
   }
-  function convertToPt(size) {
-    var dpi = 74.999943307122;
-    var pointsPerInch = 72;
-    var conversionFactors = {
-      pt: 1,
-      // 1 pt = 1 pt
-      //        px: pointsPerInch / dpi,       // px to pt depends on DPI
-      px: dpi / 100,
-      // px to pt depends on DPI
-      mm: 3.7795275591 * dpi / 100,
-      // 1 mm = 1 inch / 25.4
-      // mm: pointsPerInch / 25.4,   // 1 mm = 1 inch / 25.4
-      cm: pointsPerInch / 2.54,
-      // 1 cm = 1 inch / 2.54
-      in: 96 * dpi / 100,
-      // 1 inch = 72 pt
-      // in: pointsPerInch,          // 1 inch = 72 pt
-      pc: 16 * dpi,
-      // 1 pica (pc) = 12 pt
-      em: 16 * dpi,
-      // Assuming 1 em ≈ 12 pt (adjust if needed)
-      rem: 16 * dpi
-      // Assuming 1 rem ≈ 12 pt (adjust if needed)
+  function getElementBoxWidth(el) {
+    var _document$fonts;
+    if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
+    console.log("document.fonts?.ready: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.ready));
+    var prev = {
+      maxWidth: el.style.maxWidth,
+      whiteSpace: el.style.whiteSpace,
+      transform: el.style.transform,
+      display: el.style.display
     };
-    var match = size.match(/^(-?[\d.]+)([a-z%]*)$/i);
-    if (!match) {
-      throw new Error("Invalid size format: " + size);
+    try {
+      el.style.maxWidth = "none";
+      el.style.whiteSpace = "nowrap";
+      el.style.display = "inline-block";
+      el.offsetWidth;
+      var wPx = el.getBoundingClientRect().width;
+      console.log("".concat(el.id, ": ").concat(wPx));
+      return convertToPt("".concat(wPx, "px"));
+    } finally {
+      el.style.maxWidth = prev.maxWidth;
+      el.style.whiteSpace = prev.whiteSpace;
+      el.style.display = prev.display;
     }
-    var value = parseFloat(match[1]);
-    var unit = match[2].toLowerCase();
-    if (!unit) {
-      unit = "px";
-    }
-    if (!conversionFactors[unit]) {
-      throw new Error("Unsupported unit: " + unit);
-    }
-    return value * conversionFactors[unit];
-  }
-  function getElementBoxWidth(_x) {
-    return _getElementBoxWidth.apply(this, arguments);
-  }
-  function _getElementBoxWidth() {
-    _getElementBoxWidth = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(el) {
-      var _document$fonts;
-      var prev, wPx;
-      return _regenerator().w(function(_context) {
-        while (1) switch (_context.p = _context.n) {
-          case 0:
-            if (el instanceof Element) {
-              _context.n = 1;
-              break;
-            }
-            throw new Error("measureInlineWidthNowrap: el must be Element");
-          case 1:
-            if (!((_document$fonts = document.fonts) !== null && _document$fonts !== void 0 && _document$fonts.ready)) {
-              _context.n = 5;
-              break;
-            }
-            _context.p = 2;
-            _context.n = 3;
-            return document.fonts.ready;
-          case 3:
-            _context.n = 5;
-            break;
-          case 4:
-            _context.p = 4;
-            _context.v;
-          case 5:
-            prev = {
-              maxWidth: el.style.maxWidth,
-              whiteSpace: el.style.whiteSpace,
-              transform: el.style.transform,
-              display: el.style.display
-            };
-            _context.p = 6;
-            el.style.maxWidth = "none";
-            el.style.whiteSpace = "nowrap";
-            el.style.display = "inline-block";
-            el.offsetWidth;
-            wPx = el.getBoundingClientRect().width;
-            console.log("".concat(el.id, ": ").concat(wPx));
-            return _context.a(2, convertToPt("".concat(wPx, "px")));
-          case 7:
-            _context.p = 7;
-            el.style.maxWidth = prev.maxWidth;
-            el.style.whiteSpace = prev.whiteSpace;
-            el.style.display = prev.display;
-            return _context.f(7);
-          case 8:
-            return _context.a(2);
-        }
-      }, _callee, null, [[6, , 7, 8], [2, 4]]);
-    }));
-    return _getElementBoxWidth.apply(this, arguments);
   }
   function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
@@ -505,52 +353,29 @@ this.Pod = (function() {
     var newFontSizePt = parseFloat(actualFontSizePt) * scale;
     return Math.min(newFontSizePt, maxFontSizePt);
   }
-  function squeeze(_x) {
-    return _squeeze.apply(this, arguments);
-  }
-  function _squeeze() {
-    _squeeze = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(s) {
-      var rowCount, actualFontSize, actualWidthPt, newFontSizePt;
-      return _regenerator().w(function(_context) {
-        while (1) switch (_context.n) {
-          case 0:
-            rowCount = getRenderedLineCountForNode(s.element);
-            if (!(rowCount <= s.maxRows && s.maxRows > 1)) {
-              _context.n = 1;
-              break;
-            }
-            return _context.a(2);
-          case 1:
-            if (!(s.maxRows > 1)) {
-              _context.n = 2;
-              break;
-            }
-            fitTextToMaxRows(s.element, s.maxRows, {
-              minFontSize: s.minFontSizePt
-            });
-            return _context.a(2);
-          case 2:
-            actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
-            _context.n = 3;
-            return getElementBoxWidth(s.element);
-          case 3:
-            actualWidthPt = _context.v;
-            newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
-            console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(newFontSizePt, " | ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
-            newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-            newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
-            s.element.style.fontSize = newFontSizePt.toString() + "pt";
-            while (getRenderedLineCountForNode(s.element) > 1) {
-              newFontSizePt -= 0.1;
-              s.element.style.fontSize = newFontSizePt.toString() + "pt";
-            }
-            s.element.style.maxWidth = s.maxWidth + "pt";
-          case 4:
-            return _context.a(2);
-        }
-      }, _callee);
-    }));
-    return _squeeze.apply(this, arguments);
+  function squeeze(s) {
+    var rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+      return;
+    }
+    if (s.maxRows > 1) {
+      fitTextToMaxRows(s.element, s.maxRows, {
+        minFontSize: s.minFontSizePt
+      });
+      return;
+    }
+    var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
+    var actualWidthPt = getElementBoxWidth(s.element);
+    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
+    console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(newFontSizePt, " | ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
+    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
+    newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
+    s.element.style.fontSize = newFontSizePt.toString() + "pt";
+    while (getRenderedLineCountForNode(s.element) > 1) {
+      newFontSizePt -= 0.1;
+      s.element.style.fontSize = newFontSizePt.toString() + "pt";
+    }
+    s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function getElementsToSqueeze() {
     var squeezeElements = document.querySelectorAll(".squeeze");
@@ -762,188 +587,95 @@ this.Pod = (function() {
     return squeezeElementsWithParams;
   }
   function prepareElementsForScaling() {
-    return _prepareElementsForScaling.apply(this, arguments);
+    var elements = getElementsToScaling();
+    elements.map(function(element, index) {
+      var _classArray$find, _classArray$find2;
+      var maxWidth = window.getComputedStyle(element).maxWidth;
+      var maxFontSize = window.getComputedStyle(element).fontSize;
+      var currentWidth = window.getComputedStyle(element).width;
+      if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
+        return;
+      }
+      element.width = maxWidth;
+      var maxWidthPt = convertToPt("".concat(getElementBoxWidth(element), "px"));
+      element.width = currentWidth;
+      var maxFontSizePt = convertToPt(maxFontSize);
+      var classArray = Array.from(element.classList);
+      var maxMatch = (_classArray$find = classArray.find(function(c) {
+        return c.startsWith("max-scale-");
+      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
+      var maxScale = maxMatch ? maxMatch[1] : null;
+      var minMatch = (_classArray$find2 = classArray.find(function(c) {
+        return c.startsWith("min-scale-");
+      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
+      var minScale = minMatch ? minMatch[1] : null;
+      elementsToSqueezeScaling[index] = {
+        element: elements[index],
+        maxWidthPt: maxWidthPt,
+        maxFontSizePt: maxFontSizePt,
+        maxScale: maxScale,
+        minScale: minScale
+      };
+      element.style.transform = "scale(1, 1)";
+      element.style.transformOrigin = "left center";
+      element.style.display = "inline-block";
+      element.style.flex = "0 0 auto";
+      element.style.alignSelf = "flex-start";
+      element.style.maxWidth = "";
+      element.style.whiteSpace = "nowrap";
+    });
   }
-  function _prepareElementsForScaling() {
-    _prepareElementsForScaling = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2() {
-      var elements;
-      return _regenerator().w(function(_context2) {
-        while (1) switch (_context2.n) {
-          case 0:
-            elements = getElementsToScaling();
-            elements.map(/* @__PURE__ */ (function() {
-              var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(element, index) {
-                var _classArray$find, _classArray$find2;
-                var maxWidth, maxFontSize, currentWidth, maxWidthPt, maxFontSizePt, classArray, maxMatch, maxScale, minMatch, minScale, _t, _t2;
-                return _regenerator().w(function(_context) {
-                  while (1) switch (_context.n) {
-                    case 0:
-                      maxWidth = window.getComputedStyle(element).maxWidth;
-                      maxFontSize = window.getComputedStyle(element).fontSize;
-                      currentWidth = window.getComputedStyle(element).width;
-                      if (!(!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none")) {
-                        _context.n = 1;
-                        break;
-                      }
-                      return _context.a(2);
-                    case 1:
-                      element.width = maxWidth;
-                      _t = convertToPt;
-                      _t2 = "";
-                      _context.n = 2;
-                      return getElementBoxWidth(element);
-                    case 2:
-                      maxWidthPt = _t(_t2.concat.call(_t2, _context.v, "px"));
-                      element.width = currentWidth;
-                      maxFontSizePt = convertToPt(maxFontSize);
-                      classArray = Array.from(element.classList);
-                      maxMatch = (_classArray$find = classArray.find(function(c) {
-                        return c.startsWith("max-scale-");
-                      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
-                      maxScale = maxMatch ? maxMatch[1] : null;
-                      minMatch = (_classArray$find2 = classArray.find(function(c) {
-                        return c.startsWith("min-scale-");
-                      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
-                      minScale = minMatch ? minMatch[1] : null;
-                      elementsToSqueezeScaling[index] = {
-                        element: elements[index],
-                        maxWidthPt: maxWidthPt,
-                        maxFontSizePt: maxFontSizePt,
-                        maxScale: maxScale,
-                        minScale: minScale
-                      };
-                      element.style.transform = "scale(1, 1)";
-                      element.style.transformOrigin = "left center";
-                      element.style.display = "inline-block";
-                      element.style.flex = "0 0 auto";
-                      element.style.alignSelf = "flex-start";
-                      element.style.maxWidth = "";
-                      element.style.whiteSpace = "nowrap";
-                    case 3:
-                      return _context.a(2);
-                  }
-                }, _callee);
-              }));
-              return function(_x4, _x5) {
-                return _ref.apply(this, arguments);
-              };
-            })());
-          case 1:
-            return _context2.a(2);
-        }
-      }, _callee2);
-    }));
-    return _prepareElementsForScaling.apply(this, arguments);
+  function calculateSqueezedScale(element, maxWidthPt) {
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+    _ref.pxToPt;
+    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
+    var targetPt = maxWidthPt;
+    var prevTransform = element.style.transform || "";
+    var prevOrigin = element.style.transformOrigin || "";
+    element.style.transform = "none";
+    if (setOrigin) element.style.transformOrigin = "left center";
+    var baseWidthPt = getElementBoxWidth(element) || 0;
+    if (baseWidthPt <= 0) {
+      element.style.transform = prevTransform;
+      element.style.transformOrigin = prevOrigin;
+      return 1;
+    }
+    var sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
+    console.log("sx1: ".concat(sx));
+    var sy = axis === "uniform" ? sx : 1;
+    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
+    for (var i = 0; i < maxIter; i++) {
+      var w = getElementBoxWidth(element);
+      var diffPt = targetPt - w;
+      if (Math.abs(diffPt) <= epsilon) break;
+      var factor = targetPt / (w || 1);
+      sx = clamp(sx * factor, minScale, maxScale);
+      console.log("w: ".concat(w, " - sx2: ").concat(sx));
+      sy = axis === "uniform" ? sx : 1;
+      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
+    }
+    if (!setOrigin) element.style.transformOrigin = prevOrigin;
+    console.log("sx3: ".concat(sx));
+    return sx;
+    function clamp(v, lo, hi) {
+      return Math.max(lo, Math.min(hi, v));
+    }
   }
-  function calculateSqueezedScale(_x, _x2) {
-    return _calculateSqueezedScale.apply(this, arguments);
-  }
-  function _calculateSqueezedScale() {
-    _calculateSqueezedScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee3(element, maxWidthPt) {
-      var _ref2, _ref2$axis, axis, _ref2$minScale, minScale, _ref2$maxScale, maxScale, _ref2$epsilon, epsilon, _ref2$maxIter, maxIter, _ref2$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args3 = arguments, _t3;
-      return _regenerator().w(function(_context3) {
-        while (1) switch (_context3.n) {
-          case 0:
-            clamp = function _clamp(v, lo, hi) {
-              return Math.max(lo, Math.min(hi, v));
-            };
-            _ref2 = _args3.length > 2 && _args3[2] !== void 0 ? _args3[2] : {}, _ref2.pxToPt, _ref2$axis = _ref2.axis, axis = _ref2$axis === void 0 ? "x" : _ref2$axis, _ref2$minScale = _ref2.minScale, minScale = _ref2$minScale === void 0 ? 0.2 : _ref2$minScale, _ref2$maxScale = _ref2.maxScale, maxScale = _ref2$maxScale === void 0 ? 1 : _ref2$maxScale, _ref2$epsilon = _ref2.epsilon, epsilon = _ref2$epsilon === void 0 ? 0.05 : _ref2$epsilon, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 5 : _ref2$maxIter, _ref2$setOrigin = _ref2.setOrigin, setOrigin = _ref2$setOrigin === void 0 ? true : _ref2$setOrigin;
-            targetPt = maxWidthPt;
-            prevTransform = element.style.transform || "";
-            prevOrigin = element.style.transformOrigin || "";
-            element.style.transform = "none";
-            if (setOrigin) element.style.transformOrigin = "left center";
-            _context3.n = 1;
-            return getElementBoxWidth(element);
-          case 1:
-            _t3 = _context3.v;
-            if (_t3) {
-              _context3.n = 2;
-              break;
-            }
-            _t3 = 0;
-          case 2:
-            baseWidthPt = _t3;
-            if (!(baseWidthPt <= 0)) {
-              _context3.n = 3;
-              break;
-            }
-            element.style.transform = prevTransform;
-            element.style.transformOrigin = prevOrigin;
-            return _context3.a(2, 1);
-          case 3:
-            sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
-            console.log("sx1: ".concat(sx));
-            sy = axis === "uniform" ? sx : 1;
-            element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-            i = 0;
-          case 4:
-            if (!(i < maxIter)) {
-              _context3.n = 8;
-              break;
-            }
-            _context3.n = 5;
-            return getElementBoxWidth(element);
-          case 5:
-            w = _context3.v;
-            diffPt = targetPt - w;
-            if (!(Math.abs(diffPt) <= epsilon)) {
-              _context3.n = 6;
-              break;
-            }
-            return _context3.a(3, 8);
-          case 6:
-            factor = targetPt / (w || 1);
-            sx = clamp(sx * factor, minScale, maxScale);
-            console.log("w: ".concat(w, " - sx2: ").concat(sx));
-            sy = axis === "uniform" ? sx : 1;
-            element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-          // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
-          case 7:
-            i++;
-            _context3.n = 4;
-            break;
-          case 8:
-            if (!setOrigin) element.style.transformOrigin = prevOrigin;
-            console.log("sx3: ".concat(sx));
-            return _context3.a(2, sx);
-        }
-      }, _callee3);
-    }));
-    return _calculateSqueezedScale.apply(this, arguments);
-  }
-  function squeezeScale(_x3) {
-    return _squeezeScale.apply(this, arguments);
-  }
-  function _squeezeScale() {
-    _squeezeScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee4(s) {
-      var _s$maxScale, _s$minScale;
-      var newScale, maxScale, minScale, finalScale, finalScaleString;
-      return _regenerator().w(function(_context4) {
-        while (1) switch (_context4.n) {
-          case 0:
-            parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
-            _context4.n = 1;
-            return calculateSqueezedScale(
-              s.element,
-              s.maxWidthPt
-              // getElementBoxWidth(s.element),
-              // originalLetterSpacing
-            );
-          case 1:
-            newScale = _context4.v;
-            maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
-            minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
-            finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
-            finalScaleString = "scale(".concat(finalScale, ", 1)");
-            s.element.style.transform = finalScaleString;
-            s.element.style.maxWidth = s.maxWidth + "pt";
-          case 2:
-            return _context4.a(2);
-        }
-      }, _callee4);
-    }));
-    return _squeezeScale.apply(this, arguments);
+  function squeezeScale(s) {
+    var _s$maxScale, _s$minScale;
+    parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
+    var newScale = calculateSqueezedScale(
+      s.element,
+      s.maxWidthPt
+      // getElementBoxWidth(s.element),
+      // originalLetterSpacing
+    );
+    var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
+    var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
+    var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
+    var finalScaleString = "scale(".concat(finalScale, ", 1)");
+    s.element.style.transform = finalScaleString;
+    s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
@@ -951,29 +683,13 @@ this.Pod = (function() {
     }
   }
   function runSqueeze() {
-    return _runSqueeze.apply(this, arguments);
-  }
-  function _runSqueeze() {
-    _runSqueeze = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee() {
-      return _regenerator().w(function(_context) {
-        while (1) switch (_context.n) {
-          case 0:
-            console.log("SQUEEZING");
-            prepareElements();
-            prepareElementsForLetterSpacing();
-            _context.n = 1;
-            return prepareElementsForScaling();
-          case 1:
-            squeezeAll();
-            squeezeAllLetterSpacing();
-            squeezeAllScaling();
-          // handleSeparators();
-          case 2:
-            return _context.a(2);
-        }
-      }, _callee);
-    }));
-    return _runSqueeze.apply(this, arguments);
+    console.log("SQUEEZING");
+    prepareElements();
+    prepareElementsForLetterSpacing();
+    prepareElementsForScaling();
+    squeezeAll();
+    squeezeAllLetterSpacing();
+    squeezeAllScaling();
   }
   function addPostMessageHandler() {
     window.addEventListener("message", function(event) {

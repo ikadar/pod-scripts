@@ -15,9 +15,9 @@ function getElementsToScaling () {
     return squeezeElementsWithParams;
 }
 
-async function prepareElementsForScaling() {
+function prepareElementsForScaling() {
     const elements = getElementsToScaling();
-    elements.map(async function (element, index) {
+    elements.map(function (element, index) {
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         const maxFontSize = window.getComputedStyle(element).fontSize;
@@ -29,7 +29,7 @@ async function prepareElementsForScaling() {
 
         element.width = maxWidth;
 
-        const maxWidthPt = convertToPt(`${await getElementBoxWidth(element)}px`);
+        const maxWidthPt = convertToPt(`${getElementBoxWidth(element)}px`);
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);
         element.width = currentWidth;
@@ -80,7 +80,7 @@ async function prepareElementsForScaling() {
  *
  * @returns {number}    - a végső X scale érték
  */
-async function calculateSqueezedScale(
+function calculateSqueezedScale(
     element,
     maxWidthPt,
     {
@@ -109,7 +109,7 @@ async function calculateSqueezedScale(
     if (setOrigin) element.style.transformOrigin = 'left center';
 
     // 3) Nyers (skála nélküli) szélesség
-    const baseWidthPt = await getElementBoxWidth(element) || 0;
+    const baseWidthPt = getElementBoxWidth(element) || 0;
     // const baseWidthPx = element.getBoundingClientRect().width || 0;
     if (baseWidthPt <= 0) {
         // nincs értelmezhető szélesség – ne robbanjon
@@ -129,7 +129,7 @@ async function calculateSqueezedScale(
 
     // 5) Finomhangolás (iteratív, gyors konvergencia)
     for (let i = 0; i < maxIter; i++) {
-        const w = await getElementBoxWidth(element);
+        const w = getElementBoxWidth(element);
         // const w = element.getBoundingClientRect().width;
         const diffPt = targetPt - w;
         if (Math.abs(diffPt) <= epsilon) break;
@@ -154,11 +154,11 @@ async function calculateSqueezedScale(
 
 
 
-async function squeezeScale(s) {
+function squeezeScale(s) {
 
     const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
 
-    const newScale = await calculateSqueezedScale(
+    const newScale = calculateSqueezedScale(
         s.element,
         s.maxWidthPt,
         // getElementBoxWidth(s.element),

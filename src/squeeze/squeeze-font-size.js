@@ -11,7 +11,7 @@ function calculateSqueezedFontSize (maxFontSizePt, maxWidthPt, actualWidthPt, ac
     return Math.min(newFontSizePt, maxFontSizePt);
 }
 
-async function squeeze (s) {
+function squeeze (s) {
     // console.log(s);
 
     const rowCount = getRenderedLineCountForNode(s.element);
@@ -29,7 +29,7 @@ async function squeeze (s) {
     }
 
     const actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
-    const actualWidthPt = await getElementBoxWidth(s.element);
+    const actualWidthPt = getElementBoxWidth(s.element);
 
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     console.log(`${s.element.id}: ${actualFontSize} - ${newFontSizePt} | ${actualWidthPt} - ${s.maxWidthPt}`);
