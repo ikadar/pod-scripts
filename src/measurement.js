@@ -18,6 +18,7 @@ async function getElementBoxWidth(el) {
         maxWidth: el.style.maxWidth,
         whiteSpace: el.style.whiteSpace,
         transform: el.style.transform,
+        display: el.style.display,
     };
 
     try {
@@ -25,6 +26,7 @@ async function getElementBoxWidth(el) {
         el.style.maxWidth   = 'none';
         el.style.whiteSpace = 'nowrap';
         // el.style.transform  = 'none'; // scale/rotate ne torzítson
+        el.style.display = 'inline-block';
 
         // 4) reflow trigger (biztos ami biztos)
         // eslint-disable-next-line no-unused-expressions
@@ -43,6 +45,7 @@ async function getElementBoxWidth(el) {
         el.style.maxWidth   = prev.maxWidth;
         el.style.whiteSpace = prev.whiteSpace;
         // el.style.transform  = prev.transform;
+        el.style.display = prev.display;
     }
 }
 

@@ -415,11 +415,13 @@ this.Pod = (function() {
             prev = {
               maxWidth: el.style.maxWidth,
               whiteSpace: el.style.whiteSpace,
-              transform: el.style.transform
+              transform: el.style.transform,
+              display: el.style.display
             };
             _context.p = 6;
             el.style.maxWidth = "none";
             el.style.whiteSpace = "nowrap";
+            el.style.display = "inline-block";
             el.offsetWidth;
             wPx = window.getComputedStyle(el).width;
             console.log("".concat(el.id, ": ").concat(wPx));
@@ -428,6 +430,7 @@ this.Pod = (function() {
             _context.p = 7;
             el.style.maxWidth = prev.maxWidth;
             el.style.whiteSpace = prev.whiteSpace;
+            el.style.display = prev.display;
             return _context.f(7);
           case 8:
             return _context.a(2);
