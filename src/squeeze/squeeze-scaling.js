@@ -147,11 +147,11 @@ async function calculateSqueezedScale(
 
 
 
-function squeezeScale(s) {
+async function squeezeScale(s) {
 
     const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
 
-    const newScale = calculateSqueezedScale(
+    const newScale = await calculateSqueezedScale(
         s.element,
         s.maxWidthPt,
         // getElementBoxWidth(s.element),

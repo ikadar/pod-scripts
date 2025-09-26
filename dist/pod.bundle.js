@@ -874,21 +874,38 @@ this.Pod = (function() {
     }));
     return _calculateSqueezedScale.apply(this, arguments);
   }
-  function squeezeScale(s) {
-    var _s$maxScale, _s$minScale;
-    parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
-    var newScale = calculateSqueezedScale(
-      s.element,
-      s.maxWidthPt
-      // getElementBoxWidth(s.element),
-      // originalLetterSpacing
-    );
-    var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
-    var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
-    var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
-    var finalScaleString = "scale(".concat(finalScale, ", 1)");
-    s.element.style.transform = finalScaleString;
-    s.element.style.maxWidth = s.maxWidth + "pt";
+  function squeezeScale(_x3) {
+    return _squeezeScale.apply(this, arguments);
+  }
+  function _squeezeScale() {
+    _squeezeScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(s) {
+      var _s$maxScale, _s$minScale;
+      var newScale, maxScale, minScale, finalScale, finalScaleString;
+      return _regenerator().w(function(_context2) {
+        while (1) switch (_context2.n) {
+          case 0:
+            parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
+            _context2.n = 1;
+            return calculateSqueezedScale(
+              s.element,
+              s.maxWidthPt
+              // getElementBoxWidth(s.element),
+              // originalLetterSpacing
+            );
+          case 1:
+            newScale = _context2.v;
+            maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
+            minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
+            finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
+            finalScaleString = "scale(".concat(finalScale, ", 1)");
+            s.element.style.transform = finalScaleString;
+            s.element.style.maxWidth = s.maxWidth + "pt";
+          case 2:
+            return _context2.a(2);
+        }
+      }, _callee2);
+    }));
+    return _squeezeScale.apply(this, arguments);
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
