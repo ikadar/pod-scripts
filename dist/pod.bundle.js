@@ -733,9 +733,23 @@ this.Pod = (function() {
       }
     }
     document.addEventListener("DOMContentLoaded", function(event) {
-      init(data);
+      ensureFontsReady(function() {
+        console.log("Betöltődtek a fontok!");
+        init(data);
+      }, 50);
     });
     window.__PROCESSING_DONE__ = true;
+  }
+  function ensureFontsReady(run, interval) {
+    interval = interval || 50;
+    function check() {
+      if (document.fonts && document.fonts.status === "loaded") {
+        run();
+      } else {
+        setTimeout(check, interval);
+      }
+    }
+    check();
   }
   return addPodScripts;
 })();

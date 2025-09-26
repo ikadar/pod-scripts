@@ -27,10 +27,34 @@ function addPodScripts(data) {
     }
 
     document.addEventListener("DOMContentLoaded", (event) => {
-        init(data);
+
+        ensureFontsReady(function () {
+            console.log("Betöltődtek a fontok!");
+            init(data);
+        }, 50);
     });
 
     window.__PROCESSING_DONE__ = true;
+}
+
+/**
+ * Meghívja a run() függvényt, amint a dokumentum fontjai betöltődtek.
+ * Nem használ async/await-et, csak setTimeout-ot.
+ *
+ * @param {Function} run    - a te indító függvényed
+ * @param {number} interval - milliszekundumok két próbálkozás között (alap: 50ms)
+ */
+function ensureFontsReady(run, interval) {
+    interval = interval || 50;
+
+    function check() {
+        if (document.fonts && document.fonts.status === "loaded") {
+            run();
+        } else {
+            setTimeout(check, interval);
+        }
+    }
+    check();
 }
 
 export default addPodScripts;
