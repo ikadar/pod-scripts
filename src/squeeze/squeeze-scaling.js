@@ -130,6 +130,7 @@ async function calculateSqueezedScale(
         // multiplikatív korrekció: új sx = régi sx * (cél / mért)
         const factor = targetPt / (w || 1);
         sx = clamp(sx * factor, minScale, maxScale);
+        console.log(`sx2: ${sx}`);
         sy = (axis === 'uniform') ? sx : 1;
         element.style.transform = `scale(${sx}, ${sy})`.trim();
         // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
@@ -138,7 +139,7 @@ async function calculateSqueezedScale(
     // (opcionális) ha nem akarsz origin-t hagyni:
     if (!setOrigin) element.style.transformOrigin = prevOrigin;
 
-    console.log(`sx2: ${sx}`);
+    console.log(`sx3: ${sx}`);
     return sx;
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
