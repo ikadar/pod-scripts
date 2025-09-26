@@ -8,47 +8,52 @@ import convertToPt from "./conversion";
 function getElementBoxWidth(el) {
     if (!(el instanceof Element)) throw new Error('measureInlineWidthNowrap: el must be Element');
 
-    // 1) várj a fontokra (ha támogatott)
 
-    console.log(`document.fonts?.status: ${document.fonts?.status}`);
-    // if (document.fonts?.ready) {
-    //     try { await document.fonts.ready; } catch {}
-    // }
+    ensureFontsReady(function () {
 
-    // 2) eredeti inline stílusok mentése
-    const prev = {
-        maxWidth: el.style.maxWidth,
-        whiteSpace: el.style.whiteSpace,
-        transform: el.style.transform,
-        display: el.style.display,
-    };
+        console.log("Betöltődtek a fontok!");
+        // 1) várj a fontokra (ha támogatott)
 
-    try {
-        // 3) mérési állapot
-        el.style.maxWidth   = 'none';
-        el.style.whiteSpace = 'nowrap';
-        // el.style.transform  = 'none'; // scale/rotate ne torzítson
-        el.style.display = 'inline-block';
+        console.log(`document.fonts?.status: ${document.fonts?.status}`);
+        // if (document.fonts?.ready) {
+        //     try { await document.fonts.ready; } catch {}
+        // }
 
-        // 4) reflow trigger (biztos ami biztos)
-        // eslint-disable-next-line no-unused-expressions
-        el.offsetWidth;
+        // 2) eredeti inline stílusok mentése
+        const prev = {
+            maxWidth: el.style.maxWidth,
+            whiteSpace: el.style.whiteSpace,
+            transform: el.style.transform,
+            display: el.style.display,
+        };
 
-        // // 5) mérés
-        // const wPx = window.getComputedStyle(el).width;
-        // console.log(`${el.id}: ${wPx}`);
-        // return convertToPt(`${wPx}`);
-        // 5) mérés
-        const wPx = el.getBoundingClientRect().width;
-        console.log(`${el.id}: ${wPx}`);
-        return convertToPt(`${wPx}px`);
-    } finally {
-        // 6) visszaállítás
-        el.style.maxWidth   = prev.maxWidth;
-        el.style.whiteSpace = prev.whiteSpace;
-        // el.style.transform  = prev.transform;
-        el.style.display = prev.display;
-    }
+        try {
+            // 3) mérési állapot
+            el.style.maxWidth   = 'none';
+            el.style.whiteSpace = 'nowrap';
+            // el.style.transform  = 'none'; // scale/rotate ne torzítson
+            el.style.display = 'inline-block';
+
+            // 4) reflow trigger (biztos ami biztos)
+            // eslint-disable-next-line no-unused-expressions
+            el.offsetWidth;
+
+            // // 5) mérés
+            // const wPx = window.getComputedStyle(el).width;
+            // console.log(`${el.id}: ${wPx}`);
+            // return convertToPt(`${wPx}`);
+            // 5) mérés
+            const wPx = el.getBoundingClientRect().width;
+            console.log(`${el.id}: ${wPx}`);
+            return convertToPt(`${wPx}px`);
+        } finally {
+            // 6) visszaállítás
+            el.style.maxWidth   = prev.maxWidth;
+            el.style.whiteSpace = prev.whiteSpace;
+            // el.style.transform  = prev.transform;
+            el.style.display = prev.display;
+        }
+    }, 50);
 }
 
 // function getElementBoxWidth (el) {
@@ -134,5 +139,19 @@ function getRenderedLineCountForNode(node, { epsilon = 0.5 } = {}) {
     // az első klaszter is számít:
     return lines + 1;
 }
+
+function ensureFontsReady(run, interval) {
+    interval = interval || 50;
+
+    function check() {
+        if (document.fonts && document.fonts.status === "loaded") {
+            run();
+        } else {
+            setTimeout(check, interval);
+        }
+    }
+    check();
+}
+
 
 export {getElementBoxWidth, getTextNodeLineCount, getRenderedLineCountForNode};

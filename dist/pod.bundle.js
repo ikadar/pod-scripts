@@ -264,28 +264,31 @@ this.Pod = (function() {
     }
   }
   function getElementBoxWidth(el) {
-    var _document$fonts;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
-    console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
-    var prev = {
-      maxWidth: el.style.maxWidth,
-      whiteSpace: el.style.whiteSpace,
-      transform: el.style.transform,
-      display: el.style.display
-    };
-    try {
-      el.style.maxWidth = "none";
-      el.style.whiteSpace = "nowrap";
-      el.style.display = "inline-block";
-      el.offsetWidth;
-      var wPx = el.getBoundingClientRect().width;
-      console.log("".concat(el.id, ": ").concat(wPx));
-      return convertToPt("".concat(wPx, "px"));
-    } finally {
-      el.style.maxWidth = prev.maxWidth;
-      el.style.whiteSpace = prev.whiteSpace;
-      el.style.display = prev.display;
-    }
+    ensureFontsReady$1(function() {
+      var _document$fonts;
+      console.log("Betöltődtek a fontok!");
+      console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
+      var prev = {
+        maxWidth: el.style.maxWidth,
+        whiteSpace: el.style.whiteSpace,
+        transform: el.style.transform,
+        display: el.style.display
+      };
+      try {
+        el.style.maxWidth = "none";
+        el.style.whiteSpace = "nowrap";
+        el.style.display = "inline-block";
+        el.offsetWidth;
+        var wPx = el.getBoundingClientRect().width;
+        console.log("".concat(el.id, ": ").concat(wPx));
+        return convertToPt("".concat(wPx, "px"));
+      } finally {
+        el.style.maxWidth = prev.maxWidth;
+        el.style.whiteSpace = prev.whiteSpace;
+        el.style.display = prev.display;
+      }
+    }, 50);
   }
   function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
@@ -346,6 +349,17 @@ this.Pod = (function() {
       }
     }
     return lines + 1;
+  }
+  function ensureFontsReady$1(run, interval) {
+    interval = interval || 50;
+    function check() {
+      if (document.fonts && document.fonts.status === "loaded") {
+        run();
+      } else {
+        setTimeout(check, interval);
+      }
+    }
+    check();
   }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
