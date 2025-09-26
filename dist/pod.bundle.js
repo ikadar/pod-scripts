@@ -266,7 +266,7 @@ this.Pod = (function() {
   function getElementBoxWidth(el) {
     var _document$fonts;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
-    console.log("document.fonts?.ready: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.ready));
+    console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
     var prev = {
       maxWidth: el.style.maxWidth,
       whiteSpace: el.style.whiteSpace,

@@ -10,7 +10,7 @@ function getElementBoxWidth(el) {
 
     // 1) várj a fontokra (ha támogatott)
 
-    console.log(`document.fonts?.ready: ${document.fonts?.ready}`);
+    console.log(`document.fonts?.status: ${document.fonts?.status}`);
     // if (document.fonts?.ready) {
     //     try { await document.fonts.ready; } catch {}
     // }
