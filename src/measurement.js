@@ -31,9 +31,13 @@ async function getElementBoxWidth(el) {
         el.offsetWidth;
 
         // 5) mérés
-        const wPx = el.getBoundingClientRect().width;
+        const wPx = window.getComputedStyle(el).width;
         console.log(`${el.id}: ${wPx}`);
-        return convertToPt(`${wPx}px`);
+        return convertToPt(`${wPx}`);
+        // // 5) mérés
+        // const wPx = el.getBoundingClientRect().width;
+        // console.log(`${el.id}: ${wPx}`);
+        // return convertToPt(`${wPx}px`);
     } finally {
         // 6) visszaállítás
         el.style.maxWidth   = prev.maxWidth;

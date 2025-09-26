@@ -421,9 +421,9 @@ this.Pod = (function() {
             el.style.maxWidth = "none";
             el.style.whiteSpace = "nowrap";
             el.offsetWidth;
-            wPx = el.getBoundingClientRect().width;
+            wPx = window.getComputedStyle(el).width;
             console.log("".concat(el.id, ": ").concat(wPx));
-            return _context.a(2, convertToPt("".concat(wPx, "px")));
+            return _context.a(2, convertToPt("".concat(wPx)));
           case 7:
             _context.p = 7;
             el.style.maxWidth = prev.maxWidth;
