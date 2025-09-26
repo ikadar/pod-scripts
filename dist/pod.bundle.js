@@ -766,7 +766,7 @@ this.Pod = (function() {
     elements.map(/* @__PURE__ */ (function() {
       var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(element, index) {
         var _classArray$find, _classArray$find2;
-        var maxWidth, maxFontSize, currentWidth, maxWidthPt, maxFontSizePt, classArray, maxMatch, maxScale, minMatch, minScale, _t;
+        var maxWidth, maxFontSize, currentWidth, maxWidthPt, maxFontSizePt, classArray, maxMatch, maxScale, minMatch, minScale, _t, _t2;
         return _regenerator().w(function(_context) {
           while (1) switch (_context.n) {
             case 0:
@@ -781,10 +781,11 @@ this.Pod = (function() {
             case 1:
               element.width = maxWidth;
               _t = convertToPt;
+              _t2 = "";
               _context.n = 2;
               return getElementBoxWidth(element);
             case 2:
-              maxWidthPt = _t(_context.v);
+              maxWidthPt = _t(_t2.concat.call(_t2, _context.v, "px"));
               element.width = currentWidth;
               maxFontSizePt = convertToPt(maxFontSize);
               classArray = Array.from(element.classList);
@@ -825,7 +826,7 @@ this.Pod = (function() {
   }
   function _calculateSqueezedScale() {
     _calculateSqueezedScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(element, maxWidthPt) {
-      var _ref2, _ref2$axis, axis, _ref2$minScale, minScale, _ref2$maxScale, maxScale, _ref2$epsilon, epsilon, _ref2$maxIter, maxIter, _ref2$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args2 = arguments, _t2;
+      var _ref2, _ref2$axis, axis, _ref2$minScale, minScale, _ref2$maxScale, maxScale, _ref2$epsilon, epsilon, _ref2$maxIter, maxIter, _ref2$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args2 = arguments, _t3;
       return _regenerator().w(function(_context2) {
         while (1) switch (_context2.n) {
           case 0:
@@ -841,14 +842,14 @@ this.Pod = (function() {
             _context2.n = 1;
             return getElementBoxWidth(element);
           case 1:
-            _t2 = _context2.v;
-            if (_t2) {
+            _t3 = _context2.v;
+            if (_t3) {
               _context2.n = 2;
               break;
             }
-            _t2 = 0;
+            _t3 = 0;
           case 2:
-            baseWidthPt = _t2;
+            baseWidthPt = _t3;
             if (!(baseWidthPt <= 0)) {
               _context2.n = 3;
               break;
