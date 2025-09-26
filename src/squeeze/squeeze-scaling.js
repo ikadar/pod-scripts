@@ -17,7 +17,7 @@ function getElementsToScaling () {
 
 function prepareElementsForScaling() {
     const elements = getElementsToScaling();
-    elements.map(function (element, index) {
+    elements.map(async function (element, index) {
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         const maxFontSize = window.getComputedStyle(element).fontSize;
@@ -29,7 +29,7 @@ function prepareElementsForScaling() {
 
         element.width = maxWidth;
 
-        const maxWidthPt = (convertToPt(getElementBoxWidth(element)) / 162) * 100;
+        const maxWidthPt = convertToPt(await getElementBoxWidth(element));
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);
         element.width = currentWidth;

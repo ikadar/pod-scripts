@@ -763,79 +763,99 @@ this.Pod = (function() {
   }
   function prepareElementsForScaling() {
     var elements = getElementsToScaling();
-    elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2;
-      var maxWidth = window.getComputedStyle(element).maxWidth;
-      var maxFontSize = window.getComputedStyle(element).fontSize;
-      var currentWidth = window.getComputedStyle(element).width;
-      if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
-        return;
-      }
-      element.width = maxWidth;
-      var maxWidthPt = convertToPt(getElementBoxWidth(element)) / 162 * 100;
-      element.width = currentWidth;
-      var maxFontSizePt = convertToPt(maxFontSize);
-      var classArray = Array.from(element.classList);
-      var maxMatch = (_classArray$find = classArray.find(function(c) {
-        return c.startsWith("max-scale-");
-      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
-      var maxScale = maxMatch ? maxMatch[1] : null;
-      var minMatch = (_classArray$find2 = classArray.find(function(c) {
-        return c.startsWith("min-scale-");
-      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
-      var minScale = minMatch ? minMatch[1] : null;
-      elementsToSqueezeScaling[index] = {
-        element: elements[index],
-        maxWidthPt: maxWidthPt,
-        maxFontSizePt: maxFontSizePt,
-        maxScale: maxScale,
-        minScale: minScale
+    elements.map(/* @__PURE__ */ (function() {
+      var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(element, index) {
+        var _classArray$find, _classArray$find2;
+        var maxWidth, maxFontSize, currentWidth, maxWidthPt, maxFontSizePt, classArray, maxMatch, maxScale, minMatch, minScale, _t;
+        return _regenerator().w(function(_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              maxWidth = window.getComputedStyle(element).maxWidth;
+              maxFontSize = window.getComputedStyle(element).fontSize;
+              currentWidth = window.getComputedStyle(element).width;
+              if (!(!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none")) {
+                _context.n = 1;
+                break;
+              }
+              return _context.a(2);
+            case 1:
+              element.width = maxWidth;
+              _t = convertToPt;
+              _context.n = 2;
+              return getElementBoxWidth(element);
+            case 2:
+              maxWidthPt = _t(_context.v);
+              element.width = currentWidth;
+              maxFontSizePt = convertToPt(maxFontSize);
+              classArray = Array.from(element.classList);
+              maxMatch = (_classArray$find = classArray.find(function(c) {
+                return c.startsWith("max-scale-");
+              })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
+              maxScale = maxMatch ? maxMatch[1] : null;
+              minMatch = (_classArray$find2 = classArray.find(function(c) {
+                return c.startsWith("min-scale-");
+              })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
+              minScale = minMatch ? minMatch[1] : null;
+              elementsToSqueezeScaling[index] = {
+                element: elements[index],
+                maxWidthPt: maxWidthPt,
+                maxFontSizePt: maxFontSizePt,
+                maxScale: maxScale,
+                minScale: minScale
+              };
+              element.style.transform = "scale(1, 1)";
+              element.style.transformOrigin = "left center";
+              element.style.display = "inline-block";
+              element.style.flex = "0 0 auto";
+              element.style.alignSelf = "flex-start";
+              element.style.maxWidth = "";
+              element.style.whiteSpace = "nowrap";
+            case 3:
+              return _context.a(2);
+          }
+        }, _callee);
+      }));
+      return function(_x, _x2) {
+        return _ref.apply(this, arguments);
       };
-      element.style.transform = "scale(1, 1)";
-      element.style.transformOrigin = "left center";
-      element.style.display = "inline-block";
-      element.style.flex = "0 0 auto";
-      element.style.alignSelf = "flex-start";
-      element.style.maxWidth = "";
-      element.style.whiteSpace = "nowrap";
-    });
+    })());
   }
-  function calculateSqueezedScale(_x, _x2) {
+  function calculateSqueezedScale(_x3, _x4) {
     return _calculateSqueezedScale.apply(this, arguments);
   }
   function _calculateSqueezedScale() {
-    _calculateSqueezedScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(element, maxWidthPt) {
-      var _ref, _ref$axis, axis, _ref$minScale, minScale, _ref$maxScale, maxScale, _ref$epsilon, epsilon, _ref$maxIter, maxIter, _ref$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args = arguments, _t;
-      return _regenerator().w(function(_context) {
-        while (1) switch (_context.n) {
+    _calculateSqueezedScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(element, maxWidthPt) {
+      var _ref2, _ref2$axis, axis, _ref2$minScale, minScale, _ref2$maxScale, maxScale, _ref2$epsilon, epsilon, _ref2$maxIter, maxIter, _ref2$setOrigin, setOrigin, targetPt, prevTransform, prevOrigin, baseWidthPt, sx, sy, i, w, diffPt, factor, clamp, _args2 = arguments, _t2;
+      return _regenerator().w(function(_context2) {
+        while (1) switch (_context2.n) {
           case 0:
             clamp = function _clamp(v, lo, hi) {
               return Math.max(lo, Math.min(hi, v));
             };
-            _ref = _args.length > 2 && _args[2] !== void 0 ? _args[2] : {}, _ref.pxToPt, _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
+            _ref2 = _args2.length > 2 && _args2[2] !== void 0 ? _args2[2] : {}, _ref2.pxToPt, _ref2$axis = _ref2.axis, axis = _ref2$axis === void 0 ? "x" : _ref2$axis, _ref2$minScale = _ref2.minScale, minScale = _ref2$minScale === void 0 ? 0.2 : _ref2$minScale, _ref2$maxScale = _ref2.maxScale, maxScale = _ref2$maxScale === void 0 ? 1 : _ref2$maxScale, _ref2$epsilon = _ref2.epsilon, epsilon = _ref2$epsilon === void 0 ? 0.05 : _ref2$epsilon, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 5 : _ref2$maxIter, _ref2$setOrigin = _ref2.setOrigin, setOrigin = _ref2$setOrigin === void 0 ? true : _ref2$setOrigin;
             targetPt = maxWidthPt;
             prevTransform = element.style.transform || "";
             prevOrigin = element.style.transformOrigin || "";
             element.style.transform = "none";
             if (setOrigin) element.style.transformOrigin = "left center";
-            _context.n = 1;
+            _context2.n = 1;
             return getElementBoxWidth(element);
           case 1:
-            _t = _context.v;
-            if (_t) {
-              _context.n = 2;
+            _t2 = _context2.v;
+            if (_t2) {
+              _context2.n = 2;
               break;
             }
-            _t = 0;
+            _t2 = 0;
           case 2:
-            baseWidthPt = _t;
+            baseWidthPt = _t2;
             if (!(baseWidthPt <= 0)) {
-              _context.n = 3;
+              _context2.n = 3;
               break;
             }
             element.style.transform = prevTransform;
             element.style.transformOrigin = prevOrigin;
-            return _context.a(2, 1);
+            return _context2.a(2, 1);
           case 3:
             sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
             console.log("sx1: ".concat(sx));
@@ -844,19 +864,19 @@ this.Pod = (function() {
             i = 0;
           case 4:
             if (!(i < maxIter)) {
-              _context.n = 8;
+              _context2.n = 8;
               break;
             }
-            _context.n = 5;
+            _context2.n = 5;
             return getElementBoxWidth(element);
           case 5:
-            w = _context.v;
+            w = _context2.v;
             diffPt = targetPt - w;
             if (!(Math.abs(diffPt) <= epsilon)) {
-              _context.n = 6;
+              _context2.n = 6;
               break;
             }
-            return _context.a(3, 8);
+            return _context2.a(3, 8);
           case 6:
             factor = targetPt / (w || 1);
             sx = clamp(sx * factor, minScale, maxScale);
@@ -866,29 +886,29 @@ this.Pod = (function() {
           // element.style.transform = `scale(${sx}, ${sy}) ${prevTransform}`.trim();
           case 7:
             i++;
-            _context.n = 4;
+            _context2.n = 4;
             break;
           case 8:
             if (!setOrigin) element.style.transformOrigin = prevOrigin;
             console.log("sx3: ".concat(sx));
-            return _context.a(2, sx);
+            return _context2.a(2, sx);
         }
-      }, _callee);
+      }, _callee2);
     }));
     return _calculateSqueezedScale.apply(this, arguments);
   }
-  function squeezeScale(_x3) {
+  function squeezeScale(_x5) {
     return _squeezeScale.apply(this, arguments);
   }
   function _squeezeScale() {
-    _squeezeScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(s) {
+    _squeezeScale = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee3(s) {
       var _s$maxScale, _s$minScale;
       var newScale, maxScale, minScale, finalScale, finalScaleString;
-      return _regenerator().w(function(_context2) {
-        while (1) switch (_context2.n) {
+      return _regenerator().w(function(_context3) {
+        while (1) switch (_context3.n) {
           case 0:
             parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
-            _context2.n = 1;
+            _context3.n = 1;
             return calculateSqueezedScale(
               s.element,
               s.maxWidthPt
@@ -896,7 +916,7 @@ this.Pod = (function() {
               // originalLetterSpacing
             );
           case 1:
-            newScale = _context2.v;
+            newScale = _context3.v;
             maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
             minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
             finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
@@ -904,9 +924,9 @@ this.Pod = (function() {
             s.element.style.transform = finalScaleString;
             s.element.style.maxWidth = s.maxWidth + "pt";
           case 2:
-            return _context2.a(2);
+            return _context3.a(2);
         }
-      }, _callee2);
+      }, _callee3);
     }));
     return _squeezeScale.apply(this, arguments);
   }
