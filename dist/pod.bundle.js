@@ -422,6 +422,7 @@ this.Pod = (function() {
             el.style.whiteSpace = "nowrap";
             el.offsetWidth;
             wPx = el.getBoundingClientRect().width;
+            console.log("".concat(el.id, ": ").concat(wPx));
             return _context.a(2, convertToPt("".concat(wPx, "px")));
           case 7:
             _context.p = 7;

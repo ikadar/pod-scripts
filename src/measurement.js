@@ -32,6 +32,7 @@ async function getElementBoxWidth(el) {
 
         // 5) mérés
         const wPx = el.getBoundingClientRect().width;
+        console.log(`${el.id}: ${wPx}`);
         return convertToPt(`${wPx}px`);
     } finally {
         // 6) visszaállítás
