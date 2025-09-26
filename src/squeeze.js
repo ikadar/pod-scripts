@@ -7,7 +7,7 @@ function runSqueeze() {
     console.log("SQUEEZING");
     prepareElements();
     prepareElementsForLetterSpacing();
-    prepareElementsForScaling();
+    await prepareElementsForScaling();
 
     squeezeAll();
     squeezeAllLetterSpacing();

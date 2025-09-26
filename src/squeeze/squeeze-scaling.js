@@ -15,7 +15,7 @@ function getElementsToScaling () {
     return squeezeElementsWithParams;
 }
 
-function prepareElementsForScaling() {
+async function prepareElementsForScaling() {
     const elements = getElementsToScaling();
     elements.map(async function (element, index) {
 
