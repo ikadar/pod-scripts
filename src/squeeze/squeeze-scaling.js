@@ -26,7 +26,7 @@ function prepareElementsForScaling() {
             return;
         }
 
-        const maxWidthPt = convertToPt(maxWidth);
+        const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         const maxFontSizePt = convertToPt(maxFontSize);
 
         const classArray = Array.from(element.classList);
