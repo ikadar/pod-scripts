@@ -767,10 +767,13 @@ this.Pod = (function() {
       var _classArray$find, _classArray$find2;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
+      var currentWidth = window.getComputedStyle(element).width;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
-      var maxWidthPt = convertToPt(maxWidth) / 162 * 100;
+      element.width = maxWidth;
+      var maxWidthPt = convertToPt(getElementBoxWidth(element)) / 162 * 100;
+      element.width = currentWidth;
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
       var maxMatch = (_classArray$find = classArray.find(function(c) {

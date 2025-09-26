@@ -21,12 +21,19 @@ function prepareElementsForScaling() {
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         const maxFontSize = window.getComputedStyle(element).fontSize;
+        const currentWidth = window.getComputedStyle(element).width;
 
         if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
             return;
         }
 
-        const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
+        element.width = maxWidth;
+
+        const maxWidthPt = (convertToPt(getElementBoxWidth(element)) / 162) * 100;
+        // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
+        // const maxWidthPt = convertToPt(maxWidth);
+        element.width = currentWidth;
+
         const maxFontSizePt = convertToPt(maxFontSize);
 
         const classArray = Array.from(element.classList);
