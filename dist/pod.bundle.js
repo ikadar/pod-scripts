@@ -548,7 +548,7 @@ this.Pod = (function() {
     });
   }
   function fitTextToMaxRows(element, maxRowCount) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 0 : _ref$maxIter;
     var style = window.getComputedStyle(element);
     var currentFontSizePt = convertToPt("".concat(parseFloat(style.fontSize), "px"));
     var iter = 0;
@@ -683,7 +683,7 @@ this.Pod = (function() {
     });
   }
   function fitLetterSpacingToMaxRows(textNode, maxRows) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref2$minSpacing = _ref2.minSpacing, minSpacing = _ref2$minSpacing === void 0 ? -5 : _ref2$minSpacing, _ref2$step = _ref2.step, step = _ref2$step === void 0 ? 0.2 : _ref2$step, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 50 : _ref2$maxIter;
+    var _ref2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref2$minSpacing = _ref2.minSpacing, minSpacing = _ref2$minSpacing === void 0 ? -5 : _ref2$minSpacing, _ref2$step = _ref2.step, step = _ref2$step === void 0 ? 0.2 : _ref2$step, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 0 : _ref2$maxIter;
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
     var parent = textNode.parentElement;
     if (!parent) return;

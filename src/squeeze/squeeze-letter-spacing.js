@@ -158,7 +158,7 @@ function prepareElementsForLetterSpacing() {
 function fitLetterSpacingToMaxRows(textNode, maxRows, {
     minSpacing = -5,   // px – alsó korlát
     step = 0.2,        // px – ennyivel csökkentünk iterációnként
-    maxIter = 50,      // véd a végtelen ciklus ellen
+    maxIter = 0,      // véd a végtelen ciklus ellen
 } = {}) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
 
