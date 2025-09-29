@@ -118,7 +118,7 @@ function prepareElements () {
 function fitTextToMaxRows(element, maxRowCount, {
     minFontSize = 6,         // px
     step = 0.05,              // mennyivel csökkentsen egy lépésben
-    maxIter = 50,            // végtelen ciklus elkerülésére
+    maxIter = 500,            // végtelen ciklus elkerülésére
 } = {}) {
 
     let style = window.getComputedStyle(element);
