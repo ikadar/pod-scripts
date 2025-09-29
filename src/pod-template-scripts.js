@@ -18,6 +18,10 @@ function addPodScripts(data) {
 
         addPostMessageHandler();
 
+        document.fonts?.addEventListener?.('loading', () => console.log('[fonts] loading…'));
+        document.fonts?.addEventListener?.('loadingdone', () => console.log('[fonts] loading done'));
+        document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
+
         const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 

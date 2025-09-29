@@ -147,6 +147,7 @@ function ensureFontsReady(interval = 50) {
                 setTimeout(check, interval);
             }
         }
+        console.log("CHECK");
         check();
     });
 }
