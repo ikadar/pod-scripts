@@ -15,7 +15,7 @@ function runSqueeze() {
 
         // squeezeAll();
         // squeezeAllLetterSpacing();
-        // squeezeAllScaling();
+        squeezeAllScaling();
 
         // handleSeparators();
     })
