@@ -12,14 +12,19 @@ const templateScripts = () => {
 
 function addPodScripts(data) {
 
-    function init(data) {
+    async function init(data) {
 
         setTemplateScripts(templateScripts);
 
         addPostMessageHandler();
 
-        const rendered = false;
-        // const rendered = renderTemplate(data);
+        if (document.fonts?.ready) {
+            try { await document.fonts.ready; } catch {}
+        }
+
+
+        // const rendered = false;
+        const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 
         if (!rendered) {

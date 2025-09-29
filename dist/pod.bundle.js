@@ -456,12 +456,42 @@ this.Pod = (function() {
   };
   function addPodScripts(data) {
     var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE;
-    function init(data2) {
-      setTemplateScripts(templateScripts);
-      addPostMessageHandler();
-      {
-        templateScripts();
-      }
+    function init(_x) {
+      return _init.apply(this, arguments);
+    }
+    function _init() {
+      _init = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(data2) {
+        var _document$fonts3;
+        var rendered;
+        return _regenerator().w(function(_context2) {
+          while (1) switch (_context2.p = _context2.n) {
+            case 0:
+              setTemplateScripts(templateScripts);
+              addPostMessageHandler();
+              if (!((_document$fonts3 = document.fonts) !== null && _document$fonts3 !== void 0 && _document$fonts3.ready)) {
+                _context2.n = 4;
+                break;
+              }
+              _context2.p = 1;
+              _context2.n = 2;
+              return document.fonts.ready;
+            case 2:
+              _context2.n = 4;
+              break;
+            case 3:
+              _context2.p = 3;
+              _context2.v;
+            case 4:
+              rendered = renderTemplate(data2);
+              if (!rendered) {
+                templateScripts();
+              }
+            case 5:
+              return _context2.a(2);
+          }
+        }, _callee2, null, [[1, 3]]);
+      }));
+      return _init.apply(this, arguments);
     }
     (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
       console.log("[fonts] loading…", e.fontfaces.length);
@@ -481,14 +511,14 @@ this.Pod = (function() {
             case 0:
               ensureFontsReady(function() {
                 console.log("Betöltődtek a fontok! 1", document.fonts);
-                init();
+                init(data);
               }, 50);
             case 1:
               return _context.a(2);
           }
         }, _callee);
       }));
-      return function(_x) {
+      return function(_x2) {
         return _ref.apply(this, arguments);
       };
     })());
