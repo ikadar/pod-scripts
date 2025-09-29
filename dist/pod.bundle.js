@@ -460,8 +460,8 @@ this.Pod = (function() {
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
       (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
+        console.log("[fonts] loading…", e.fontfaces.length);
         debugger;
-        console.log("[fonts] loading…", e);
       });
       var rendered = renderTemplate(data2);
       if (!rendered) {

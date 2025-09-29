@@ -19,8 +19,8 @@ function addPodScripts(data) {
         addPostMessageHandler();
 
         document.fonts?.addEventListener?.('loading', (e) => {
+            console.log('[fonts] loading…', e.fontfaces.length);
             debugger;
-            console.log('[fonts] loading…', e);
         });
 
         // document.fonts?.addEventListener?.('loadingdone', (e) => {
