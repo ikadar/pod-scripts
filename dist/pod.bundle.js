@@ -284,7 +284,7 @@ this.Pod = (function() {
     if (!sourceNode) {
       return false;
     }
-    if (Object.keys(sourceNode).length === 0) {
+    if (Object.keys(data).length === 0) {
       return false;
     }
     var source = sourceNode.innerHTML;

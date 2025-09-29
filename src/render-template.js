@@ -17,7 +17,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
         return false;
     }
 
-    if (Object.keys(sourceNode).length === 0) {
+    if (Object.keys(data).length === 0) {
         return false;
     }
 
