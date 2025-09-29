@@ -712,9 +712,9 @@ this.Pod = (function() {
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
-      element.width = maxWidth;
+      element.style.width = maxWidth;
       var maxWidthPt = convertToPt("".concat(getElementBoxWidth(element), "px"));
-      element.width = currentWidth;
+      element.style.width = currentWidth;
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
       var maxMatch = (_classArray$find = classArray.find(function(c) {

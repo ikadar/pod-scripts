@@ -27,12 +27,12 @@ function prepareElementsForScaling() {
             return;
         }
 
-        element.width = maxWidth;
+        element.style.width = maxWidth;
 
         const maxWidthPt = convertToPt(`${getElementBoxWidth(element)}px`);
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);
-        element.width = currentWidth;
+        element.style.width = currentWidth;
 
         const maxFontSizePt = convertToPt(maxFontSize);
 
