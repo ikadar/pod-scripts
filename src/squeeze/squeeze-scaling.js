@@ -22,11 +22,13 @@ function prepareElementsForScaling() {
         const maxWidth = window.getComputedStyle(element).maxWidth;
         const maxFontSize = window.getComputedStyle(element).fontSize;
         const currentWidth = window.getComputedStyle(element).width;
+        const innerHTML = element.innerHTML;
 
         if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
             return;
         }
 
+        element.innerHTML = "";
         element.style.width = maxWidth;
 
         const maxWidthPt = getElementBoxWidth(element);
@@ -34,6 +36,7 @@ function prepareElementsForScaling() {
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);
         element.style.width = currentWidth;
+        element.innerHTML = innerHTML;
 
         const maxFontSizePt = convertToPt(maxFontSize);
 
