@@ -1,5 +1,124 @@
 this.Pod = (function() {
   "use strict";
+  function asyncGeneratorStep(n, t, e, r, o, a, c) {
+    try {
+      var i = n[a](c), u = i.value;
+    } catch (n2) {
+      return void e(n2);
+    }
+    i.done ? t(u) : Promise.resolve(u).then(r, o);
+  }
+  function _asyncToGenerator(n) {
+    return function() {
+      var t = this, e = arguments;
+      return new Promise(function(r, o) {
+        var a = n.apply(t, e);
+        function _next(n2) {
+          asyncGeneratorStep(a, r, o, _next, _throw, "next", n2);
+        }
+        function _throw(n2) {
+          asyncGeneratorStep(a, r, o, _next, _throw, "throw", n2);
+        }
+        _next(void 0);
+      });
+    };
+  }
+  function _regenerator() {
+    /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
+    var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag";
+    function i(r2, n2, o2, i2) {
+      var c2 = n2 && n2.prototype instanceof Generator ? n2 : Generator, u2 = Object.create(c2.prototype);
+      return _regeneratorDefine(u2, "_invoke", (function(r3, n3, o3) {
+        var i3, c3, u3, f2 = 0, p = o3 || [], y = false, G = {
+          p: 0,
+          n: 0,
+          v: e,
+          a: d,
+          f: d.bind(e, 4),
+          d: function(t2, r4) {
+            return i3 = t2, c3 = 0, u3 = e, G.n = r4, a;
+          }
+        };
+        function d(r4, n4) {
+          for (c3 = r4, u3 = n4, t = 0; !y && f2 && !o4 && t < p.length; t++) {
+            var o4, i4 = p[t], d2 = G.p, l = i4[2];
+            r4 > 3 ? (o4 = l === n4) && (u3 = i4[(c3 = i4[4]) ? 5 : (c3 = 3, 3)], i4[4] = i4[5] = e) : i4[0] <= d2 && ((o4 = r4 < 2 && d2 < i4[1]) ? (c3 = 0, G.v = n4, G.n = i4[1]) : d2 < l && (o4 = r4 < 3 || i4[0] > n4 || n4 > l) && (i4[4] = r4, i4[5] = n4, G.n = l, c3 = 0));
+          }
+          if (o4 || r4 > 1) return a;
+          throw y = true, n4;
+        }
+        return function(o4, p2, l) {
+          if (f2 > 1) throw TypeError("Generator is already running");
+          for (y && 1 === p2 && d(p2, l), c3 = p2, u3 = l; (t = c3 < 2 ? e : u3) || !y; ) {
+            i3 || (c3 ? c3 < 3 ? (c3 > 1 && (G.n = -1), d(c3, u3)) : G.n = u3 : G.v = u3);
+            try {
+              if (f2 = 2, i3) {
+                if (c3 || (o4 = "next"), t = i3[o4]) {
+                  if (!(t = t.call(i3, u3))) throw TypeError("iterator result is not an object");
+                  if (!t.done) return t;
+                  u3 = t.value, c3 < 2 && (c3 = 0);
+                } else 1 === c3 && (t = i3.return) && t.call(i3), c3 < 2 && (u3 = TypeError("The iterator does not provide a '" + o4 + "' method"), c3 = 1);
+                i3 = e;
+              } else if ((t = (y = G.n < 0) ? u3 : r3.call(n3, G)) !== a) break;
+            } catch (t2) {
+              i3 = e, c3 = 1, u3 = t2;
+            } finally {
+              f2 = 1;
+            }
+          }
+          return {
+            value: t,
+            done: y
+          };
+        };
+      })(r2, o2, i2), true), u2;
+    }
+    var a = {};
+    function Generator() {
+    }
+    function GeneratorFunction() {
+    }
+    function GeneratorFunctionPrototype() {
+    }
+    t = Object.getPrototypeOf;
+    var c = [][n] ? t(t([][n]())) : (_regeneratorDefine(t = {}, n, function() {
+      return this;
+    }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
+    function f(e2) {
+      return Object.setPrototypeOf ? Object.setPrototypeOf(e2, GeneratorFunctionPrototype) : (e2.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine(e2, o, "GeneratorFunction")), e2.prototype = Object.create(u), e2;
+    }
+    return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine(u), _regeneratorDefine(u, o, "Generator"), _regeneratorDefine(u, n, function() {
+      return this;
+    }), _regeneratorDefine(u, "toString", function() {
+      return "[object Generator]";
+    }), (_regenerator = function() {
+      return {
+        w: i,
+        m: f
+      };
+    })();
+  }
+  function _regeneratorDefine(e, r, n, t) {
+    var i = Object.defineProperty;
+    try {
+      i({}, "", {});
+    } catch (e2) {
+      i = 0;
+    }
+    _regeneratorDefine = function(e2, r2, n2, t2) {
+      function o(r3, n3) {
+        _regeneratorDefine(e2, r3, function(e3) {
+          return this._invoke(r3, n3, e3);
+        });
+      }
+      r2 ? i ? i(e2, r2, {
+        value: n2,
+        enumerable: !t2,
+        configurable: !t2,
+        writable: !t2
+      }) : e2[r2] = n2 : (o("next", 0), o("throw", 1), o("return", 2));
+    }, _regeneratorDefine(e, r, n, t);
+  }
   var handleSeparators = function handleSeparators2() {
     var results = Array.from(document.querySelectorAll('[class*="separator-["]')).map(function(el) {
       var m = el.className.match(/separator-\[([^\]]+)\]/);
@@ -395,17 +514,67 @@ this.Pod = (function() {
     handleSeparators();
   };
   function addPodScripts(data) {
+    var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE, _document$fonts3, _document$fonts3$addE, _document$fonts4;
+    (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function() {
+      console.log("[fonts] loading… status=", document.fonts.status);
+    });
+    (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
+      var _e$fontfaces;
+      console.log("[fonts] DONE. Faces:");
+      (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
+        console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status);
+      });
+    });
+    (_document$fonts3 = document.fonts) === null || _document$fonts3 === void 0 || (_document$fonts3$addE = _document$fonts3.addEventListener) === null || _document$fonts3$addE === void 0 || _document$fonts3$addE.call(_document$fonts3, "loadingerror", function(e) {
+      console.warn("[fonts] ERROR. Faces:", e.fontfaces);
+    });
+    if ((_document$fonts4 = document.fonts) !== null && _document$fonts4 !== void 0 && _document$fonts4.load) {
+      var _origLoad = document.fonts.load.bind(document.fonts);
+      document.fonts.load = function(descriptor, test) {
+        console.log("[fonts.load] called:", descriptor, "test:", test);
+        var p = _origLoad(descriptor, test);
+        p.then(function() {
+          return console.log("[fonts.load] resolved:", descriptor);
+        }).catch(function(err) {
+          return console.warn("[fonts.load] error:", descriptor, err);
+        });
+        return p;
+      };
+    }
+    function waitFontsForElement(_x) {
+      return _waitFontsForElement.apply(this, arguments);
+    }
+    function _waitFontsForElement() {
+      _waitFontsForElement = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(el) {
+        var _document$fonts8, _document$fonts8$chec, _document$fonts9, _document$fonts9$load;
+        var test, cs, desc, _args2 = arguments;
+        return _regenerator().w(function(_context2) {
+          while (1) switch (_context2.n) {
+            case 0:
+              test = _args2.length > 1 && _args2[1] !== void 0 ? _args2[1] : "A";
+              cs = getComputedStyle(el);
+              desc = "".concat(cs.fontStyle, " ").concat(cs.fontWeight, " ").concat(cs.fontStretch || "normal", " ").concat(cs.fontSize, " ").concat(cs.fontFamily);
+              console.log("[fonts.check]", desc, "=>", (_document$fonts8 = document.fonts) === null || _document$fonts8 === void 0 || (_document$fonts8$chec = _document$fonts8.check) === null || _document$fonts8$chec === void 0 ? void 0 : _document$fonts8$chec.call(_document$fonts8, desc));
+              _context2.n = 1;
+              return (_document$fonts9 = document.fonts) === null || _document$fonts9 === void 0 || (_document$fonts9$load = _document$fonts9.load) === null || _document$fonts9$load === void 0 ? void 0 : _document$fonts9$load.call(_document$fonts9, desc, test);
+            case 1:
+              return _context2.a(2);
+          }
+        }, _callee2);
+      }));
+      return _waitFontsForElement.apply(this, arguments);
+    }
     function init(data2) {
-      var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE, _document$fonts3, _document$fonts3$addE;
+      var _document$fonts5, _document$fonts5$addE, _document$fonts6, _document$fonts6$addE, _document$fonts7, _document$fonts7$addE;
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
-      (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
+      (_document$fonts5 = document.fonts) === null || _document$fonts5 === void 0 || (_document$fonts5$addE = _document$fonts5.addEventListener) === null || _document$fonts5$addE === void 0 || _document$fonts5$addE.call(_document$fonts5, "loading", function(e) {
         console.log("[fonts] loading…", e);
       });
-      (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
+      (_document$fonts6 = document.fonts) === null || _document$fonts6 === void 0 || (_document$fonts6$addE = _document$fonts6.addEventListener) === null || _document$fonts6$addE === void 0 || _document$fonts6$addE.call(_document$fonts6, "loadingdone", function(e) {
         console.log("[fonts] loading done", e);
       });
-      (_document$fonts3 = document.fonts) === null || _document$fonts3 === void 0 || (_document$fonts3$addE = _document$fonts3.addEventListener) === null || _document$fonts3$addE === void 0 || _document$fonts3$addE.call(_document$fonts3, "loadingerror", function(e) {
+      (_document$fonts7 = document.fonts) === null || _document$fonts7 === void 0 || (_document$fonts7$addE = _document$fonts7.addEventListener) === null || _document$fonts7$addE === void 0 || _document$fonts7$addE.call(_document$fonts7, "loadingerror", function(e) {
         return console.warn("[fonts] error", e);
       });
       var rendered = renderTemplate(data2);
@@ -413,12 +582,27 @@ this.Pod = (function() {
         templateScripts();
       }
     }
-    document.addEventListener("DOMContentLoaded", function(event) {
-      ensureFontsReady(function() {
-        console.log("Betöltődtek a fontok! 1");
-        init(data);
-      }, 50);
-    });
+    document.addEventListener("DOMContentLoaded", /* @__PURE__ */ (function() {
+      var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(event) {
+        return _regenerator().w(function(_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              _context.n = 1;
+              return waitFontsForElement(yourElement);
+            case 1:
+              ensureFontsReady(function() {
+                console.log("Betöltődtek a fontok! 1");
+                init(data);
+              }, 50);
+            case 2:
+              return _context.a(2);
+          }
+        }, _callee);
+      }));
+      return function(_x2) {
+        return _ref.apply(this, arguments);
+      };
+    })());
     window.__PROCESSING_DONE__ = true;
   }
   function ensureFontsReady(run, interval) {
