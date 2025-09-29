@@ -455,26 +455,26 @@ this.Pod = (function() {
     handleSeparators();
   };
   function addPodScripts(data) {
+    var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE;
     function init(data2) {
-      var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE;
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
-      (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
-        console.log("[fonts] loading…", e.fontfaces.length);
-      });
-      (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
-        var _e$fontfaces;
-        console.log("[fonts] loading done");
-        (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
-          console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status);
-        });
-        debugger;
-      });
       var rendered = renderTemplate(data2);
       if (!rendered) {
         templateScripts();
       }
     }
+    (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
+      console.log("[fonts] loading…", e.fontfaces.length);
+    });
+    (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
+      var _e$fontfaces;
+      console.log("[fonts] loading done");
+      (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
+        console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status);
+      });
+      debugger;
+    });
     document.addEventListener("DOMContentLoaded", /* @__PURE__ */ (function() {
       var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(event) {
         return _regenerator().w(function(_context) {

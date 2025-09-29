@@ -18,23 +18,6 @@ function addPodScripts(data) {
 
         addPostMessageHandler();
 
-        document.fonts?.addEventListener?.('loading', (e) => {
-            console.log('[fonts] loading…', e.fontfaces.length);
-        });
-
-        document.fonts?.addEventListener?.('loadingdone', (e) => {
-            console.log('[fonts] loading done');
-            e.fontfaces?.forEach(ff => {
-                console.log('  family:', ff.family,
-                    'style:', ff.style,
-                    'weight:', ff.weight,
-                    'stretch:', ff.stretch,
-                    'status:', ff.status);
-            });
-            debugger;
-        });
-        // document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
-
         const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 
@@ -42,6 +25,23 @@ function addPodScripts(data) {
             templateScripts();
         }
     }
+
+    document.fonts?.addEventListener?.('loading', (e) => {
+        console.log('[fonts] loading…', e.fontfaces.length);
+    });
+
+    document.fonts?.addEventListener?.('loadingdone', (e) => {
+        console.log('[fonts] loading done');
+        e.fontfaces?.forEach(ff => {
+            console.log('  family:', ff.family,
+                'style:', ff.style,
+                'weight:', ff.weight,
+                'stretch:', ff.stretch,
+                'status:', ff.status);
+        });
+        debugger;
+    });
+    // document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
 
     document.addEventListener("DOMContentLoaded", async (event) => {
 
