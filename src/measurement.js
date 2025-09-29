@@ -8,16 +8,6 @@ import convertToPt from "./conversion";
 function getElementBoxWidth(el) {
     if (!(el instanceof Element)) throw new Error('measureInlineWidthNowrap: el must be Element');
 
-    // 1) várj a fontokra (ha támogatott)
-
-    console.log(`document.fonts?.status: ${document.fonts?.status}`);
-    if (document.fonts?.status === "loading") {
-        console.log("!!!");
-    }
-    // if (document.fonts?.ready) {
-    //     try { await document.fonts.ready; } catch {}
-    // }
-
     // 2) eredeti inline stílusok mentése
     const prev = {
         maxWidth: el.style.maxWidth,
@@ -43,7 +33,7 @@ function getElementBoxWidth(el) {
         // return convertToPt(`${wPx}`);
         // 5) mérés
         const wPx = el.getBoundingClientRect().width;
-        console.log(`${el.id}: ${wPx}`);
+        // console.log(`${el.id}: ${wPx}`);
         return convertToPt(`${wPx}px`);
     } finally {
         // 6) visszaállítás
@@ -53,24 +43,6 @@ function getElementBoxWidth(el) {
         el.style.display = prev.display;
     }
 }
-
-// function getElementBoxWidth (el) {
-//
-//     const computedStyle = window.getComputedStyle(el);
-//     const computedMaxWidth = computedStyle.getPropertyValue("maxWidth");
-//     const computedWhiteSpace = computedStyle.getPropertyValue("whiteSpace");
-//
-//     el.style.maxWidth = "";
-//     el.style.whiteSpace = "nowrap";
-//
-//     const boxWidth = convertToPt(el.getBoundingClientRect().width + "px");
-//
-//     el.style.maxWidth = computedMaxWidth;
-//     el.style.whiteSpace = computedWhiteSpace; //
-//
-//     return boxWidth;
-// }
-
 
 function getTextNodeLineCount(textNode) {
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
