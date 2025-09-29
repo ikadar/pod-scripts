@@ -9,15 +9,15 @@ function runSqueeze() {
 
     ensureFontsReady().then(() => {
         console.log("Betöltődtek a fontok! 3", document.fonts);
-        // prepareElements();
-        // prepareElementsForLetterSpacing();
+        prepareElements();
+        prepareElementsForLetterSpacing();
         prepareElementsForScaling();
 
-        // squeezeAll();
-        // squeezeAllLetterSpacing();
+        squeezeAll();
+        squeezeAllLetterSpacing();
         squeezeAllScaling();
 
-        // handleSeparators();
+        handleSeparators();
     })
 
 
