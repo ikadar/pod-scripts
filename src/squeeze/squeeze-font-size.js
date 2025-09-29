@@ -72,10 +72,15 @@ function prepareElements () {
 
         const maxWidth = window.getComputedStyle(element).maxWidth;
         let maxFontSize = window.getComputedStyle(element).fontSize;
+        const currentWidth = window.getComputedStyle(element).width;
 
         if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
             return;
         }
+
+        element.style.width = maxWidth;
+        const maxWidthPt = getElementBoxWidth(element, false);
+        element.style.width = currentWidth;
 
         const classArray = Array.from(element.classList);
         const maxMatch = classArray.find(c => c.startsWith('max-font-size-'))?.match(/^max-font-size-\[([^\]]+)\]$/);
@@ -86,7 +91,7 @@ function prepareElements () {
         const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
         const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
 
-        const maxWidthPt = convertToPt(maxWidth);
+        // const maxWidthPt = convertToPt(maxWidth);
         // const maxFontSizePt = convertToPt(maxFontSize);
 
         elementsToSqueeze[index] = {

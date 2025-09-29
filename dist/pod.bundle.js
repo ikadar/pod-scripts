@@ -518,9 +518,13 @@ this.Pod = (function() {
       var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
+      var currentWidth = window.getComputedStyle(element).width;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
+      element.style.width = maxWidth;
+      var maxWidthPt = getElementBoxWidth(element, false);
+      element.style.width = currentWidth;
       var classArray = Array.from(element.classList);
       var maxMatch = (_classArray$find = classArray.find(function(c) {
         return c.startsWith("max-font-size-");
@@ -534,7 +538,6 @@ this.Pod = (function() {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
       var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
-      var maxWidthPt = convertToPt(maxWidth);
       elementsToSqueeze[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
