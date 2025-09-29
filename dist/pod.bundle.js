@@ -97,76 +97,6 @@ this.Pod = (function() {
   var getYCoordinate = function getYCoordinate2(element) {
     return element.getBoundingClientRect().top;
   };
-  var templateScripts$1 = function templateScripts2() {
-  };
-  var setTemplateScripts = function setTemplateScripts2(scripts) {
-    templateScripts$1 = scripts;
-  };
-  function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
-    var sourceNode = document.getElementById("entry-template");
-    if (!sourceNode) {
-      return false;
-    }
-    var source = sourceNode.innerHTML;
-    var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
-      return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
-    });
-    var renderer = Twig.twig({
-      data: source
-    });
-    var html = renderer.render(safeData);
-    document.getElementsByTagName("body")[0].outerHTML = html;
-    templateScripts$1();
-    if (sendData) {
-      window.parent.postMessage({
-        source: "template-processor",
-        html: html,
-        data: data,
-        templateId: templateId,
-        orderLineUuid: orderLineUuid,
-        options: options
-      }, "*");
-    }
-    return true;
-  }
-  function zoom(ratio) {
-    document.getElementsByTagName("body")[0].style.scale = ratio;
-  }
-  function smartCaps() {
-    var ignore = ["rue", "avenue", "impasse", "allée", "boulevard", "place", "route", "voie", "de", "la", "le", "les", "lès", "au", "aux", "du", "quai", "promenade", "chemin", "sentier", "passage", "square", "cours", "traverse", "piétonne", "résidence", "esplanade", "rond-point", "carrefour", "giratoire", "faubourg", "cour", "courtil", "clos", "cité", "villa", "hameau", "lieu-dit", "lotissement", "enclos", "chaussée", "parvis", "digue", "port", "berges", "traboule", "estrade", "estay", "rampe", "immeuble", "batiment", "bâtiment"];
-    function getTextNodesInSmartCap() {
-      var root = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
-      var result = [];
-      var elements = root.querySelectorAll(".smartCap");
-      elements.forEach(function(el) {
-        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-        var node;
-        while (node = walker.nextNode()) {
-          var text = node.nodeValue;
-          if (text.trim().length > 0) {
-            node.nodeValue = text.replace(/\w\S*/g, function(word) {
-              var lower = word.toLowerCase();
-              if (ignore.includes(lower)) {
-                return word;
-              }
-              if (lower.startsWith("d'") || lower.startsWith("l'")) {
-                var prefix = lower.slice(0, 2);
-                var rest = lower.slice(2);
-                return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
-              }
-              return word.charAt(0).toUpperCase() + word.slice(1);
-            });
-            result.push(node);
-          }
-        }
-      });
-      return result;
-    }
-    var smartCapsNodeList = getTextNodesInSmartCap();
-    var smartCaps2 = Array.from(smartCapsNodeList);
-    smartCaps2.forEach(function(smartCap) {
-    });
-  }
   function convertToPt(size) {
     var dpi = 74.999943307122;
     var pointsPerInch = 72;
@@ -347,9 +277,83 @@ this.Pod = (function() {
       squeezeScale(elementsToSqueezeScaling[i]);
     }
   }
+  var templateScripts$1 = function templateScripts2() {
+  };
+  var setTemplateScripts = function setTemplateScripts2(scripts) {
+    templateScripts$1 = scripts;
+  };
+  function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
+    var sourceNode = document.getElementById("entry-template");
+    if (!sourceNode) {
+      return false;
+    }
+    var source = sourceNode.innerHTML;
+    var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
+      return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
+    });
+    var renderer = Twig.twig({
+      data: source
+    });
+    var html = renderer.render(safeData);
+    document.getElementsByTagName("body")[0].outerHTML = html;
+    ensureFontsReady$1().then(function() {
+      console.log("Betöltődtek a fontok! 2");
+      templateScripts$1();
+    });
+    if (sendData) {
+      window.parent.postMessage({
+        source: "template-processor",
+        html: html,
+        data: data,
+        templateId: templateId,
+        orderLineUuid: orderLineUuid,
+        options: options
+      }, "*");
+    }
+    return true;
+  }
+  function zoom(ratio) {
+    document.getElementsByTagName("body")[0].style.scale = ratio;
+  }
+  function smartCaps() {
+    var ignore = ["rue", "avenue", "impasse", "allée", "boulevard", "place", "route", "voie", "de", "la", "le", "les", "lès", "au", "aux", "du", "quai", "promenade", "chemin", "sentier", "passage", "square", "cours", "traverse", "piétonne", "résidence", "esplanade", "rond-point", "carrefour", "giratoire", "faubourg", "cour", "courtil", "clos", "cité", "villa", "hameau", "lieu-dit", "lotissement", "enclos", "chaussée", "parvis", "digue", "port", "berges", "traboule", "estrade", "estay", "rampe", "immeuble", "batiment", "bâtiment"];
+    function getTextNodesInSmartCap() {
+      var root = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
+      var result = [];
+      var elements = root.querySelectorAll(".smartCap");
+      elements.forEach(function(el) {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        var node;
+        while (node = walker.nextNode()) {
+          var text = node.nodeValue;
+          if (text.trim().length > 0) {
+            node.nodeValue = text.replace(/\w\S*/g, function(word) {
+              var lower = word.toLowerCase();
+              if (ignore.includes(lower)) {
+                return word;
+              }
+              if (lower.startsWith("d'") || lower.startsWith("l'")) {
+                var prefix = lower.slice(0, 2);
+                var rest = lower.slice(2);
+                return prefix + rest.charAt(0).toUpperCase() + rest.slice(1);
+              }
+              return word.charAt(0).toUpperCase() + word.slice(1);
+            });
+            result.push(node);
+          }
+        }
+      });
+      return result;
+    }
+    var smartCapsNodeList = getTextNodesInSmartCap();
+    var smartCaps2 = Array.from(smartCapsNodeList);
+    smartCaps2.forEach(function(smartCap) {
+    });
+  }
   function runSqueeze() {
     console.log("SQUEEZING");
     ensureFontsReady$1().then(function() {
+      console.log("Betöltődtek a fontok! 3");
       prepareElementsForScaling();
       squeezeAllScaling();
     });
@@ -397,7 +401,7 @@ this.Pod = (function() {
     }
     document.addEventListener("DOMContentLoaded", function(event) {
       ensureFontsReady(function() {
-        console.log("Betöltődtek a fontok!");
+        console.log("Betöltődtek a fontok! 1");
         init(data);
       }, 50);
     });

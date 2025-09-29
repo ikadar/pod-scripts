@@ -29,7 +29,7 @@ function addPodScripts(data) {
     document.addEventListener("DOMContentLoaded", (event) => {
 
         ensureFontsReady(function () {
-            console.log("Betöltődtek a fontok!");
+            console.log("Betöltődtek a fontok! 1");
             init(data);
         }, 50);
     });

@@ -8,6 +8,7 @@ function runSqueeze() {
     console.log("SQUEEZING");
 
     ensureFontsReady().then(() => {
+        console.log("Betöltődtek a fontok! 3");
         // prepareElements();
         // prepareElementsForLetterSpacing();
         prepareElementsForScaling();
