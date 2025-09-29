@@ -21,7 +21,8 @@ function getElementBoxWidth(el) {
         el.style.maxWidth   = 'none';
         el.style.whiteSpace = 'nowrap';
         // el.style.transform  = 'none'; // scale/rotate ne torzítson
-        el.style.display = 'inline-block';
+        el.style.display = 'inline';
+        // el.style.display = 'inline-block';
 
         // 4) reflow trigger (biztos ami biztos)
         // eslint-disable-next-line no-unused-expressions
