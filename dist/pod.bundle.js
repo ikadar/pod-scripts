@@ -471,7 +471,7 @@ this.Pod = (function() {
       var _e$fontfaces;
       console.log("[fonts] loading done");
       (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
-        console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status);
+        console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status, "display:", ff.display, "unicodeRange", ff.unicodeRange);
       });
       debugger;
     });

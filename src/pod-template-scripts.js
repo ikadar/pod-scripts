@@ -37,7 +37,9 @@ function addPodScripts(data) {
                 'style:', ff.style,
                 'weight:', ff.weight,
                 'stretch:', ff.stretch,
-                'status:', ff.status);
+                'status:', ff.status,
+                'display:', ff.display,
+                'unicodeRange', ff.unicodeRange);
         });
         debugger;
     });
