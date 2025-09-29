@@ -5,7 +5,7 @@ import convertToPt from "./conversion";
  * A mérés előtt megvárja a webfontok betöltését.
  * Visszatérési érték: px (number). Ha pt kell, szorozd 0.75-tel (96dpi).
  */
-function getElementBoxWidth(el) {
+function getElementBoxWidth(el, overflown=false) {
     if (!(el instanceof Element)) throw new Error('measureInlineWidthNowrap: el must be Element');
 
     // 2) eredeti inline stílusok mentése
@@ -34,8 +34,11 @@ function getElementBoxWidth(el) {
         // return convertToPt(`${wPx}`);
         // 5) mérés
         const wPx = el.getBoundingClientRect().width;
-        el.style.display = 'inline-block';
-        const wPx2 = el.getBoundingClientRect().width;
+        let wPx2 = 0;
+        if (overflown) {
+            el.style.display = 'inline-block';
+            wPx2 = el.getBoundingClientRect().width;
+        }
         // console.log(`${el.id}: ${wPx}`);
         return convertToPt(`${Math.max(wPx, wPx2)}px`);
     } finally {

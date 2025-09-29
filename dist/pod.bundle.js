@@ -383,6 +383,7 @@ this.Pod = (function() {
     return value * conversionFactors[unit];
   }
   function getElementBoxWidth(el) {
+    var overflown = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
     var prev = {
       maxWidth: el.style.maxWidth,
@@ -396,8 +397,11 @@ this.Pod = (function() {
       el.style.display = "inline";
       el.offsetWidth;
       var wPx = el.getBoundingClientRect().width;
-      el.style.display = "inline-block";
-      var wPx2 = el.getBoundingClientRect().width;
+      var wPx2 = 0;
+      if (overflown) {
+        el.style.display = "inline-block";
+        wPx2 = el.getBoundingClientRect().width;
+      }
       return convertToPt("".concat(Math.max(wPx, wPx2), "px"));
     } finally {
       el.style.maxWidth = prev.maxWidth;
