@@ -17,6 +17,10 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
         return false;
     }
 
+    if (Object.keys(sourceNode).length === 0) {
+        return false;
+    }
+
     const source = sourceNode.innerHTML;
 
     // Wrap each string property in SafeString

@@ -284,6 +284,9 @@ this.Pod = (function() {
     if (!sourceNode) {
       return false;
     }
+    if (Object.keys(sourceNode).length === 0) {
+      return false;
+    }
     var source = sourceNode.innerHTML;
     var safeData = JSON.parse(JSON.stringify(data), function(key, value) {
       return typeof value === "string" ? value.replace(/\\n/g, "<br />") : value;
