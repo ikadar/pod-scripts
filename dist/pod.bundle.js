@@ -711,15 +711,12 @@ this.Pod = (function() {
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       var currentWidth = window.getComputedStyle(element).width;
-      var innerHTML = element.innerHTML;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
-      element.innerHTML = "";
       element.style.width = maxWidth;
       var maxWidthPt = getElementBoxWidth(element);
       element.style.width = currentWidth;
-      element.innerHTML = innerHTML;
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
       var maxMatch = (_classArray$find = classArray.find(function(c) {
