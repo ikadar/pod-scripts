@@ -561,7 +561,6 @@ this.Pod = (function() {
       (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
         console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status, "display:", ff.display, "unicodeRange", ff.unicodeRange);
       });
-      debugger;
     });
     document.addEventListener("DOMContentLoaded", /* @__PURE__ */ (function() {
       var _ref = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee(event) {

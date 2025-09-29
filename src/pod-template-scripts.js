@@ -47,7 +47,7 @@ function addPodScripts(data) {
                 'display:', ff.display,
                 'unicodeRange', ff.unicodeRange);
         });
-        debugger;
+        // debugger;
     });
     // document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
 
