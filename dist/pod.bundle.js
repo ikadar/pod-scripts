@@ -713,7 +713,7 @@ this.Pod = (function() {
         return;
       }
       element.style.width = maxWidth;
-      var maxWidthPt = convertToPt("".concat(getElementBoxWidth(element), "px"));
+      var maxWidthPt = getElementBoxWidth(element);
       element.style.width = currentWidth;
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);

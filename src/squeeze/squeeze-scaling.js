@@ -29,7 +29,8 @@ function prepareElementsForScaling() {
 
         element.style.width = maxWidth;
 
-        const maxWidthPt = convertToPt(`${getElementBoxWidth(element)}px`);
+        const maxWidthPt = getElementBoxWidth(element);
+        // const maxWidthPt = convertToPt(`${getElementBoxWidth(element)}px`);
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);
         element.style.width = currentWidth;
