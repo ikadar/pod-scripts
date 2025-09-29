@@ -31,7 +31,7 @@ function prepareElementsForScaling() {
         // element.innerHTML = "";
         element.style.width = maxWidth;
 
-        const maxWidthPt = getElementBoxWidth(element);
+        const maxWidthPt = getElementBoxWidth(element, false);
         // const maxWidthPt = convertToPt(`${getElementBoxWidth(element)}px`);
         // const maxWidthPt = (convertToPt(maxWidth) / 162) * 100;
         // const maxWidthPt = convertToPt(maxWidth);

@@ -383,7 +383,7 @@ this.Pod = (function() {
     return value * conversionFactors[unit];
   }
   function getElementBoxWidth(el) {
-    var overflown = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+    var overflown = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
     var prev = {
       maxWidth: el.style.maxWidth,
@@ -719,7 +719,7 @@ this.Pod = (function() {
         return;
       }
       element.style.width = maxWidth;
-      var maxWidthPt = getElementBoxWidth(element);
+      var maxWidthPt = getElementBoxWidth(element, false);
       element.style.width = currentWidth;
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
