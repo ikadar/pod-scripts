@@ -545,13 +545,13 @@ this.Pod = (function() {
         minFontSizePt: minFontSizePt,
         maxRows: maxRows
       };
-      element.style.display = "inline-block";
+      element.style.display = "inline";
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
     });
   }
   function fitTextToMaxRows(element, maxRowCount) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 0 : _ref$maxIter;
+    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
     var style = window.getComputedStyle(element);
     var currentFontSizePt = convertToPt("".concat(parseFloat(style.fontSize), "px"));
     var iter = 0;

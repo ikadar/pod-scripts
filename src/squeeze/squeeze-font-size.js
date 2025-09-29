@@ -103,7 +103,8 @@ function prepareElements () {
         };
 
         // element.style.fontSize = "1pt";
-        element.style.display = "inline-block";
+        element.style.display = "inline";
+        // element.style.display = "inline-block";
         element.style.flex = "0 0 auto";
         element.style.alignSelf = "flex-start";
         // element.style.maxWidth = "";
@@ -117,7 +118,7 @@ function prepareElements () {
 function fitTextToMaxRows(element, maxRowCount, {
     minFontSize = 6,         // px
     step = 0.5,              // mennyivel csökkentsen egy lépésben
-    maxIter = 0,            // végtelen ciklus elkerülésére
+    maxIter = 50,            // végtelen ciklus elkerülésére
 } = {}) {
 
     let style = window.getComputedStyle(element);
