@@ -403,7 +403,7 @@ this.Pod = (function() {
         console.log("[fonts] loading…", e);
       });
       (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
-        console.log("[fonts] loading done", d);
+        console.log("[fonts] loading done", e);
       });
       (_document$fonts3 = document.fonts) === null || _document$fonts3 === void 0 || (_document$fonts3$addE = _document$fonts3.addEventListener) === null || _document$fonts3$addE === void 0 || _document$fonts3$addE.call(_document$fonts3, "loadingerror", function(e) {
         return console.warn("[fonts] error", e);

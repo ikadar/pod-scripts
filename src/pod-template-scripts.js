@@ -22,7 +22,7 @@ function addPodScripts(data) {
             console.log('[fonts] loading…', e);
         });
         document.fonts?.addEventListener?.('loadingdone', (e) => {
-            console.log('[fonts] loading done', d);
+            console.log('[fonts] loading done', e);
         });
         document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
 
