@@ -12,50 +12,6 @@ const templateScripts = () => {
 
 function addPodScripts(data) {
 
-
-
-    // 1) Események
-    document.fonts?.addEventListener?.('loading', () => {
-        console.log('[fonts] loading… status=', document.fonts.status);
-    });
-
-    document.fonts?.addEventListener?.('loadingdone', (e) => {
-        console.log('[fonts] DONE. Faces:');
-        e.fontfaces?.forEach(ff => {
-            console.log('  family:', ff.family,
-                'style:', ff.style,
-                'weight:', ff.weight,
-                'stretch:', ff.stretch,
-                'status:', ff.status);
-        });
-    });
-
-    document.fonts?.addEventListener?.('loadingerror', (e) => {
-        console.warn('[fonts] ERROR. Faces:', e.fontfaces);
-    });
-
-// 2) Monkey-patch: logold, ha BÁRKI hívja a document.fonts.load-ot
-    if (document.fonts?.load) {
-        const _origLoad = document.fonts.load.bind(document.fonts);
-        document.fonts.load = function(descriptor, test) {
-            console.log('[fonts.load] called:', descriptor, 'test:', test);
-            const p = _origLoad(descriptor, test);
-            p.then(() => console.log('[fonts.load] resolved:', descriptor))
-                .catch(err => console.warn('[fonts.load] error:', descriptor, err));
-            return p;
-        };
-    }
-
-    async function waitFontsForElement(el, test='A') {
-        const cs = getComputedStyle(el);
-        const desc = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontStretch || 'normal'} ${cs.fontSize} ${cs.fontFamily}`;
-        console.log('[fonts.check]', desc, '=>', document.fonts?.check?.(desc));
-        await document.fonts?.load?.(desc, test);
-    }
-
-
-
-
     function init(data) {
 
         setTemplateScripts(templateScripts);
@@ -66,7 +22,14 @@ function addPodScripts(data) {
             console.log('[fonts] loading…', e);
         });
         document.fonts?.addEventListener?.('loadingdone', (e) => {
-            console.log('[fonts] loading done', e);
+            console.log('[fonts] loading done');
+            e.fontfaces?.forEach(ff => {
+                console.log('  family:', ff.family,
+                    'style:', ff.style,
+                    'weight:', ff.weight,
+                    'stretch:', ff.stretch,
+                    'status:', ff.status);
+            });
         });
         document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
 
@@ -79,8 +42,6 @@ function addPodScripts(data) {
     }
 
     document.addEventListener("DOMContentLoaded", async (event) => {
-
-        await waitFontsForElement(yourElement);
 
         ensureFontsReady(function () {
             console.log("Betöltődtek a fontok! 1");
