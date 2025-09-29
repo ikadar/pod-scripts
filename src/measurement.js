@@ -34,8 +34,10 @@ function getElementBoxWidth(el) {
         // return convertToPt(`${wPx}`);
         // 5) mérés
         const wPx = el.getBoundingClientRect().width;
+        el.style.display = 'inline-block';
+        const wPx2 = el.getBoundingClientRect().width;
         // console.log(`${el.id}: ${wPx}`);
-        return convertToPt(`${wPx}px`);
+        return convertToPt(`${Math.max(wPx, wPx2)}px`);
     } finally {
         // 6) visszaállítás
         el.style.maxWidth   = prev.maxWidth;

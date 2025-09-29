@@ -396,7 +396,9 @@ this.Pod = (function() {
       el.style.display = "inline";
       el.offsetWidth;
       var wPx = el.getBoundingClientRect().width;
-      return convertToPt("".concat(wPx, "px"));
+      el.style.display = "inline-block";
+      var wPx2 = el.getBoundingClientRect().width;
+      return convertToPt("".concat(Math.max(wPx, wPx2), "px"));
     } finally {
       el.style.maxWidth = prev.maxWidth;
       el.style.whiteSpace = prev.whiteSpace;
