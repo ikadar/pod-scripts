@@ -21,7 +21,7 @@ function getElementBoxWidth(el, overflown=true) {
         el.style.maxWidth   = 'none';
         el.style.whiteSpace = 'nowrap';
         // el.style.transform  = 'none'; // scale/rotate ne torzítson
-        el.style.display = 'inline';
+        el.style.display = 'inline-block';
         // el.style.display = 'inline-block';
 
         // 4) reflow trigger (biztos ami biztos)
@@ -36,7 +36,7 @@ function getElementBoxWidth(el, overflown=true) {
         const wPx = el.getBoundingClientRect().width;
         let wPx2 = 0;
         if (overflown) {
-            el.style.display = 'inline-block';
+            el.style.display = 'inline';
             wPx2 = el.getBoundingClientRect().width;
         }
         // console.log(`${el.id}: ${wPx}`);

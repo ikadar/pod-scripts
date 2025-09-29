@@ -394,12 +394,12 @@ this.Pod = (function() {
     try {
       el.style.maxWidth = "none";
       el.style.whiteSpace = "nowrap";
-      el.style.display = "inline";
+      el.style.display = "inline-block";
       el.offsetWidth;
       var wPx = el.getBoundingClientRect().width;
       var wPx2 = 0;
       if (overflown) {
-        el.style.display = "inline-block";
+        el.style.display = "inline";
         wPx2 = el.getBoundingClientRect().width;
       }
       return convertToPt("".concat(Math.max(wPx, wPx2), "px"));
