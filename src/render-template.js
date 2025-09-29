@@ -1,7 +1,3 @@
-import logInfo from "./log-info";
-import {ensureFontsReady} from "./measurement";
-import {prepareElementsForScaling, squeezeAllScaling} from "./squeeze/squeeze-scaling";
-
 let templateScripts = () => {}
 
 const setTemplateScripts = (scripts) => {
@@ -36,11 +32,8 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
 
     document.getElementsByTagName('body')[0].outerHTML = html;
 
-    ensureFontsReady().then(() => {
-        console.log("Betöltődtek a fontok! 2", document.fonts);
-        scriptFromTheTemplate();
-        templateScripts();
-    })
+    scriptFromTheTemplate();
+    templateScripts();
 
     if (sendData) {
         window.parent.postMessage({source: "template-processor", html: html, data: data, templateId: templateId, orderLineUuid: orderLineUuid, options: options}, "*");

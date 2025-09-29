@@ -138,31 +138,4 @@ function getRenderedLineCountForNode(node, { epsilon = 0.5 } = {}) {
     return lines + 1;
 }
 
-function ensureFontsReady(interval = 50) {
-    return new Promise(resolve => {
-        function check() {
-            if (document.fonts && document.fonts.status === "loaded") {
-                resolve();
-            } else {
-                setTimeout(check, interval);
-            }
-        }
-        console.log("CHECK");
-        check();
-    });
-}
-
-// function ensureFontsReady(run, interval) {
-//     interval = interval || 50;
-//
-//     function check() {
-//         if (document.fonts && document.fonts.status === "loaded") {
-//             run();
-//         } else {
-//             setTimeout(check, interval);
-//         }
-//     }
-//     check();
-// }
-
-export {getElementBoxWidth, getTextNodeLineCount, getRenderedLineCountForNode, ensureFontsReady};
+export {getElementBoxWidth, getTextNodeLineCount, getRenderedLineCountForNode};
