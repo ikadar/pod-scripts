@@ -2,18 +2,24 @@ import handleSeparators from "./separator";
 import { prepareElements, squeezeAll } from "./squeeze/squeeze-font-size";
 import { prepareElementsForLetterSpacing, squeezeAllLetterSpacing } from "./squeeze/squeeze-letter-spacing";
 import { prepareElementsForScaling, squeezeAllScaling } from "./squeeze/squeeze-scaling";
+import {ensureFontsReady} from "./measurement";
 
 function runSqueeze() {
     console.log("SQUEEZING");
-    prepareElements();
-    prepareElementsForLetterSpacing();
-    prepareElementsForScaling();
 
-    squeezeAll();
-    squeezeAllLetterSpacing();
-    squeezeAllScaling();
+    ensureFontsReady().then(() => {
+        // prepareElements();
+        // prepareElementsForLetterSpacing();
+        prepareElementsForScaling();
 
-    // handleSeparators();
+        // squeezeAll();
+        // squeezeAllLetterSpacing();
+        squeezeAllScaling();
+
+        // handleSeparators();
+    })
+
+
 }
 
 export default runSqueeze;

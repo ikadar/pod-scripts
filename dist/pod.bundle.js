@@ -10,7 +10,7 @@ this.Pod = (function() {
     }).filter(Boolean);
     results.forEach(function(_ref) {
       var element = _ref.element, value = _ref.value;
-      var textNodes = getAllTextNodes$1(element);
+      var textNodes = getAllTextNodes(element);
       textNodes.forEach(function(node) {
         return wrapMatchesWithSeparatorAndSegments(node, value);
       });
@@ -44,7 +44,7 @@ this.Pod = (function() {
       }
     });
   };
-  function getAllTextNodes$1(root) {
+  function getAllTextNodes(root) {
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     var nodes = [];
     var n;
@@ -205,391 +205,42 @@ this.Pod = (function() {
     }
     return value * conversionFactors[unit];
   }
-  function _arrayLikeToArray(r, a) {
-    (null == a || a > r.length) && (a = r.length);
-    for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-    return n;
-  }
-  function _createForOfIteratorHelper(r, e) {
-    var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (!t) {
-      if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e) {
-        t && (r = t);
-        var n = 0, F = function() {
-        };
-        return {
-          s: F,
-          n: function() {
-            return n >= r.length ? {
-              done: true
-            } : {
-              done: false,
-              value: r[n++]
-            };
-          },
-          e: function(r2) {
-            throw r2;
-          },
-          f: F
-        };
-      }
-      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-    var o, a = true, u = false;
-    return {
-      s: function() {
-        t = t.call(r);
-      },
-      n: function() {
-        var r2 = t.next();
-        return a = r2.done, r2;
-      },
-      e: function(r2) {
-        u = true, o = r2;
-      },
-      f: function() {
-        try {
-          a || null == t.return || t.return();
-        } finally {
-          if (u) throw o;
-        }
-      }
-    };
-  }
-  function _unsupportedIterableToArray(r, a) {
-    if (r) {
-      if ("string" == typeof r) return _arrayLikeToArray(r, a);
-      var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
-    }
-  }
   function getElementBoxWidth(el) {
+    var _document$fonts;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
-    ensureFontsReady$1(function() {
-      var _document$fonts;
-      console.log("Betöltődtek a fontok!");
-      console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
-      var prev = {
-        maxWidth: el.style.maxWidth,
-        whiteSpace: el.style.whiteSpace,
-        transform: el.style.transform,
-        display: el.style.display
-      };
-      try {
-        el.style.maxWidth = "none";
-        el.style.whiteSpace = "nowrap";
-        el.style.display = "inline-block";
-        el.offsetWidth;
-        var wPx = el.getBoundingClientRect().width;
-        console.log("".concat(el.id, ": ").concat(wPx));
-        return convertToPt("".concat(wPx, "px"));
-      } finally {
-        el.style.maxWidth = prev.maxWidth;
-        el.style.whiteSpace = prev.whiteSpace;
-        el.style.display = prev.display;
-      }
-    }, 50);
-  }
-  function getTextNodeLineCount(textNode) {
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
-    var range = document.createRange();
-    range.selectNodeContents(textNode);
-    var rects = range.getClientRects();
-    return rects.length;
-  }
-  function getAllTextNodes(root) {
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
-    var out = [];
-    var n;
-    while (n = walker.nextNode()) {
-      if (n.nodeValue && n.nodeValue.trim().length) out.push(n);
-    }
-    return out;
-  }
-  function getRenderedLineCountForNode(node) {
-    var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.5 : _ref$epsilon;
-    if (!node) return 0;
-    var rects = [];
-    var _iterator = _createForOfIteratorHelper(getAllTextNodes(node)), _step;
+    console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
+    var prev = {
+      maxWidth: el.style.maxWidth,
+      whiteSpace: el.style.whiteSpace,
+      transform: el.style.transform,
+      display: el.style.display
+    };
     try {
-      for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-        var tn = _step.value;
-        var range = document.createRange();
-        range.selectNodeContents(tn);
-        var rlist = range.getClientRects();
-        for (var i = 0; i < rlist.length; i++) {
-          var _r = rlist[i];
-          if (_r.width > 0 && _r.height > 0) {
-            rects.push({
-              top: _r.top,
-              bottom: _r.bottom,
-              left: _r.left,
-              right: _r.right,
-              height: _r.height
-            });
-          }
+      el.style.maxWidth = "none";
+      el.style.whiteSpace = "nowrap";
+      el.style.display = "inline-block";
+      el.offsetWidth;
+      var wPx = el.getBoundingClientRect().width;
+      console.log("".concat(el.id, ": ").concat(wPx));
+      return convertToPt("".concat(wPx, "px"));
+    } finally {
+      el.style.maxWidth = prev.maxWidth;
+      el.style.whiteSpace = prev.whiteSpace;
+      el.style.display = prev.display;
+    }
+  }
+  function ensureFontsReady$1() {
+    var interval = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 50;
+    return new Promise(function(resolve) {
+      function check() {
+        if (document.fonts && document.fonts.status === "loaded") {
+          resolve();
+        } else {
+          setTimeout(check, interval);
         }
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-    if (rects.length === 0) return 0;
-    rects.sort(function(a, b) {
-      return a.top - b.top;
+      check();
     });
-    var lines = 0;
-    var currentTop = rects[0].top;
-    for (var _i = 0, _rects = rects; _i < _rects.length; _i++) {
-      var r = _rects[_i];
-      if (Math.abs(r.top - currentTop) > epsilon) {
-        lines++;
-        currentTop = r.top;
-      }
-    }
-    return lines + 1;
-  }
-  function ensureFontsReady$1(run, interval) {
-    interval = interval || 50;
-    function check() {
-      if (document.fonts && document.fonts.status === "loaded") {
-        run();
-      } else {
-        setTimeout(check, interval);
-      }
-    }
-    check();
-  }
-  var elementsToSqueeze = [];
-  function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
-    var scale = maxWidthPt / actualWidthPt;
-    var newFontSizePt = parseFloat(actualFontSizePt) * scale;
-    return Math.min(newFontSizePt, maxFontSizePt);
-  }
-  function squeeze(s) {
-    var rowCount = getRenderedLineCountForNode(s.element);
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
-      return;
-    }
-    if (s.maxRows > 1) {
-      fitTextToMaxRows(s.element, s.maxRows, {
-        minFontSize: s.minFontSizePt
-      });
-      return;
-    }
-    var actualFontSize = convertToPt(window.getComputedStyle(s.element).fontSize);
-    var actualWidthPt = getElementBoxWidth(s.element);
-    var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
-    console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(newFontSizePt, " | ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
-    newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-    newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
-    s.element.style.fontSize = newFontSizePt.toString() + "pt";
-    while (getRenderedLineCountForNode(s.element) > 1) {
-      newFontSizePt -= 0.1;
-      s.element.style.fontSize = newFontSizePt.toString() + "pt";
-    }
-    s.element.style.maxWidth = s.maxWidth + "pt";
-  }
-  function getElementsToSqueeze() {
-    var squeezeElements = document.querySelectorAll(".squeeze");
-    var squeezeElementsWithParams = [];
-    for (var i = 0; i < squeezeElements.length; i++) {
-      squeezeElementsWithParams.push(squeezeElements[i]);
-    }
-    return squeezeElementsWithParams;
-  }
-  function squeezeAll() {
-    for (var i in elementsToSqueeze) {
-      squeeze(elementsToSqueeze[i]);
-    }
-  }
-  function prepareElements() {
-    var elements = getElementsToSqueeze();
-    elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2, _classArray$find3;
-      var maxWidth = window.getComputedStyle(element).maxWidth;
-      var maxFontSize = window.getComputedStyle(element).fontSize;
-      if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
-        return;
-      }
-      var classArray = Array.from(element.classList);
-      var maxMatch = (_classArray$find = classArray.find(function(c) {
-        return c.startsWith("max-font-size-");
-      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-font-size-\[([^\]]+)\]$/);
-      var maxFontSizePt = maxMatch ? convertToPt(maxMatch[1]) : convertToPt(maxFontSize);
-      var minMatch = (_classArray$find2 = classArray.find(function(c) {
-        return c.startsWith("min-font-size-");
-      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-font-size-\[([^\]]+)\]$/);
-      var minFontSizePt = minMatch ? convertToPt(minMatch[1]) : null;
-      var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
-        return c.startsWith("max-rows-");
-      })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
-      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
-      var maxWidthPt = convertToPt(maxWidth);
-      elementsToSqueeze[index] = {
-        element: elements[index],
-        maxWidthPt: maxWidthPt,
-        maxFontSizePt: maxFontSizePt,
-        minFontSizePt: minFontSizePt,
-        maxRows: maxRows
-      };
-      element.style.display = "inline-block";
-      element.style.flex = "0 0 auto";
-      element.style.alignSelf = "flex-start";
-    });
-  }
-  function fitTextToMaxRows(element, maxRowCount) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$minFontSize = _ref.minFontSize, minFontSize = _ref$minFontSize === void 0 ? 6 : _ref$minFontSize, _ref$step = _ref.step, step = _ref$step === void 0 ? 0.5 : _ref$step, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 50 : _ref$maxIter;
-    var style = window.getComputedStyle(element);
-    var currentFontSizePt = convertToPt("".concat(parseFloat(style.fontSize), "px"));
-    var iter = 0;
-    while (iter < maxIter) {
-      var rowCount = getRenderedLineCountForNode(element);
-      if (rowCount <= maxRowCount) break;
-      currentFontSizePt = Math.max(currentFontSizePt - step, minFontSize);
-      element.style.fontSize = "".concat(currentFontSizePt, "pt");
-      iter++;
-    }
-    console.log(iter);
-  }
-  var elementsToSqueezeSpacing = [];
-  function calculateSqueezedLetterSpacing(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.74999943307122 : _ref$pxToPt, _ref$epsilonPt = _ref.epsilonPt, epsilonPt = _ref$epsilonPt === void 0 ? 0.05 : _ref$epsilonPt, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 20 : _ref$maxIter, _ref$minLSpt = _ref.minLSpt, minLSpt = _ref$minLSpt === void 0 ? -5 : _ref$minLSpt, _ref$maxLSpt = _ref.maxLSpt, maxLSpt = _ref$maxLSpt === void 0 ? 20 : _ref$maxLSpt;
-    var toPt = function toPt2(px) {
-      return px * pxToPt;
-    };
-    var toPx = function toPx2(pt) {
-      return pt / pxToPt;
-    };
-    var targetPt = maxWidthPt * 1;
-    var text = element.textContent || "";
-    var gaps = Math.max(0, text.length - 1);
-    if (gaps === 0) {
-      return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
-    }
-    var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
-    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
-    var currentLSPt = toPt(currentLSpx);
-    var currentWidthPt = getElementBoxWidth(element);
-    var guessPt = currentLSPt;
-    if (gaps > 0) {
-      var extraPerGapPt = (targetPt - currentWidthPt) / gaps;
-      guessPt = currentLSPt + extraPerGapPt;
-    }
-    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
-    element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = getElementBoxWidth(element);
-    if (Math.abs(wPt - targetPt) <= epsilonPt) {
-      return guessPt;
-    }
-    var loPt, hiPt;
-    if (wPt < targetPt) {
-      loPt = guessPt;
-      hiPt = maxLSpt;
-    } else {
-      loPt = minLSpt;
-      hiPt = guessPt;
-    }
-    for (var i = 0; i < maxIter; i++) {
-      var midPt = (loPt + hiPt) / 2;
-      element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = getElementBoxWidth(element);
-      var diff = wPt - targetPt;
-      if (Math.abs(diff) <= epsilonPt) {
-        guessPt = midPt;
-        break;
-      }
-      if (diff < 0) loPt = midPt;
-      else hiPt = midPt;
-      guessPt = midPt;
-    }
-    return guessPt;
-  }
-  function squeezeLetterSpacing(s) {
-    var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
-      return;
-    }
-    if (s.maxRows > 1) {
-      fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
-        minSpacing: s.minLetterSpacingPt
-      });
-      return;
-    }
-    var newLetterSpacingPt = calculateSqueezedLetterSpacing(
-      s.element,
-      s.maxWidthPt
-      // getElementBoxWidth(s.element),
-      // originalLetterSpacing
-    );
-    var finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
-    s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
-    s.element.style.maxWidth = s.maxWidth + "pt";
-  }
-  function squeezeAllLetterSpacing() {
-    for (var i in elementsToSqueezeSpacing) {
-      squeezeLetterSpacing(elementsToSqueezeSpacing[i]);
-    }
-  }
-  function getElementsToSqueezeLetterSpacing() {
-    var squeezeElements = document.querySelectorAll(".squeeze-spacing");
-    var squeezeElementsWithParams = [];
-    for (var i = 0; i < squeezeElements.length; i++) {
-      squeezeElementsWithParams.push(squeezeElements[i]);
-    }
-    return squeezeElementsWithParams;
-  }
-  function prepareElementsForLetterSpacing() {
-    var elements = getElementsToSqueezeLetterSpacing();
-    elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2, _classArray$find3;
-      var maxWidth = window.getComputedStyle(element).maxWidth;
-      if (!maxWidth || maxWidth === "none") {
-        return;
-      }
-      var maxWidthPt = convertToPt(maxWidth);
-      var classArray = Array.from(element.classList);
-      var maxMatch = (_classArray$find = classArray.find(function(c) {
-        return c.startsWith("max-letter-spacing-");
-      })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-letter-spacing-\[([^\]]+)\]$/);
-      var maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : null;
-      var minMatch = (_classArray$find2 = classArray.find(function(c) {
-        return c.startsWith("min-letter-spacing-");
-      })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-letter-spacing-\[([^\]]+)\]$/);
-      var minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
-      var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
-        return c.startsWith("max-rows-");
-      })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
-      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
-      elementsToSqueezeSpacing[index] = {
-        element: elements[index],
-        maxWidthPt: maxWidthPt,
-        maxLetterSpacingPt: maxLetterSpacingPt,
-        minLetterSpacingPt: minLetterSpacingPt,
-        maxRows: maxRows
-      };
-      element.style.display = "inline-block";
-      element.style.flex = "0 0 auto";
-      element.style.alignSelf = "flex-start";
-    });
-  }
-  function fitLetterSpacingToMaxRows(textNode, maxRows) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref2$minSpacing = _ref2.minSpacing, minSpacing = _ref2$minSpacing === void 0 ? -5 : _ref2$minSpacing, _ref2$step = _ref2.step, step = _ref2$step === void 0 ? 0.2 : _ref2$step, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 50 : _ref2$maxIter;
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
-    var parent = textNode.parentElement;
-    if (!parent) return;
-    var style = window.getComputedStyle(parent);
-    var currentSpacingPt = convertToPt("".concat(parseFloat(style.letterSpacing) || 0, "px"));
-    var iter = 0;
-    while (iter < maxIter) {
-      var rowCount = getTextNodeLineCount(textNode);
-      if (rowCount <= maxRows) break;
-      currentSpacingPt = Math.max(currentSpacingPt - step, minSpacing);
-      parent.style.letterSpacing = "".concat(currentSpacingPt, "pt");
-      iter++;
-    }
-    return currentSpacingPt;
   }
   var elementsToSqueezeScaling = [];
   function getElementsToScaling() {
@@ -698,12 +349,10 @@ this.Pod = (function() {
   }
   function runSqueeze() {
     console.log("SQUEEZING");
-    prepareElements();
-    prepareElementsForLetterSpacing();
-    prepareElementsForScaling();
-    squeezeAll();
-    squeezeAllLetterSpacing();
-    squeezeAllScaling();
+    ensureFontsReady$1().then(function() {
+      prepareElementsForScaling();
+      squeezeAllScaling();
+    });
   }
   function addPostMessageHandler() {
     window.addEventListener("message", function(event) {
