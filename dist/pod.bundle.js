@@ -515,21 +515,12 @@ this.Pod = (function() {
   };
   function addPodScripts(data) {
     function init(data2) {
-      var _document$fonts, _document$fonts$addEv, _document$fonts2, _document$fonts2$addE, _document$fonts3, _document$fonts3$addE;
+      var _document$fonts, _document$fonts$addEv;
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
       (_document$fonts = document.fonts) === null || _document$fonts === void 0 || (_document$fonts$addEv = _document$fonts.addEventListener) === null || _document$fonts$addEv === void 0 || _document$fonts$addEv.call(_document$fonts, "loading", function(e) {
+        debugger;
         console.log("[fonts] loading…", e);
-      });
-      (_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 || (_document$fonts2$addE = _document$fonts2.addEventListener) === null || _document$fonts2$addE === void 0 || _document$fonts2$addE.call(_document$fonts2, "loadingdone", function(e) {
-        var _e$fontfaces;
-        console.log("[fonts] loading done");
-        (_e$fontfaces = e.fontfaces) === null || _e$fontfaces === void 0 || _e$fontfaces.forEach(function(ff) {
-          console.log("  family:", ff.family, "style:", ff.style, "weight:", ff.weight, "stretch:", ff.stretch, "status:", ff.status);
-        });
-      });
-      (_document$fonts3 = document.fonts) === null || _document$fonts3 === void 0 || (_document$fonts3$addE = _document$fonts3.addEventListener) === null || _document$fonts3$addE === void 0 || _document$fonts3$addE.call(_document$fonts3, "loadingerror", function(e) {
-        return console.warn("[fonts] error", e);
       });
       var rendered = renderTemplate(data2);
       if (!rendered) {

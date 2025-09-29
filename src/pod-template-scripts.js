@@ -19,19 +19,21 @@ function addPodScripts(data) {
         addPostMessageHandler();
 
         document.fonts?.addEventListener?.('loading', (e) => {
+            debugger;
             console.log('[fonts] loading…', e);
         });
-        document.fonts?.addEventListener?.('loadingdone', (e) => {
-            console.log('[fonts] loading done');
-            e.fontfaces?.forEach(ff => {
-                console.log('  family:', ff.family,
-                    'style:', ff.style,
-                    'weight:', ff.weight,
-                    'stretch:', ff.stretch,
-                    'status:', ff.status);
-            });
-        });
-        document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
+
+        // document.fonts?.addEventListener?.('loadingdone', (e) => {
+        //     console.log('[fonts] loading done');
+        //     e.fontfaces?.forEach(ff => {
+        //         console.log('  family:', ff.family,
+        //             'style:', ff.style,
+        //             'weight:', ff.weight,
+        //             'stretch:', ff.stretch,
+        //             'status:', ff.status);
+        //     });
+        // });
+        // document.fonts?.addEventListener?.('loadingerror', (e) => console.warn('[fonts] error', e));
 
         const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
