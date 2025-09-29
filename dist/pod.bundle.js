@@ -491,7 +491,6 @@ this.Pod = (function() {
     var newFontSizePt = calculateSqueezedFontSize(s.maxFontSizePt, s.maxWidthPt, actualWidthPt, actualFontSize);
     console.log("".concat(s.element.id, ": ").concat(actualFontSize, " - ").concat(newFontSizePt, " | ").concat(actualWidthPt, " - ").concat(s.maxWidthPt));
     newFontSizePt = Math.max(newFontSizePt, s.minFontSizePt);
-    newFontSizePt = Math.floor(newFontSizePt * 10) / 10;
     s.element.style.fontSize = newFontSizePt.toString() + "pt";
     while (getRenderedLineCountForNode(s.element) > 1) {
       newFontSizePt -= 0.1;
