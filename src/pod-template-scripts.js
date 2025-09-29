@@ -18,7 +18,8 @@ function addPodScripts(data) {
 
         addPostMessageHandler();
 
-        const rendered = renderTemplate(data);
+        const rendered = false;
+        // const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 
         if (!rendered) {

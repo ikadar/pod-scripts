@@ -255,11 +255,10 @@ this.Pod = (function() {
     return value * conversionFactors[unit];
   }
   function getElementBoxWidth(el) {
-    var _document$fonts;
+    var _document$fonts, _document$fonts2;
     if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
     console.log("document.fonts?.status: ".concat((_document$fonts = document.fonts) === null || _document$fonts === void 0 ? void 0 : _document$fonts.status));
-    while (((_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 ? void 0 : _document$fonts2.status) !== "loading") {
-      var _document$fonts2;
+    if (((_document$fonts2 = document.fonts) === null || _document$fonts2 === void 0 ? void 0 : _document$fonts2.status) === "loading") {
       console.log("!!!");
     }
     var prev = {
@@ -460,8 +459,7 @@ this.Pod = (function() {
     function init(data2) {
       setTemplateScripts(templateScripts);
       addPostMessageHandler();
-      var rendered = renderTemplate(data2);
-      if (!rendered) {
+      {
         templateScripts();
       }
     }
@@ -483,7 +481,7 @@ this.Pod = (function() {
             case 0:
               ensureFontsReady(function() {
                 console.log("Betöltődtek a fontok! 1", document.fonts);
-                init(data);
+                init();
               }, 50);
             case 1:
               return _context.a(2);
