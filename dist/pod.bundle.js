@@ -362,7 +362,7 @@ this.Pod = (function() {
     var html = renderer.render(safeData);
     document.getElementsByTagName("body")[0].outerHTML = html;
     ensureFontsReady$1().then(function() {
-      console.log("Betöltődtek a fontok! 2");
+      console.log("Betöltődtek a fontok! 2", document.fonts);
       templateScripts$1();
     });
     if (sendData) {
@@ -418,7 +418,7 @@ this.Pod = (function() {
   function runSqueeze() {
     console.log("SQUEEZING");
     ensureFontsReady$1().then(function() {
-      console.log("Betöltődtek a fontok! 3");
+      console.log("Betöltődtek a fontok! 3", document.fonts);
       prepareElementsForScaling();
     });
   }
@@ -481,7 +481,7 @@ this.Pod = (function() {
           while (1) switch (_context.n) {
             case 0:
               ensureFontsReady(function() {
-                console.log("Betöltődtek a fontok! 1");
+                console.log("Betöltődtek a fontok! 1", document.fonts);
                 init(data);
               }, 50);
             case 1:

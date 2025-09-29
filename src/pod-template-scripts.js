@@ -48,7 +48,7 @@ function addPodScripts(data) {
     document.addEventListener("DOMContentLoaded", async (event) => {
 
         ensureFontsReady(function () {
-            console.log("Betöltődtek a fontok! 1");
+            console.log("Betöltődtek a fontok! 1", document.fonts);
             init(data);
         }, 50);
     });

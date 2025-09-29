@@ -37,7 +37,7 @@ function renderTemplate(data, templateId, orderLineUuid, options, sendData) {
     document.getElementsByTagName('body')[0].outerHTML = html;
 
     ensureFontsReady().then(() => {
-        console.log("Betöltődtek a fontok! 2");
+        console.log("Betöltődtek a fontok! 2", document.fonts);
         scriptFromTheTemplate();
         templateScripts();
     })
