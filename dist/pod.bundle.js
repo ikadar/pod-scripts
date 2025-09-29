@@ -750,7 +750,7 @@ this.Pod = (function() {
   function calculateSqueezedScale(element, maxWidthPt) {
     var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
     _ref.pxToPt;
-    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 5 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
+    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.2 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 0 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
     var targetPt = maxWidthPt;
     var prevTransform = element.style.transform || "";
     var prevOrigin = element.style.transformOrigin || "";

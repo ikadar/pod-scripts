@@ -93,7 +93,7 @@ function calculateSqueezedScale(
         minScale = 0.2,
         maxScale = 1,
         epsilon = 0.05,
-        maxIter = 5,
+        maxIter = 0,
         setOrigin = true,
     } = {}
 ) {
