@@ -820,13 +820,16 @@ this.Pod = (function() {
     var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
     var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     var finalScaleString = "scale(".concat(finalScale, ", 1)");
-    s.element.style.transform = finalScaleString;
-    var scaleX = getScaleX(s.element);
-    s.element.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
-    s.element.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
+    applyTransformX(s.element, finalScaleString);
     if (s.maxRows > 1) {
       console.log("rowCount: ".concat(rowCount));
     }
+  }
+  function applyTransformX(el, scaleString) {
+    el.style.transform = scaleString;
+    var scaleX = getScaleX(el);
+    el.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
+    el.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {

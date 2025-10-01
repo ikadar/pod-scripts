@@ -159,6 +159,11 @@ function calculateSqueezedScale(
 
 function squeezeScale(s) {
 
+    // ha s.maxRows == 1, sima squeeze
+    // ha max squeeze és no squeeze esetén a row count különbözik, akkor
+    // keresd meg, azt a squeeze legkisebb mértéket, ami még ugyanannyi rows-t eredményez mint a max squeeze
+
+
     const rowCount = getRenderedLineCountForNode(s.element);
     // if (rowCount <= s.maxRows && s.maxRows > 1) {
     //     // console.log(`rowCount: ${rowCount}`);
@@ -176,18 +181,27 @@ function squeezeScale(s) {
     const finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     const finalScaleString = `scale(${finalScale}, 1)`;
 
-    s.element.style.transform = finalScaleString;
-    const scaleX = getScaleX(s.element);
-    s.element.style.maxWidth = `${Math.ceil(100*100 / (scaleX))/100}%`;
-    s.element.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
-    // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
-    // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
+    applyTransformX(s.element, finalScaleString);
+
+    // s.element.style.transform = finalScaleString;
+    // const scaleX = getScaleX(s.element);
+    // s.element.style.maxWidth = `${Math.ceil(100*100 / (scaleX))/100}%`;
+    // s.element.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
+    // // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
+    // // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
 
     if (s.maxRows > 1) {
     // if (rowCount > s.maxRows && s.maxRows > 1) {
         console.log(`rowCount: ${rowCount}`);
     }
 
+}
+
+function applyTransformX(el, scaleString) {
+    el.style.transform = scaleString;
+    const scaleX = getScaleX(el);
+    el.style.maxWidth = `${Math.ceil(100*100 / (scaleX))/100}%`;
+    el.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
 }
 
 
