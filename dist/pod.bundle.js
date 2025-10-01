@@ -804,8 +804,8 @@ this.Pod = (function() {
     var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     var finalScaleString = "scale(".concat(finalScale, ", 1)");
     s.element.style.transform = finalScaleString;
-    s.element.style.maxWidth = "".concat(s.maxWidthPt * finalScale, "pt");
-    s.element.style.width = "".concat(s.maxWidthPt * finalScale, "pt");
+    s.element.style.maxWidth = "".concat(s.maxWidthPt / finalScale, "pt");
+    s.element.style.width = "".concat(s.maxWidthPt / finalScale, "pt");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
