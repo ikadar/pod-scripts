@@ -156,7 +156,7 @@ function squeezeScale(s) {
 
     const rowCount = getRenderedLineCountForNode(s.element);
     if (rowCount <= s.maxRows && s.maxRows > 1) {
-        console.log(`rowCount: ${rowCount}`);
+        // console.log(`rowCount: ${rowCount}`);
         return;
     }
 
@@ -177,6 +177,11 @@ function squeezeScale(s) {
     s.element.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
     // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
     // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
+
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+        console.log(`rowCount: ${rowCount}`);
+    }
+
 }
 
 
