@@ -810,10 +810,10 @@ this.Pod = (function() {
   }
   function squeezeScale(s) {
     var _s$maxScale, _s$minScale;
-    applyTransformX(s.element, "scale(1, 1)");
-    var maxRowCount = getRenderedLineCountForNode(s.element);
     applyTransformX(s.element, "scale(".concat(s.minScale, ", 1)"));
     var minRowCount = getRenderedLineCountForNode(s.element);
+    applyTransformX(s.element, "scale(1, 1)");
+    var maxRowCount = getRenderedLineCountForNode(s.element);
     console.log(minRowCount, maxRowCount);
     var rowCount = getRenderedLineCountForNode(s.element);
     var newScale = calculateSqueezedScale(
