@@ -178,10 +178,10 @@ this.Pod = (function() {
     }
   }
   var handleSeparators = function handleSeparators2() {
-    var results = Array.from(document.querySelectorAll('[class*="separator-["]')).map(function(el) {
-      var m = el.className.match(/separator-\[([^\]]+)\]/);
+    var results = Array.from(document.querySelectorAll('[class*="separator-["]')).map(function(el2) {
+      var m = el2.className.match(/separator-\[([^\]]+)\]/);
       return m ? {
-        element: el,
+        element: el2,
         value: m[1]
       } : null;
     }).filter(Boolean);
@@ -318,8 +318,8 @@ this.Pod = (function() {
       var root = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
       var result = [];
       var elements = root.querySelectorAll(".smartCap");
-      elements.forEach(function(el) {
-        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      elements.forEach(function(el2) {
+        var walker = document.createTreeWalker(el2, NodeFilter.SHOW_TEXT);
         var node;
         while (node = walker.nextNode()) {
           var text = node.nodeValue;
@@ -385,31 +385,31 @@ this.Pod = (function() {
     }
     return value * conversionFactors[unit];
   }
-  function getElementBoxWidth(el) {
+  function getElementBoxWidth(el2) {
     var overflown = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
-    if (!(el instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
+    if (!(el2 instanceof Element)) throw new Error("measureInlineWidthNowrap: el must be Element");
     var prev = {
-      maxWidth: el.style.maxWidth,
-      whiteSpace: el.style.whiteSpace,
-      transform: el.style.transform,
-      display: el.style.display
+      maxWidth: el2.style.maxWidth,
+      whiteSpace: el2.style.whiteSpace,
+      transform: el2.style.transform,
+      display: el2.style.display
     };
     try {
-      el.style.maxWidth = "none";
-      el.style.whiteSpace = "nowrap";
-      el.style.display = "inline-block";
-      el.offsetWidth;
-      var wPx = el.getBoundingClientRect().width;
+      el2.style.maxWidth = "none";
+      el2.style.whiteSpace = "nowrap";
+      el2.style.display = "inline-block";
+      el2.offsetWidth;
+      var wPx = el2.getBoundingClientRect().width;
       var wPx2 = 0;
       if (overflown) {
-        el.style.display = "inline";
-        wPx2 = el.getBoundingClientRect().width;
+        el2.style.display = "inline";
+        wPx2 = el2.getBoundingClientRect().width;
       }
       return convertToPt("".concat(Math.max(wPx, wPx2), "px"));
     } finally {
-      el.style.maxWidth = prev.maxWidth;
-      el.style.whiteSpace = prev.whiteSpace;
-      el.style.display = prev.display;
+      el2.style.maxWidth = prev.maxWidth;
+      el2.style.whiteSpace = prev.whiteSpace;
+      el2.style.display = prev.display;
     }
   }
   function getTextNodeLineCount(textNode) {
@@ -472,8 +472,8 @@ this.Pod = (function() {
     }
     return lines + 1;
   }
-  function getScaleX(el) {
-    var style = window.getComputedStyle(el);
+  function getScaleX(el2) {
+    var style = window.getComputedStyle(el2);
     var transform = style.transform;
     if (!transform || transform === "none") {
       return 1;
@@ -813,7 +813,10 @@ this.Pod = (function() {
     var rowCount = getRenderedLineCountForNode(s.element);
     var newScale = calculateSqueezedScale(
       s.element,
-      s.maxWidthPt
+      s.maxWidthPt,
+      {
+        minScale: el.minScale
+      }
       // getElementBoxWidth(s.element),
     );
     var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
@@ -825,11 +828,11 @@ this.Pod = (function() {
       console.log("rowCount: ".concat(rowCount));
     }
   }
-  function applyTransformX(el, scaleString) {
-    el.style.transform = scaleString;
-    var scaleX = getScaleX(el);
-    el.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
-    el.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
+  function applyTransformX(el2, scaleString) {
+    el2.style.transform = scaleString;
+    var scaleX = getScaleX(el2);
+    el2.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
+    el2.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {

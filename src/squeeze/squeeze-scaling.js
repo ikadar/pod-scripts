@@ -173,6 +173,9 @@ function squeezeScale(s) {
     const newScale = calculateSqueezedScale(
         s.element,
         s.maxWidthPt,
+        {
+            minScale: el.minScale,
+        }
         // getElementBoxWidth(s.element),
     );
 
