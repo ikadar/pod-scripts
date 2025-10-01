@@ -1,5 +1,5 @@
 import convertToPt from "../conversion";
-import {getElementBoxWidth, getRenderedLineCountForNode} from "../measurement";
+import {getElementBoxWidth, getRenderedLineCountForNode, getScaleX} from "../measurement";
 
 const elementsToSqueezeScaling = [];
 
@@ -173,8 +173,11 @@ function squeezeScale(s) {
     const finalScaleString = `scale(${finalScale}, 1)`;
 
     s.element.style.transform = finalScaleString;
-    s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
-    s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
+    const scaleX = getScaleX(s.element);
+    s.element.style.maxWidth = `${100 * (1/scaleX)}%`;
+    s.element.style.width = `${100 * (1/scaleX)}%`;
+    // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
+    // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
 }
 
 

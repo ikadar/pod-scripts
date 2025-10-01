@@ -116,4 +116,27 @@ function getRenderedLineCountForNode(node, { epsilon = 0.5 } = {}) {
     return lines + 1;
 }
 
-export {getElementBoxWidth, getTextNodeLineCount, getRenderedLineCountForNode};
+function getScaleX(el) {
+    const style = window.getComputedStyle(el);
+    const transform = style.transform;
+
+    if (!transform || transform === "none") {
+        return 1; // nincs transzformáció → scaleX = 1
+    }
+
+    if (transform.startsWith("matrix3d")) {
+        // matrix3d(a1, a2, ..., a16)
+        const values = transform.slice(9, -1).split(",").map(parseFloat);
+        return values[0]; // a1 = scaleX
+    }
+
+    if (transform.startsWith("matrix")) {
+        // matrix(a, b, c, d, e, f)
+        const values = transform.slice(7, -1).split(",").map(parseFloat);
+        return values[0]; // a = scaleX
+    }
+
+    return 1; // fallback
+}
+
+export {getElementBoxWidth, getTextNodeLineCount, getRenderedLineCountForNode, getScaleX};

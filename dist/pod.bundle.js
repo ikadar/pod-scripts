@@ -472,6 +472,22 @@ this.Pod = (function() {
     }
     return lines + 1;
   }
+  function getScaleX(el) {
+    var style = window.getComputedStyle(el);
+    var transform = style.transform;
+    if (!transform || transform === "none") {
+      return 1;
+    }
+    if (transform.startsWith("matrix3d")) {
+      var values = transform.slice(9, -1).split(",").map(parseFloat);
+      return values[0];
+    }
+    if (transform.startsWith("matrix")) {
+      var _values = transform.slice(7, -1).split(",").map(parseFloat);
+      return _values[0];
+    }
+    return 1;
+  }
   var elementsToSqueeze = [];
   function calculateSqueezedFontSize(maxFontSizePt, maxWidthPt, actualWidthPt, actualFontSizePt) {
     var scale = maxWidthPt / actualWidthPt;
@@ -804,8 +820,9 @@ this.Pod = (function() {
     var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
     var finalScaleString = "scale(".concat(finalScale, ", 1)");
     s.element.style.transform = finalScaleString;
-    s.element.style.maxWidth = "".concat(s.maxWidthPt / finalScale, "pt");
-    s.element.style.width = "".concat(s.maxWidthPt / finalScale, "pt");
+    var scaleX = getScaleX(s.element);
+    s.element.style.maxWidth = "".concat(100 * (1 / scaleX), "%");
+    s.element.style.width = "".concat(100 * (1 / scaleX), "%");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
