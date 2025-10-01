@@ -863,6 +863,10 @@ this.Pod = (function() {
       var data = {};
       Object.keys(event.data.data).map(function(key) {
         if (Array.isArray(event.data.data[key]) && event.data.data[key].length > 0) {
+          var _event$data$data$key$;
+          if ((_event$data$data$key$ = event.data.data[key][0]) !== null && _event$data$data$key$ !== void 0 && _event$data$data$key$.uuid) {
+            data[key] = event.data.data[key][0].uuid;
+          }
           data[key] = event.data.data[key][0].label;
         } else {
           data[key] = event.data.data[key];
