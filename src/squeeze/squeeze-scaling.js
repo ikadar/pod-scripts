@@ -40,12 +40,17 @@ function prepareElementsForScaling() {
         const minMatch = classArray.find(c => c.startsWith('min-scale-'))?.match(/^min-scale-\[([^\]]+)\]$/);
         const minScale = minMatch ? minMatch[1] : null;
 
+        const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
+        const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
+
+
         elementsToSqueezeScaling[index] = {
             element: elements[index],
             maxWidthPt: maxWidthPt,
             maxFontSizePt: maxFontSizePt,
             maxScale: maxScale,
             minScale: minScale,
+            maxRows: maxRows
         };
 
         element.style.transform = "scale(1, 1)";

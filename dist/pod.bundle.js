@@ -732,7 +732,7 @@ this.Pod = (function() {
   function prepareElementsForScaling() {
     var elements = getElementsToScaling();
     elements.map(function(element, index) {
-      var _classArray$find, _classArray$find2;
+      var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       var maxFontSize = window.getComputedStyle(element).fontSize;
       var currentWidth = window.getComputedStyle(element).width;
@@ -752,12 +752,17 @@ this.Pod = (function() {
         return c.startsWith("min-scale-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
       var minScale = minMatch ? minMatch[1] : null;
+      var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
+        return c.startsWith("max-rows-");
+      })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
+      var maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
       elementsToSqueezeScaling[index] = {
         element: elements[index],
         maxWidthPt: maxWidthPt,
         maxFontSizePt: maxFontSizePt,
         maxScale: maxScale,
-        minScale: minScale
+        minScale: minScale,
+        maxRows: maxRows
       };
       element.style.transform = "scale(1, 1)";
       element.style.transformOrigin = "left center";
