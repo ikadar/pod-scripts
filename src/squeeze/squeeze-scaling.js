@@ -174,8 +174,8 @@ function squeezeScale(s) {
 
     s.element.style.transform = finalScaleString;
     const scaleX = getScaleX(s.element);
-    s.element.style.maxWidth = `${100 * (1/scaleX)}%`;
-    s.element.style.width = `${100 * (1/scaleX)}%`;
+    s.element.style.maxWidth = `${Math.ceil(100*100 / (scaleX))/100}%`;
+    s.element.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
     // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
     // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
 }
