@@ -13,7 +13,7 @@ function addPostMessageHandler() {
         Object.keys(event.data.data).map((key) => {
             if (Array.isArray(event.data.data[key]) && (event.data.data[key].length > 0)) {
                 if (event.data.data[key][0]?.uuid) {
-                    data[key] = event.data.data[key][0].uuid;
+                    data[key] = `https://bar-dev.wheel.digital/client-api/file-manager/${event.data.data[key][0].uuid}`;
                 } else {
                     data[key] = event.data.data[key][0].label;
                 }
