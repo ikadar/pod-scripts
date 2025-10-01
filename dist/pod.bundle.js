@@ -822,7 +822,7 @@ this.Pod = (function() {
     var scaleX = getScaleX(s.element);
     s.element.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
     s.element.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
+    if (rowCount > s.maxRows && s.maxRows > 1) {
       console.log("rowCount: ".concat(rowCount));
     }
   }

@@ -178,7 +178,7 @@ function squeezeScale(s) {
     // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
     // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
 
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
+    if (rowCount > s.maxRows && s.maxRows > 1) {
         console.log(`rowCount: ${rowCount}`);
     }
 
