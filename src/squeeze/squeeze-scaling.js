@@ -164,9 +164,9 @@ function squeezeScale(s) {
     // keresd meg, azt a squeeze legkisebb mértéket, ami még ugyanannyi rows-t eredményez mint a max squeeze
 
     applyTransformX(s.element, `scale(1, 1)`);
-    const maxRowCount = getElementBoxWidth(s.element);
+    const maxRowCount = getRenderedLineCountForNode(s.element);
     applyTransformX(s.element, `scale(${s.minScale}, 1)`);
-    const minRowCount = getElementBoxWidth(s.element);
+    const minRowCount = getRenderedLineCountForNode(s.element);
 
     console.log(minRowCount, maxRowCount);
 
