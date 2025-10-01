@@ -174,7 +174,7 @@ function squeezeScale(s) {
         s.element,
         s.maxWidthPt,
         {
-            minScale: el.minScale,
+            minScale: s.minScale,
         }
         // getElementBoxWidth(s.element),
     );
