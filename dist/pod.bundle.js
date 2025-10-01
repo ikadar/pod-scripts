@@ -866,8 +866,9 @@ this.Pod = (function() {
           var _event$data$data$key$;
           if ((_event$data$data$key$ = event.data.data[key][0]) !== null && _event$data$data$key$ !== void 0 && _event$data$data$key$.uuid) {
             data[key] = event.data.data[key][0].uuid;
+          } else {
+            data[key] = event.data.data[key][0].label;
           }
-          data[key] = event.data.data[key][0].label;
         } else {
           data[key] = event.data.data[key];
         }

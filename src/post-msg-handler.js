@@ -14,8 +14,9 @@ function addPostMessageHandler() {
             if (Array.isArray(event.data.data[key]) && (event.data.data[key].length > 0)) {
                 if (event.data.data[key][0]?.uuid) {
                     data[key] = event.data.data[key][0].uuid;
+                } else {
+                    data[key] = event.data.data[key][0].label;
                 }
-                data[key] = event.data.data[key][0].label;
             } else {
                 data[key] = event.data.data[key];
             }
