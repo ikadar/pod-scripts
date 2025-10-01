@@ -790,12 +790,15 @@ this.Pod = (function() {
   }
   function squeezeScale(s) {
     var _s$maxScale, _s$minScale;
-    parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
+    var rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+      console.log("rowCount: ".concat(rowCount));
+      return;
+    }
     var newScale = calculateSqueezedScale(
       s.element,
       s.maxWidthPt
       // getElementBoxWidth(s.element),
-      // originalLetterSpacing
     );
     var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
     var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;

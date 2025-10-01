@@ -1,5 +1,5 @@
 import convertToPt from "../conversion";
-import {getElementBoxWidth} from "../measurement";
+import {getElementBoxWidth, getRenderedLineCountForNode} from "../measurement";
 
 const elementsToSqueezeScaling = [];
 
@@ -154,13 +154,17 @@ function calculateSqueezedScale(
 
 function squeezeScale(s) {
 
-    const originalLetterSpacing = parseFloat(window.getComputedStyle(s.element).letterSpacing) || 0;
+
+    const rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows && s.maxRows > 1) {
+        console.log(`rowCount: ${rowCount}`);
+        return;
+    }
 
     const newScale = calculateSqueezedScale(
         s.element,
         s.maxWidthPt,
         // getElementBoxWidth(s.element),
-        // originalLetterSpacing
     );
 
     const maxScale = s.maxScale ?? newScale;
