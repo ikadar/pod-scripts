@@ -173,8 +173,8 @@ function squeezeScale(s) {
     const finalScaleString = `scale(${finalScale}, 1)`;
 
     s.element.style.transform = finalScaleString;
-    s.element.style.maxWidth = s.maxWidth + "pt";
-    s.element.style.width = s.maxWidth + "pt";
+    s.element.style.maxWidth = s.maxWidthPt + "pt";
+    s.element.style.width = s.maxWidthPt + "pt";
 }
 
 
