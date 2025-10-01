@@ -174,6 +174,7 @@ function squeezeScale(s) {
 
     s.element.style.transform = finalScaleString;
     s.element.style.maxWidth = s.maxWidth + "pt";
+    s.element.style.width = s.maxWidth + "pt";
 }
 
 
