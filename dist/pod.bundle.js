@@ -751,7 +751,7 @@ this.Pod = (function() {
       var minMatch = (_classArray$find2 = classArray.find(function(c) {
         return c.startsWith("min-scale-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
-      var minScale = minMatch ? minMatch[1] : null;
+      var minScale = minMatch ? parseFloat(minMatch[1]) : null;
       var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
@@ -810,6 +810,11 @@ this.Pod = (function() {
   }
   function squeezeScale(s) {
     var _s$maxScale, _s$minScale;
+    applyTransformX(s.element, "scale(1, 1)");
+    var maxRowCount = getElementBoxWidth(s.element);
+    applyTransformX(s.element, "scale(".concat(s.minScale, ", 1)"));
+    var minRowCount = getElementBoxWidth(s.element);
+    console.log(minRowCount, maxRowCount);
     var rowCount = getRenderedLineCountForNode(s.element);
     var newScale = calculateSqueezedScale(
       s.element,

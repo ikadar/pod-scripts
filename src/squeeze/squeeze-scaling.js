@@ -38,7 +38,7 @@ function prepareElementsForScaling() {
         const maxMatch = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
         const maxScale = maxMatch ? maxMatch[1] : null;
         const minMatch = classArray.find(c => c.startsWith('min-scale-'))?.match(/^min-scale-\[([^\]]+)\]$/);
-        const minScale = minMatch ? minMatch[1] : null;
+        const minScale = minMatch ? parseFloat(minMatch[1]) : null;
 
         const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
         const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
@@ -163,6 +163,12 @@ function squeezeScale(s) {
     // ha max squeeze és no squeeze esetén a row count különbözik, akkor
     // keresd meg, azt a squeeze legkisebb mértéket, ami még ugyanannyi rows-t eredményez mint a max squeeze
 
+    applyTransformX(s.element, `scale(1, 1)`);
+    const maxRowCount = getElementBoxWidth(s.element);
+    applyTransformX(s.element, `scale(${s.minScale}, 1)`);
+    const minRowCount = getElementBoxWidth(s.element);
+
+    console.log(minRowCount, maxRowCount);
 
     const rowCount = getRenderedLineCountForNode(s.element);
     // if (rowCount <= s.maxRows && s.maxRows > 1) {
