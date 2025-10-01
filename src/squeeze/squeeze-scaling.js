@@ -84,7 +84,7 @@ function calculateSqueezedScale(
     {
         pxToPt = 0.74999943307122,
         axis = 'x',         // 'x' vagy 'uniform'
-        minScale = 0.2,
+        minScale = 0.8,
         maxScale = 1,
         epsilon = 0.05,
         maxIter = 0,
@@ -153,7 +153,6 @@ function calculateSqueezedScale(
 
 
 function squeezeScale(s) {
-
 
     const rowCount = getRenderedLineCountForNode(s.element);
     if (rowCount <= s.maxRows && s.maxRows > 1) {
