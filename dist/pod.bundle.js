@@ -623,11 +623,11 @@ this.Pod = (function() {
       var maxMatch = (_classArray$find = classArray.find(function(c) {
         return c.startsWith("max-letter-spacing-");
       })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-letter-spacing-\[([^\]]+)\]$/);
-      var maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : null;
+      var maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : 0;
       var minMatch = (_classArray$find2 = classArray.find(function(c) {
         return c.startsWith("min-letter-spacing-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-letter-spacing-\[([^\]]+)\]$/);
-      var minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
+      var minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : -1;
       var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);

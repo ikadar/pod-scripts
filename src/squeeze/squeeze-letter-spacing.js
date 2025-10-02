@@ -156,9 +156,9 @@ function prepareElementsForLetterSpacing() {
 
         const classArray = Array.from(element.classList);
         const maxMatch = classArray.find(c => c.startsWith('max-letter-spacing-'))?.match(/^max-letter-spacing-\[([^\]]+)\]$/);
-        const maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : null;
+        const maxLetterSpacingPt = maxMatch ? convertToPt(maxMatch[1]) : 0;
         const minMatch = classArray.find(c => c.startsWith('min-letter-spacing-'))?.match(/^min-letter-spacing-\[([^\]]+)\]$/);
-        const minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : null;
+        const minLetterSpacingPt = minMatch ? convertToPt(minMatch[1]) : -1;
 
         const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
         const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;
