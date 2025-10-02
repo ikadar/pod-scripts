@@ -679,6 +679,10 @@ this.Pod = (function() {
       var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
       if (!maxWidth || maxWidth === "none") {
+        element.style.maxWidth = "inherit";
+        maxWidth = window.getComputedStyle(element).maxWidth;
+      }
+      if (!maxWidth || maxWidth === "none") {
         return;
       }
       var maxWidthPt = convertToPt(maxWidth);

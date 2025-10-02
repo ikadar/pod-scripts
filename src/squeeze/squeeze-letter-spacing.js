@@ -120,7 +120,11 @@ function prepareElementsForLetterSpacing() {
     const elements = getElementsToSqueezeLetterSpacing();
     elements.map(function (element, index) {
 
-        const maxWidth = window.getComputedStyle(element).maxWidth;
+        let maxWidth = window.getComputedStyle(element).maxWidth;
+        if (!maxWidth || maxWidth === "none") {
+            element.style.maxWidth = "inherit";
+            maxWidth = window.getComputedStyle(element).maxWidth;
+        }
 
         if (!maxWidth || maxWidth === "none") {
             return;
