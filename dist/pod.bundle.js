@@ -773,23 +773,17 @@ this.Pod = (function() {
     });
   }
   function squeezeScale(s) {
-    applyTransformX(s.element, "scale(".concat(s.minScale, ", 1)"));
-    var minRowCount = getRenderedLineCountForNode(s.element);
-    applyTransformX(s.element, "scale(1, 1)");
-    var maxRowCount = getRenderedLineCountForNode(s.element);
-    if (maxRowCount > minRowCount) {
-      var scale = s.minScale;
-      var _rowCount = minRowCount;
-      var epsilon = 5e-3;
-      while (_rowCount === minRowCount) {
-        scale += epsilon;
-        applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
-        _rowCount = getRenderedLineCountForNode(s.element);
-      }
-      scale -= epsilon;
-      applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
+    var rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows) {
+      return;
     }
-    return;
+    var scale = s.minScale;
+    var epsilon = 5e-3;
+    while (rowCount > s.maxRows) {
+      scale += epsilon;
+      applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
+      rowCount = getRenderedLineCountForNode(s.element);
+    }
   }
   function applyTransformX(el, scaleString) {
     el.style.transform = scaleString;

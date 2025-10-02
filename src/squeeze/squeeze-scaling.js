@@ -163,53 +163,62 @@ function squeezeScale(s) {
     // ha max squeeze és no squeeze esetén a row count különbözik, akkor
     // keresd meg, azt a squeeze legkisebb mértéket, ami még ugyanannyi rows-t eredményez mint a max squeeze
 
-    applyTransformX(s.element, `scale(${s.minScale}, 1)`);
-    const minRowCount = getRenderedLineCountForNode(s.element);
-    applyTransformX(s.element, `scale(1, 1)`);
-    const maxRowCount = getRenderedLineCountForNode(s.element);
+    // applyTransformX(s.element, `scale(${s.minScale}, 1)`);
+    // const minRowCount = getRenderedLineCountForNode(s.element);
+    // applyTransformX(s.element, `scale(1, 1)`);
+    // const maxRowCount = getRenderedLineCountForNode(s.element);
+    //
+    // if (maxRowCount > minRowCount) {
+    //     // keresd azt a squeeze legkisebb mértéket ami minRowCount-ot eredményez
+    //     let scale = s.minScale;
+    //     let rowCount = minRowCount;
+    //     const epsilon = 0.005;
+    //
+    //     while (rowCount === minRowCount) {
+    //         scale += epsilon;
+    //         applyTransformX(s.element, `scale(${scale}, 1)`);
+    //         rowCount = getRenderedLineCountForNode(s.element);
+    //     }
+    //
+    //     scale -= epsilon;
+    //     applyTransformX(s.element, `scale(${scale}, 1)`);
+    //
+    // }
+    //
+    // return;
 
-    if (maxRowCount > minRowCount) {
-        // keresd azt a squeeze legkisebb mértéket ami minRowCount-ot eredményez
-        let scale = s.minScale;
-        let rowCount = minRowCount;
-        const epsilon = 0.005;
+    // console.log(minRowCount, maxRowCount);
 
-        while (rowCount === minRowCount) {
-            scale += epsilon;
-            applyTransformX(s.element, `scale(${scale}, 1)`);
-            rowCount = getRenderedLineCountForNode(s.element);
-        }
-
-        scale -= epsilon;
-        applyTransformX(s.element, `scale(${scale}, 1)`);
-
+    let rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows) {
+        return;
     }
 
-    return;
+    let scale = s.minScale;
+    const epsilon = 0.005;
+    while (rowCount > s.maxRows) {
+        scale += epsilon;
+        applyTransformX(s.element, `scale(${scale}, 1)`);
+        rowCount = getRenderedLineCountForNode(s.element);
+    }
 
-    console.log(minRowCount, maxRowCount);
 
-    const rowCount = getRenderedLineCountForNode(s.element);
-    // if (rowCount <= s.maxRows && s.maxRows > 1) {
-    //     // console.log(`rowCount: ${rowCount}`);
-    //     return;
-    // }
 
-    const newScale = calculateSqueezedScale(
-        s.element,
-        s.maxWidthPt,
-        {
-            minScale: s.minScale,
-        }
-        // getElementBoxWidth(s.element),
-    );
-
-    const maxScale = s.maxScale ?? newScale;
-    const minScale = s.minScale ?? newScale;
-    const finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
-    const finalScaleString = `scale(${finalScale}, 1)`;
-
-    applyTransformX(s.element, finalScaleString);
+    // const newScale = calculateSqueezedScale(
+    //     s.element,
+    //     s.maxWidthPt,
+    //     {
+    //         minScale: s.minScale,
+    //     }
+    //     // getElementBoxWidth(s.element),
+    // );
+    //
+    // const maxScale = s.maxScale ?? newScale;
+    // const minScale = s.minScale ?? newScale;
+    // const finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
+    // const finalScaleString = `scale(${finalScale}, 1)`;
+    //
+    // applyTransformX(s.element, finalScaleString);
 
     // s.element.style.transform = finalScaleString;
     // const scaleX = getScaleX(s.element);
@@ -218,10 +227,6 @@ function squeezeScale(s) {
     // // s.element.style.maxWidth = `${s.maxWidthPt / finalScale}pt`;
     // // s.element.style.width = `${s.maxWidthPt / finalScale}pt`;
 
-    if (s.maxRows > 1) {
-    // if (rowCount > s.maxRows && s.maxRows > 1) {
-        console.log(`rowCount: ${rowCount}`);
-    }
 
 }
 
