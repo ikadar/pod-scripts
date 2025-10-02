@@ -777,7 +777,7 @@ this.Pod = (function() {
     var minRowCount = getRenderedLineCountForNode(s.element);
     applyTransformX(s.element, "scale(1, 1)");
     var maxRowCount = getRenderedLineCountForNode(s.element);
-    if (maxRowCount > maxRowCount) {
+    if (maxRowCount > minRowCount) {
       var scale = s.minScale;
       var _rowCount = minRowCount;
       var epsilon = 0.05;
