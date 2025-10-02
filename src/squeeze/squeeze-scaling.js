@@ -180,6 +180,9 @@ function squeezeScale(s) {
             rowCount = getRenderedLineCountForNode(s.element);
         }
 
+        scale -= epsilon;
+        applyTransformX(s.element, `scale(${scale}, 1)`);
+
     }
 
     return;

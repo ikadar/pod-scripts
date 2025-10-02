@@ -786,6 +786,8 @@ this.Pod = (function() {
         applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
         _rowCount = getRenderedLineCountForNode(s.element);
       }
+      scale -= epsilon;
+      applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
     }
     return;
   }
