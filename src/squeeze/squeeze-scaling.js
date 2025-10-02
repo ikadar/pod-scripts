@@ -168,6 +168,22 @@ function squeezeScale(s) {
     applyTransformX(s.element, `scale(1, 1)`);
     const maxRowCount = getRenderedLineCountForNode(s.element);
 
+    if (maxRowCount > maxRowCount) {
+        // keresd azt a squeeze legkisebb mértéket ami minRowCount-ot eredményez
+        let scale = s.minScale;
+        let rowCount = minRowCount;
+        const epsilon = 0.05;
+
+        while (rowCount === minRowCount) {
+            scale += epsilon;
+            applyTransformX(s.element, `scale(${scale}, 1)`);
+            rowCount = getRenderedLineCountForNode(s.element);
+        }
+
+    }
+
+    return;
+
     console.log(minRowCount, maxRowCount);
 
     const rowCount = getRenderedLineCountForNode(s.element);

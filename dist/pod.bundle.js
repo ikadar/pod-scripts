@@ -772,66 +772,22 @@ this.Pod = (function() {
       element.style.maxWidth = "";
     });
   }
-  function calculateSqueezedScale(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-    _ref.pxToPt;
-    var _ref$axis = _ref.axis, axis = _ref$axis === void 0 ? "x" : _ref$axis, _ref$minScale = _ref.minScale, minScale = _ref$minScale === void 0 ? 0.8 : _ref$minScale, _ref$maxScale = _ref.maxScale, maxScale = _ref$maxScale === void 0 ? 1 : _ref$maxScale, _ref$epsilon = _ref.epsilon, epsilon = _ref$epsilon === void 0 ? 0.05 : _ref$epsilon, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 0 : _ref$maxIter, _ref$setOrigin = _ref.setOrigin, setOrigin = _ref$setOrigin === void 0 ? true : _ref$setOrigin;
-    var targetPt = maxWidthPt;
-    var prevTransform = element.style.transform || "";
-    var prevOrigin = element.style.transformOrigin || "";
-    element.style.transform = "none";
-    if (setOrigin) element.style.transformOrigin = "left center";
-    var baseWidthPt = getElementBoxWidth(element) || 0;
-    if (baseWidthPt <= 0) {
-      element.style.transform = prevTransform;
-      element.style.transformOrigin = prevOrigin;
-      return 1;
-    }
-    var sx = clamp(targetPt / baseWidthPt, minScale, maxScale);
-    console.log("sx1: ".concat(sx));
-    var sy = axis === "uniform" ? sx : 1;
-    element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-    for (var i = 0; i < maxIter; i++) {
-      var w = getElementBoxWidth(element);
-      var diffPt = targetPt - w;
-      if (Math.abs(diffPt) <= epsilon) break;
-      var factor = targetPt / (w || 1);
-      sx = clamp(sx * factor, minScale, maxScale);
-      console.log("w: ".concat(w, " - sx2: ").concat(sx));
-      sy = axis === "uniform" ? sx : 1;
-      element.style.transform = "scale(".concat(sx, ", ").concat(sy, ")").trim();
-    }
-    if (!setOrigin) element.style.transformOrigin = prevOrigin;
-    console.log("sx3: ".concat(sx));
-    return sx;
-    function clamp(v, lo, hi) {
-      return Math.max(lo, Math.min(hi, v));
-    }
-  }
   function squeezeScale(s) {
-    var _s$maxScale, _s$minScale;
     applyTransformX(s.element, "scale(".concat(s.minScale, ", 1)"));
     var minRowCount = getRenderedLineCountForNode(s.element);
     applyTransformX(s.element, "scale(1, 1)");
     var maxRowCount = getRenderedLineCountForNode(s.element);
-    console.log(minRowCount, maxRowCount);
-    var rowCount = getRenderedLineCountForNode(s.element);
-    var newScale = calculateSqueezedScale(
-      s.element,
-      s.maxWidthPt,
-      {
-        minScale: s.minScale
+    if (maxRowCount > maxRowCount) {
+      var scale = s.minScale;
+      var _rowCount = minRowCount;
+      var epsilon = 0.05;
+      while (_rowCount === minRowCount) {
+        scale += epsilon;
+        applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
+        _rowCount = getRenderedLineCountForNode(s.element);
       }
-      // getElementBoxWidth(s.element),
-    );
-    var maxScale = (_s$maxScale = s.maxScale) !== null && _s$maxScale !== void 0 ? _s$maxScale : newScale;
-    var minScale = (_s$minScale = s.minScale) !== null && _s$minScale !== void 0 ? _s$minScale : newScale;
-    var finalScale = Math.max(Math.min(newScale, Number(maxScale)), Number(minScale));
-    var finalScaleString = "scale(".concat(finalScale, ", 1)");
-    applyTransformX(s.element, finalScaleString);
-    if (s.maxRows > 1) {
-      console.log("rowCount: ".concat(rowCount));
     }
+    return;
   }
   function applyTransformX(el, scaleString) {
     el.style.transform = scaleString;
