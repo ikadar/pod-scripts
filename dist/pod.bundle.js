@@ -736,7 +736,7 @@ this.Pod = (function() {
       var maxWidth = window.getComputedStyle(element).maxWidth;
       if (!maxWidth || maxWidth === "none") {
         element.style.maxWidth = "inherit";
-        window.getComputedStyle(element).maxWidth;
+        maxWidth = window.getComputedStyle(element).maxWidth;
       }
       var maxFontSize = window.getComputedStyle(element).fontSize;
       var currentWidth = window.getComputedStyle(element).width;

@@ -19,10 +19,10 @@ function prepareElementsForScaling() {
     const elements = getElementsToScaling();
     elements.map(function (element, index) {
 
-        const maxWidth = window.getComputedStyle(element).maxWidth;
+        let maxWidth = window.getComputedStyle(element).maxWidth;
         if (!maxWidth || maxWidth === "none") {
             element.style.maxWidth = "inherit";
-            const maxWidth = window.getComputedStyle(element).maxWidth;
+            maxWidth = window.getComputedStyle(element).maxWidth;
         }
         const maxFontSize = window.getComputedStyle(element).fontSize;
         const currentWidth = window.getComputedStyle(element).width;
