@@ -194,10 +194,10 @@ function squeezeScale(s) {
         return;
     }
 
-    let scale = s.minScale;
+    let scale = s.maxScale;
     const epsilon = 0.005;
-    while (rowCount > s.maxRows) {
-        scale += epsilon;
+    while (rowCount > s.maxRows && scale >= s.minScale) {
+        scale -= epsilon;
         applyTransformX(s.element, `scale(${scale}, 1)`);
         rowCount = getRenderedLineCountForNode(s.element);
     }

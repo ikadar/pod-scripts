@@ -777,10 +777,10 @@ this.Pod = (function() {
     if (rowCount <= s.maxRows) {
       return;
     }
-    var scale = s.minScale;
+    var scale = s.maxScale;
     var epsilon = 5e-3;
-    while (rowCount > s.maxRows) {
-      scale += epsilon;
+    while (rowCount > s.maxRows && scale >= s.minScale) {
+      scale -= epsilon;
       applyTransformX(s.element, "scale(".concat(scale, ", 1)"));
       rowCount = getRenderedLineCountForNode(s.element);
     }
