@@ -70,7 +70,11 @@ function prepareElements () {
     const elements = getElementsToSqueeze();
     elements.map(function (element, index) {
 
-        const maxWidth = window.getComputedStyle(element).maxWidth;
+        let maxWidth = window.getComputedStyle(element).maxWidth;
+        if (!maxWidth || maxWidth === "none") {
+            element.style.maxWidth = "inherit";
+            maxWidth = window.getComputedStyle(element).maxWidth;
+        }
         let maxFontSize = window.getComputedStyle(element).fontSize;
         const currentWidth = window.getComputedStyle(element).width;
 

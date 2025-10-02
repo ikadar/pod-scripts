@@ -535,6 +535,10 @@ this.Pod = (function() {
     elements.map(function(element, index) {
       var _classArray$find, _classArray$find2, _classArray$find3;
       var maxWidth = window.getComputedStyle(element).maxWidth;
+      if (!maxWidth || maxWidth === "none") {
+        element.style.maxWidth = "inherit";
+        maxWidth = window.getComputedStyle(element).maxWidth;
+      }
       var maxFontSize = window.getComputedStyle(element).fontSize;
       var currentWidth = window.getComputedStyle(element).width;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
