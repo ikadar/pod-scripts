@@ -1,4 +1,4 @@
-import {getElementBoxWidth, getTextNodeLineCount} from "../measurement";
+import {getElementBoxWidth, getRenderedLineCountForNode, getTextNodeLineCount} from "../measurement";
 import convertToPt from "../conversion";
 
 const elementsToSqueezeSpacing = [];
@@ -68,34 +68,56 @@ function calculateSqueezedLetterSpacing(element, maxWidthPt, {
     return guessPt; // PT-ben ad vissza, a te konvencióddal egyezően
 }
 
+
 function squeezeLetterSpacing(s) {
 
-    const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
+    let rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows) {
         return;
     }
 
-    if (s.maxRows > 1) {
-        fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
-            minSpacing: s.minLetterSpacingPt
-        });
-        return;
+    let scale = s.maxLetterSpacingPt;
+    const epsilon = 0.005;
+    while (rowCount > s.maxRows && scale >= s.minLetterSpacingPt) {
+        scale -= epsilon;
+        s.element.style.letterSpacing = scale.toString() + "pt";
+        // applyTransformX(s.element, `scale(${scale}, 1)`);
+        rowCount = getRenderedLineCountForNode(s.element);
     }
 
+    // --------------
 
-    const newLetterSpacingPt = calculateSqueezedLetterSpacing(
-        s.element,
-        s.maxWidthPt,
-        // getElementBoxWidth(s.element),
-        // originalLetterSpacing
-    );
-
-    const finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
-
-    s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
-    s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
+
+// function squeezeLetterSpacing(s) {
+//
+//     const rowCount = getTextNodeLineCount(s.element.childNodes[0]);
+//     if (rowCount <= s.maxRows && s.maxRows > 1) {
+//         return;
+//     }
+//
+//     if (s.maxRows > 1) {
+//         fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
+//             minSpacing: s.minLetterSpacingPt
+//         });
+//         return;
+//     }
+//
+//
+//     const newLetterSpacingPt = calculateSqueezedLetterSpacing(
+//         s.element,
+//         s.maxWidthPt,
+//         // getElementBoxWidth(s.element),
+//         // originalLetterSpacing
+//     );
+//
+//     const finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
+//
+//     s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
+//     s.element.style.maxWidth = s.maxWidth + "pt";
+// }
+//
 // Adjust letter-spacing for all elements
 function squeezeAllLetterSpacing() {
     for (var i in elementsToSqueezeSpacing) {

@@ -412,13 +412,6 @@ this.Pod = (function() {
       el.style.display = prev.display;
     }
   }
-  function getTextNodeLineCount(textNode) {
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return 0;
-    var range = document.createRange();
-    range.selectNodeContents(textNode);
-    var rects = range.getClientRects();
-    return rects.length;
-  }
   function getAllTextNodes(root) {
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     var out = [];
@@ -587,78 +580,18 @@ this.Pod = (function() {
     console.log(iter);
   }
   var elementsToSqueezeSpacing = [];
-  function calculateSqueezedLetterSpacing(element, maxWidthPt) {
-    var _ref = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref$pxToPt = _ref.pxToPt, pxToPt = _ref$pxToPt === void 0 ? 0.74999943307122 : _ref$pxToPt, _ref$epsilonPt = _ref.epsilonPt, epsilonPt = _ref$epsilonPt === void 0 ? 0.05 : _ref$epsilonPt, _ref$maxIter = _ref.maxIter, maxIter = _ref$maxIter === void 0 ? 20 : _ref$maxIter, _ref$minLSpt = _ref.minLSpt, minLSpt = _ref$minLSpt === void 0 ? -5 : _ref$minLSpt, _ref$maxLSpt = _ref.maxLSpt, maxLSpt = _ref$maxLSpt === void 0 ? 20 : _ref$maxLSpt;
-    var toPt = function toPt2(px) {
-      return px * pxToPt;
-    };
-    var toPx = function toPx2(pt) {
-      return pt / pxToPt;
-    };
-    var targetPt = maxWidthPt * 1;
-    var text = element.textContent || "";
-    var gaps = Math.max(0, text.length - 1);
-    if (gaps === 0) {
-      return parseFloat(getComputedStyle(element).letterSpacing) * pxToPt || 0;
-    }
-    var currentLSpx = parseFloat(getComputedStyle(element).letterSpacing);
-    if (Number.isNaN(currentLSpx)) currentLSpx = 0;
-    var currentLSPt = toPt(currentLSpx);
-    var currentWidthPt = getElementBoxWidth(element);
-    var guessPt = currentLSPt;
-    if (gaps > 0) {
-      var extraPerGapPt = (targetPt - currentWidthPt) / gaps;
-      guessPt = currentLSPt + extraPerGapPt;
-    }
-    guessPt = Math.max(minLSpt, Math.min(maxLSpt, guessPt));
-    element.style.letterSpacing = toPx(guessPt) + "px";
-    var wPt = getElementBoxWidth(element);
-    if (Math.abs(wPt - targetPt) <= epsilonPt) {
-      return guessPt;
-    }
-    var loPt, hiPt;
-    if (wPt < targetPt) {
-      loPt = guessPt;
-      hiPt = maxLSpt;
-    } else {
-      loPt = minLSpt;
-      hiPt = guessPt;
-    }
-    for (var i = 0; i < maxIter; i++) {
-      var midPt = (loPt + hiPt) / 2;
-      element.style.letterSpacing = toPx(midPt) + "px";
-      wPt = getElementBoxWidth(element);
-      var diff = wPt - targetPt;
-      if (Math.abs(diff) <= epsilonPt) {
-        guessPt = midPt;
-        break;
-      }
-      if (diff < 0) loPt = midPt;
-      else hiPt = midPt;
-      guessPt = midPt;
-    }
-    return guessPt;
-  }
   function squeezeLetterSpacing(s) {
-    var rowCount = getTextNodeLineCount(s.element.childNodes[0]);
-    if (rowCount <= s.maxRows && s.maxRows > 1) {
+    var rowCount = getRenderedLineCountForNode(s.element);
+    if (rowCount <= s.maxRows) {
       return;
     }
-    if (s.maxRows > 1) {
-      fitLetterSpacingToMaxRows(s.element.childNodes[0], s.maxRows, {
-        minSpacing: s.minLetterSpacingPt
-      });
-      return;
+    var scale = s.maxLetterSpacingPt;
+    var epsilon = 5e-3;
+    while (rowCount > s.maxRows && scale >= s.minLetterSpacingPt) {
+      scale -= epsilon;
+      s.element.style.letterSpacing = scale.toString() + "pt";
+      rowCount = getRenderedLineCountForNode(s.element);
     }
-    var newLetterSpacingPt = calculateSqueezedLetterSpacing(
-      s.element,
-      s.maxWidthPt
-      // getElementBoxWidth(s.element),
-      // originalLetterSpacing
-    );
-    var finalLetterSpacingPt = Math.max(Math.min(newLetterSpacingPt, s.maxLetterSpacingPt), s.minLetterSpacingPt);
-    s.element.style.letterSpacing = finalLetterSpacingPt.toString() + "pt";
-    s.element.style.maxWidth = s.maxWidth + "pt";
   }
   function squeezeAllLetterSpacing() {
     for (var i in elementsToSqueezeSpacing) {
@@ -710,23 +643,6 @@ this.Pod = (function() {
       element.style.flex = "0 0 auto";
       element.style.alignSelf = "flex-start";
     });
-  }
-  function fitLetterSpacingToMaxRows(textNode, maxRows) {
-    var _ref2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, _ref2$minSpacing = _ref2.minSpacing, minSpacing = _ref2$minSpacing === void 0 ? -5 : _ref2$minSpacing, _ref2$step = _ref2.step, step = _ref2$step === void 0 ? 0.2 : _ref2$step, _ref2$maxIter = _ref2.maxIter, maxIter = _ref2$maxIter === void 0 ? 0 : _ref2$maxIter;
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
-    var parent = textNode.parentElement;
-    if (!parent) return;
-    var style = window.getComputedStyle(parent);
-    var currentSpacingPt = convertToPt("".concat(parseFloat(style.letterSpacing) || 0, "px"));
-    var iter = 0;
-    while (iter < maxIter) {
-      var rowCount = getTextNodeLineCount(textNode);
-      if (rowCount <= maxRows) break;
-      currentSpacingPt = Math.max(currentSpacingPt - step, minSpacing);
-      parent.style.letterSpacing = "".concat(currentSpacingPt, "pt");
-      iter++;
-    }
-    return currentSpacingPt;
   }
   var elementsToSqueezeScaling = [];
   function getElementsToScaling() {
