@@ -36,9 +36,9 @@ function prepareElementsForScaling() {
 
         const classArray = Array.from(element.classList);
         const maxMatch = classArray.find(c => c.startsWith('max-scale-'))?.match(/^max-scale-\[([^\]]+)\]$/);
-        const maxScale = maxMatch ? maxMatch[1] : null;
+        const maxScale = maxMatch ? parseFloat(maxMatch[1]) : 1;
         const minMatch = classArray.find(c => c.startsWith('min-scale-'))?.match(/^min-scale-\[([^\]]+)\]$/);
-        const minScale = minMatch ? parseFloat(minMatch[1]) : null;
+        const minScale = minMatch ? parseFloat(minMatch[1]) : 1;
 
         const maxRowsMatch = classArray.find(c => c.startsWith('max-rows-'))?.match(/^max-rows-\[([^\]]+)\]$/);
         const maxRows = maxRowsMatch ? maxRowsMatch[1] : 1;

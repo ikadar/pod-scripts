@@ -747,11 +747,11 @@ this.Pod = (function() {
       var maxMatch = (_classArray$find = classArray.find(function(c) {
         return c.startsWith("max-scale-");
       })) === null || _classArray$find === void 0 ? void 0 : _classArray$find.match(/^max-scale-\[([^\]]+)\]$/);
-      var maxScale = maxMatch ? maxMatch[1] : null;
+      var maxScale = maxMatch ? parseFloat(maxMatch[1]) : 1;
       var minMatch = (_classArray$find2 = classArray.find(function(c) {
         return c.startsWith("min-scale-");
       })) === null || _classArray$find2 === void 0 ? void 0 : _classArray$find2.match(/^min-scale-\[([^\]]+)\]$/);
-      var minScale = minMatch ? parseFloat(minMatch[1]) : null;
+      var minScale = minMatch ? parseFloat(minMatch[1]) : 1;
       var maxRowsMatch = (_classArray$find3 = classArray.find(function(c) {
         return c.startsWith("max-rows-");
       })) === null || _classArray$find3 === void 0 ? void 0 : _classArray$find3.match(/^max-rows-\[([^\]]+)\]$/);
