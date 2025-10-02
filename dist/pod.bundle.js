@@ -780,7 +780,7 @@ this.Pod = (function() {
     if (maxRowCount > minRowCount) {
       var scale = s.minScale;
       var _rowCount = minRowCount;
-      var epsilon = 0.05;
+      var epsilon = 5e-3;
       while (_rowCount === minRowCount) {
         scale += epsilon;
         applyTransformX(s.element, "scale(".concat(scale, ", 1)"));

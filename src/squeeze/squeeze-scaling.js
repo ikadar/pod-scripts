@@ -172,7 +172,7 @@ function squeezeScale(s) {
         // keresd azt a squeeze legkisebb mértéket ami minRowCount-ot eredményez
         let scale = s.minScale;
         let rowCount = minRowCount;
-        const epsilon = 0.05;
+        const epsilon = 0.005;
 
         while (rowCount === minRowCount) {
             scale += epsilon;
