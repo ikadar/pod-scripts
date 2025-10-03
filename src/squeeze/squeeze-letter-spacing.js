@@ -85,7 +85,7 @@ function squeezeLetterSpacing(s) {
         rowCount = getRenderedLineCountForNode(s.element);
     } while (rowCount <= s.maxRows);
 
-    scale -= epsilon;
+    // scale -= epsilon;
     s.element.style.letterSpacing = scale.toString() + "pt";
 
     // --------------

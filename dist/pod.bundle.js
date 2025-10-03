@@ -592,7 +592,6 @@ this.Pod = (function() {
       s.element.style.letterSpacing = scale.toString() + "pt";
       rowCount = getRenderedLineCountForNode(s.element);
     } while (rowCount <= s.maxRows);
-    scale -= epsilon;
     s.element.style.letterSpacing = scale.toString() + "pt";
   }
   function squeezeAllLetterSpacing() {
