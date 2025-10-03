@@ -76,13 +76,18 @@ function squeezeLetterSpacing(s) {
         return;
     }
 
-    let scale = s.maxLetterSpacingPt;
+    let scale = s.minLetterSpacingPt;
     const epsilon = 0.005;
-    while (rowCount > s.maxRows && scale >= s.minLetterSpacingPt) {
-        scale -= epsilon;
+    let squeezed = false;
+    while (rowCount <= s.maxRows)
+        squeezed = true;{
+        scale += epsilon;
         s.element.style.letterSpacing = scale.toString() + "pt";
         // applyTransformX(s.element, `scale(${scale}, 1)`);
         rowCount = getRenderedLineCountForNode(s.element);
+    }
+    if (squeezed) {
+        scale -= epsilon
     }
 
     // --------------
