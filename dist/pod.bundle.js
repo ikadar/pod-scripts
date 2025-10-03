@@ -587,6 +587,7 @@ this.Pod = (function() {
     }
     var epsilon = 5e-3;
     var scale = s.minLetterSpacingPt - epsilon;
+    s.element.style.letterSpacing = scale.toString() + "pt";
     var squeezed = false;
     while (rowCount <= s.maxRows) {
       squeezed = true;
