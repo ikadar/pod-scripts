@@ -77,12 +77,12 @@ function squeezeLetterSpacing(s) {
     }
 
     const epsilon = 0.005;
-    let scale = s.minLetterSpacingPt - epsilon;
+    let scale = s.minLetterSpacingPt;
 
     do  {
+        scale += epsilon;
         s.element.style.letterSpacing = scale.toString() + "pt";
         rowCount = getRenderedLineCountForNode(s.element);
-        scale += epsilon;
     } while (rowCount <= s.maxRows);
 
     scale -= epsilon;

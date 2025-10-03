@@ -586,11 +586,11 @@ this.Pod = (function() {
       return;
     }
     var epsilon = 5e-3;
-    var scale = s.minLetterSpacingPt - epsilon;
+    var scale = s.minLetterSpacingPt;
     do {
+      scale += epsilon;
       s.element.style.letterSpacing = scale.toString() + "pt";
       rowCount = getRenderedLineCountForNode(s.element);
-      scale += epsilon;
     } while (rowCount <= s.maxRows);
     scale -= epsilon;
     s.element.style.letterSpacing = scale.toString() + "pt";
