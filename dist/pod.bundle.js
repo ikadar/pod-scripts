@@ -585,11 +585,11 @@ this.Pod = (function() {
     if (rowCount <= s.maxRows) {
       return;
     }
-    var scale = s.minLetterSpacingPt;
     var epsilon = 5e-3;
+    var scale = s.minLetterSpacingPt - epsilon;
     var squeezed = false;
-    while (rowCount <= s.maxRows) squeezed = true;
-    {
+    while (rowCount <= s.maxRows) {
+      squeezed = true;
       scale += epsilon;
       s.element.style.letterSpacing = scale.toString() + "pt";
       rowCount = getRenderedLineCountForNode(s.element);
