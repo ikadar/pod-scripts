@@ -77,7 +77,7 @@ function squeezeLetterSpacing(s) {
     }
 
     const epsilon = 0.005;
-    let scale = s.minLetterSpacingPt;
+    let scale = s.minLetterSpacingPt - epsilon;
 
     do  {
         s.element.style.letterSpacing = scale.toString() + "pt";
@@ -85,7 +85,7 @@ function squeezeLetterSpacing(s) {
         scale += epsilon;
     } while (rowCount <= s.maxRows);
 
-    scale -= (2 * epsilon);
+    scale -= epsilon;
     s.element.style.letterSpacing = scale.toString() + "pt";
 
     // --------------
