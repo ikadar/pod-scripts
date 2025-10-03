@@ -587,17 +587,13 @@ this.Pod = (function() {
     }
     var epsilon = 5e-3;
     var scale = s.minLetterSpacingPt - epsilon;
-    s.element.style.letterSpacing = scale.toString() + "pt";
-    var squeezed = false;
-    while (rowCount <= s.maxRows) {
-      squeezed = true;
+    do {
       scale += epsilon;
       s.element.style.letterSpacing = scale.toString() + "pt";
       rowCount = getRenderedLineCountForNode(s.element);
-    }
-    if (squeezed) {
-      scale -= epsilon;
-    }
+    } while (rowCount <= s.maxRows);
+    scale -= epsilon;
+    s.element.style.letterSpacing = scale.toString() + "pt";
   }
   function squeezeAllLetterSpacing() {
     for (var i in elementsToSqueezeSpacing) {
