@@ -782,7 +782,7 @@ this.Pod = (function() {
     }
     function _init() {
       _init = _asyncToGenerator(/* @__PURE__ */ _regenerator().m(function _callee2(data2) {
-        var _document$fonts;
+        var _document$fonts, _Object$keys;
         var rendered;
         return _regenerator().w(function(_context2) {
           while (1) switch (_context2.p = _context2.n) {
@@ -804,10 +804,14 @@ this.Pod = (function() {
               _context2.v;
             case 4:
               rendered = renderTemplate(data2);
-              if (!rendered) {
-                templateScripts();
+              if (!(!rendered || ((_Object$keys = Object.keys(data2)) === null || _Object$keys === void 0 ? void 0 : _Object$keys[0]) === "_")) {
+                _context2.n = 5;
+                break;
               }
+              return _context2.a(2);
             case 5:
+              templateScripts();
+            case 6:
               return _context2.a(2);
           }
         }, _callee2, null, [[1, 3]]);

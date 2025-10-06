@@ -26,7 +26,7 @@ function addPodScripts(data) {
         const rendered = renderTemplate(data);
         // const rendered = renderTemplate({});
 
-        if (!rendered) {
+        if (!rendered || Object.keys(data)?.[0] === "_") return; {
             templateScripts();
         }
     }
