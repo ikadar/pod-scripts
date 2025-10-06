@@ -29,7 +29,7 @@ function addPodScripts(data) {
         }
         // const rendered = renderTemplate({});
 
-        if (!rendered || Object.keys(data)?.[0] === "_") return; {
+        if (!rendered) return; {
             templateScripts();
         }
     }
