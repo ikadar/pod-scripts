@@ -23,7 +23,10 @@ function addPodScripts(data) {
         }
 
         // const rendered = false;
-        const rendered = renderTemplate(data);
+        let rendered = false;
+        if (document.getElementById("initial-render-script")) {
+            rendered = renderTemplate(data);
+        }
         // const rendered = renderTemplate({});
 
         if (!rendered || Object.keys(data)?.[0] === "_") return; {

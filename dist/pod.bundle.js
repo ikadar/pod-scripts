@@ -803,7 +803,10 @@ this.Pod = (function() {
               _context2.p = 3;
               _context2.v;
             case 4:
-              rendered = renderTemplate(data2);
+              rendered = false;
+              if (document.getElementById("initial-render-script")) {
+                rendered = renderTemplate(data2);
+              }
               if (!(!rendered || ((_Object$keys = Object.keys(data2)) === null || _Object$keys === void 0 ? void 0 : _Object$keys[0]) === "_")) {
                 _context2.n = 5;
                 break;
