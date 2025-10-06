@@ -734,7 +734,6 @@ this.Pod = (function() {
     squeezeAll();
     squeezeAllLetterSpacing();
     squeezeAllScaling();
-    handleSeparators();
   }
   function addPostMessageHandler() {
     window.addEventListener("message", function(event) {

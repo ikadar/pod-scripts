@@ -14,7 +14,7 @@ function runSqueeze() {
     squeezeAllLetterSpacing();
     squeezeAllScaling();
 
-    handleSeparators();
+    // handleSeparators();
 }
 
 export default runSqueeze;
