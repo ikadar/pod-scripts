@@ -57,7 +57,11 @@ function getAllTextNodes(root) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
     let n;
-    while ((n = walker.nextNode())) nodes.push(n);
+    while ((n = walker.nextNode())) {
+        if (!(n.parentNode.tagName === "SPAN" && n.parentNode.classList.item(0) === "separator")) {
+            nodes.push(n);
+        }
+    }
     return nodes;
 }
 

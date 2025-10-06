@@ -225,7 +225,11 @@ this.Pod = (function() {
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     var nodes = [];
     var n;
-    while (n = walker.nextNode()) nodes.push(n);
+    while (n = walker.nextNode()) {
+      if (!(n.parentNode.tagName === "SPAN" && n.parentNode.classList.item(0) === "separator")) {
+        nodes.push(n);
+      }
+    }
     return nodes;
   }
   function wrapMatchesWithSeparatorAndSegments(textNode, value) {
