@@ -669,13 +669,13 @@ this.Pod = (function() {
         maxWidth = window.getComputedStyle(element).maxWidth;
       }
       var maxFontSize = window.getComputedStyle(element).fontSize;
-      var currentWidth = window.getComputedStyle(element).width;
+      window.getComputedStyle(element).width;
       if (!maxWidth || !maxFontSize || maxWidth === "none" || maxFontSize === "none") {
         return;
       }
       element.style.width = maxWidth;
       var maxWidthPt = getElementBoxWidth(element, false);
-      element.style.width = currentWidth;
+      element.style.width = "fit-content";
       var maxFontSizePt = convertToPt(maxFontSize);
       var classArray = Array.from(element.classList);
       var maxMatch = (_classArray$find = classArray.find(function(c) {

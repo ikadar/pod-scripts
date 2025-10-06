@@ -34,7 +34,7 @@ function prepareElementsForScaling() {
         // element.innerHTML = "";
         element.style.width = maxWidth;
         const maxWidthPt = getElementBoxWidth(element, false);
-        element.style.width = currentWidth;
+        element.style.width = 'fit-content';
 
         const maxFontSizePt = convertToPt(maxFontSize);
 
