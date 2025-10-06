@@ -723,7 +723,7 @@ this.Pod = (function() {
     el.style.transform = scaleString;
     var scaleX = getScaleX(el);
     el.style.maxWidth = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
-    el.style.width = "fit-content";
+    el.style.width = "".concat(Math.ceil(100 * 100 / scaleX) / 100, "%");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
