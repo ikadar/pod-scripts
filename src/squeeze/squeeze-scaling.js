@@ -238,7 +238,8 @@ function applyTransformX(el, scaleString) {
     el.style.transform = scaleString;
     const scaleX = getScaleX(el);
     el.style.maxWidth = `${Math.ceil(100*100 / (scaleX))/100}%`;
-    el.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
+    el.style.width = ``;
+    // el.style.width = `${Math.ceil(100*100 / (scaleX))/100}%`;
 }
 
 
