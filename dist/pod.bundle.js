@@ -807,14 +807,10 @@ this.Pod = (function() {
               if (document.getElementById("initial-render-script")) {
                 rendered = renderTemplate(data2);
               }
-              if (rendered) {
-                _context2.n = 5;
-                break;
+              if (!rendered) {
+                templateScripts();
               }
-              return _context2.a(2);
             case 5:
-              templateScripts();
-            case 6:
               return _context2.a(2);
           }
         }, _callee2, null, [[1, 3]]);
