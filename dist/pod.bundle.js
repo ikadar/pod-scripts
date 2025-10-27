@@ -722,8 +722,8 @@ this.Pod = (function() {
   function applyTransformX(el, scaleString) {
     el.style.transform = scaleString;
     var scaleX = getScaleX(el);
-    el.style.maxWidth = "".concat(Math.ceil(10 * 100 / scaleX) / 10 + 1, "%");
-    el.style.width = "".concat(Math.ceil(10 * 100 / scaleX) / 10 + 1, "%");
+    el.style.maxWidth = "".concat(100 / scaleX, "%");
+    el.style.width = "".concat(100 / scaleX, "%");
   }
   function squeezeAllScaling() {
     for (var i in elementsToSqueezeScaling) {
