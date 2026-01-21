@@ -43,7 +43,9 @@ function squeeze (s) {
         s.element.style.fontSize = newFontSizePt.toString() + "pt";
     }
 
-    s.element.style.maxWidth = s.maxWidth + "pt";
+    s.element.style.maxWidth = "none";
+    s.element.style.width = "auto";
+    // s.element.style.maxWidth = s.maxWidth + "pt";
 }
 
 // get elements with squeeze and squeeze-[*] classes
