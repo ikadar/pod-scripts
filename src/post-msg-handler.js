@@ -14,7 +14,8 @@ function addPostMessageHandler() {
             if (Array.isArray(event.data.data[key]) && (event.data.data[key].length > 0)) {
                 if (event.data.data[key][0]?.uuid) {
                     // data[key] = `https://bar-dev.wheel.digital/client-api/file-manager/${event.data.data[key][0].uuid}`;
-                    data[key] = `/client-api/file-manager/${event.data.data[key][0].uuid}`;
+                    // data[key] = `/client-api/file-manager/${event.data.data[key][0].uuid}`;
+                    data[key] = `${window.location.origin}/client-api/file-manager/${event.data.data[key][0].uuid}`;
                 } else {
                     data[key] = event.data.data[key][0].label;
                 }
